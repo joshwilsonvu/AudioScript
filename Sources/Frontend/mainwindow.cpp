@@ -6,7 +6,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "language.h"
 #include "dialogs.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -42,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete m_ui;
-    m_ui = nullptr;
+    m_ui = Q_NULLPTR;
 }
 
 CodeTabs* MainWindow::editor() const

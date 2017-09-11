@@ -1,6 +1,9 @@
 #ifndef AUDIOSCRIPTVARIANT_H
 #define AUDIOSCRIPTVARIANT_H
 
+#include <string>
+#include <QString>
+
 class AudioScript;
 
 class AudioScriptVariant
@@ -22,7 +25,7 @@ public:
     MemberType type() const;
     QString name() const;
 
-    // Return nullptr if type() does not match
+    // Return Q_NULLPTR if type() does not match
     double* toDouble(AudioScript* audioScript);
     float* toFloat(AudioScript* audioScript);
     int* toInt(AudioScript* audioScript);

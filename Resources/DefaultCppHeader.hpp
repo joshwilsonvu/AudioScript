@@ -7,9 +7,8 @@
 
 #include <audioscript.h>
 
-/* Required function. */
+// Required function.
 extern "C" void* spawn();
-/**********************/
 
 // Subclass AudioScript
 class CLASSNAME : public AudioScript
@@ -19,10 +18,10 @@ public:
     CLASSNAME();
 
     // The destructor. Clean up any resources allocated here.
-    ~CLASSNAME();
+    virtual ~CLASSNAME();
 
     // Apply this AudioScript to the range of samples provided.
-    void process(std::vector<sample_t>& samples) override;
+    virtual void process(std::vector<sample_t>& samples) override;
 
 protected:
     // Declare any helper functions your AudioScript uses.

@@ -43,3 +43,12 @@ void NameDialog::validate(const QString& className) {
         *m_value = className;
     }
 }
+
+DirDialog::DirDialog(const QString& directory, QWidget* parent)
+    : QFileDialog(parent, "Select a directory for your AudioScripts",
+                  directory)
+{
+    setFileMode(QFileDialog::Directory);
+    setAcceptMode(QFileDialog::AcceptSave);
+    setOption(QFileDialog::ShowDirsOnly);
+}

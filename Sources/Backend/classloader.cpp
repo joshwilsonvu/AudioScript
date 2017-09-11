@@ -19,11 +19,6 @@ ClassLoader::ClassLoader(MainWindow* parent)
 {
     closeClass();
 
-    m_directory = "TEST";
-    QString QObject::* ptr = (QString QObject::*) &ClassLoader::m_directory;
-    qDebug() << ClassLoader::staticMetaObject.inherits(&QObject::staticMetaObject) << this->*ptr;
-    m_directory.clear();
-
     readSettings();
 }
 

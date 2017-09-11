@@ -12,7 +12,7 @@ class AudioScriptEngine : public QObject
 {
     Q_OBJECT
 public:
-    explicit AudioScriptEngine(QObject *parent = nullptr);
+    explicit AudioScriptEngine(QObject *parent = Q_NULLPTR);
     ~AudioScriptEngine();
 
 signals:

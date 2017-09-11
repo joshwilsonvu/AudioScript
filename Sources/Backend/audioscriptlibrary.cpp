@@ -1,18 +1,18 @@
-#include "audioscript.h"
+#include <audioscript.h>
 #include "audioscriptlibrary.h"
 
 // class AudioScriptLibrary
 AudioScriptLibrary::AudioScriptLibrary(const QString &name)
     : m_name(name),
       m_library(name),
-      m_spawnFunction(nullptr)
+      m_spawnFunction(Q_NULLPTR)
 {
     if (!m_library.isLoaded()) {
         return;
     }
     m_spawnFunction = reinterpret_cast<SpawnFunction>
             (m_library.resolve("spawn"));
-    // m_spawnFunction only non-nullptr if everything has gone well
+    // m_spawnFunction only non-Q_NULLPTR if everything has gone well
 }
 
 AudioScriptLibrary::~AudioScriptLibrary()
@@ -38,14 +38,14 @@ bool AudioScriptLibrary::spawnable() const
 AudioScript* AudioScriptLibrary::spawn()
 {
     if (!spawnable()) {
-        return nullptr;
+        return Q_NULLPTR;
     }
     AudioScript* audioScript = m_spawnFunction();
     audioScript->setLibrary(this);
     return audioScript;
 }
 
-void AudioScriptLibrary::registerMember(MemberVariant&& member)
+void AudioScriptLibrary::registerMember(AudioScriptVariant&& member)
 {
     m_members.push_back(std::move(member));
 }

@@ -22,7 +22,6 @@ public:
     virtual ~AudioScript();
 
     virtual void process(std::vector<sample_t>& samples) = 0;
-    virtual bool setParameter(const std::string& parameter, void* value);
 
     QString name() const;
 

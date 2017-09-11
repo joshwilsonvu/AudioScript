@@ -2,7 +2,7 @@
 
 AudioScriptVariant::AudioScriptVariant()
     : m_type(AudioScriptVariant::None),
-      m_ptrToMember(nullptr),
+      m_ptrToMember(Q_NULLPTR),
       m_name()
 {
 }
@@ -51,7 +51,7 @@ double* AudioScriptVariant::toDouble(AudioScript *audioScript)
         return &(audioScript->*reinterpret_cast<double AudioScript::*>
                  (m_ptrToMember));
     } else {
-        return nullptr;
+        return Q_NULLPTR;
     }
 }
 
@@ -61,7 +61,7 @@ float* AudioScriptVariant::toFloat(AudioScript *audioScript)
         return &(audioScript->*reinterpret_cast<float AudioScript::*>
                  (m_ptrToMember));
     } else {
-        return nullptr;
+        return Q_NULLPTR;
     }
 }
 
@@ -71,7 +71,7 @@ int* AudioScriptVariant::toInt(AudioScript *audioScript)
         return &(audioScript->*reinterpret_cast<int AudioScript::*>
                  (m_ptrToMember));
     } else {
-        return nullptr;
+        return Q_NULLPTR;
     }
 }
 
@@ -81,7 +81,7 @@ bool* AudioScriptVariant::toBool(AudioScript *audioScript)
         return &(audioScript->*reinterpret_cast<bool AudioScript::*>
                  (m_ptrToMember));
     } else {
-        return nullptr;
+        return Q_NULLPTR;
     }
 }
 

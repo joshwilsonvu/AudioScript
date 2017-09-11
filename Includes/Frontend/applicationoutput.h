@@ -7,7 +7,7 @@ class ApplicationOutput : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ApplicationOutput(QWidget *parent = nullptr);
+    explicit ApplicationOutput(QWidget *parent = Q_NULLPTR);
 
 signals:
 

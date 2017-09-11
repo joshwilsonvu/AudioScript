@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/defaults">
+        <file alias="header">DefaultCppHeader.hpp</file>
+        <file alias="source">DefaultCppSource.cpp</file>
+        <file alias="intro">Intro.h</file>
+    </qresource>
+    <qresource prefix="/docs">
+        <file alias="about">about.txt</file>
+        <file alias="todo">todo.txt</file>
+        <file alias="documentation">documentation.txt</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file alias="application">audioscript512.png</file>
+    </qresource>
+</RCC>

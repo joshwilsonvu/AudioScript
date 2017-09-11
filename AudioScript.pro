@@ -22,36 +22,42 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+CONFIG += qt debug
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    codeeditor.cpp \
-    audioscriptengine.cpp \
-    codetabs.cpp \
-    audioscript.cpp \
-    audioscriptlibrary.cpp \
-    audioscriptcompiler.cpp \
-    classloader.cpp \
-    applicationoutput.cpp \
-    dialogs.cpp \
-    audioscriptvariant.cpp
+    Sources/Backend/audioscript.cpp \
+    Sources/Backend/audioscriptcompiler.cpp \
+    Sources/Backend/audioscriptengine.cpp \
+    Sources/Backend/audioscriptlibrary.cpp \
+    Sources/Backend/audioscriptvariant.cpp \
+    Sources/Backend/classloader.cpp \
+    Sources/Backend/main.cpp \
+    Sources/Frontend/applicationoutput.cpp \
+    Sources/Frontend/codeeditor.cpp \
+    Sources/Frontend/codetabs.cpp \
+    Sources/Frontend/dialogs.cpp \
+    Sources/Frontend/mainwindow.cpp
 
 HEADERS += \
-        mainwindow.h \
-    codeeditor.h \
-    audioscriptengine.h \
-    codetabs.h \
-    audioscript.h \
-    audioscriptlibrary.h \
-    audioscriptcompiler.h \
-    classloader.h \
-    applicationoutput.h \
-    dialogs.h \
-    audioscriptvariant.h
+    Includes/Backend/audioscript.h \
+    Includes/Backend/audioscriptcompiler.h \
+    Includes/Backend/audioscriptengine.h \
+    Includes/Backend/audioscriptlibrary.h \
+    Includes/Backend/audioscriptvariant.h \
+    Includes/Backend/classloader.h \
+    Includes/Frontend/applicationoutput.h \
+    Includes/Frontend/codeeditor.h \
+    Includes/Frontend/codetabs.h \
+    Includes/Frontend/dialogs.h \
+    Includes/Frontend/mainwindow.h
 
 FORMS += \
-        mainwindow.ui
+    Forms/mainwindow.ui
 
 RESOURCES += \
-    resources.qrc
+    Resources/resources.qrc
+
+INCLUDEPATH += Sources/Backend \
+    Sources/Frontend \
+    Includes/Backend \
+    Includes/Frontend

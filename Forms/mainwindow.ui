@@ -20,7 +20,7 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset resource="../Resources/resources.qrc">
     <normaloff>:/icons/application</normaloff>:/icons/application</iconset>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
@@ -104,7 +104,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../Resources/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

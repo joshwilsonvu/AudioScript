@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDialog>
+#include <QFileDialog>
 
 class QLabel;
 class QLineEdit;
@@ -25,14 +26,12 @@ private:
     QString* m_value; // non-owning
 };
 
-class DirDialog : public QDialog
+class DirDialog : public QFileDialog
 {
     Q_OBJECT
 
 public:
-    DirDialog(QString* value, QWidget* parent = Q_NULLPTR);
-
-private slots:
+    DirDialog(const QString& directory = QString(), QWidget* parent = Q_NULLPTR);
 
 };
 

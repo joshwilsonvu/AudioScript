@@ -11,7 +11,7 @@ class CodeTabs : public QTabWidget
     Q_OBJECT
 
 public:
-    CodeTabs(QWidget* parent = nullptr);
+    CodeTabs(QWidget* parent = Q_NULLPTR);
 
     CodeEditor* header() const;
 

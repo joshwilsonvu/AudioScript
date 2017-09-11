@@ -32,7 +32,7 @@ private:
     QLibrary m_library;
     SpawnFunction m_spawnFunction;
 
-    QVector<MemberVariant> m_members;
+    QVector<AudioScriptVariant> m_members;
 };
 
 
