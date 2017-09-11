@@ -1,0 +1,14 @@
+TODO
+Bugs
+1. use QObject::disconnect to take care of closing errors where emitted signals like changed() cause slots to be called on destroyed objects
+2. fix replacement in files so that the entered class name actually replaces CLASSNAME in the default file
+Future
+3. replace qt class forward declaration preoptimizations with #include directives--include everything necessary for each file,
+   the preprocessor will skip repeated includes and removing an include from one file won't break others
+4. create a class list widget in which double-clicking opens the class
+5. implement audioscriptcompiler, code to produce libraries for audioscriptlibrary to load--and ~get minimum viable product working~
+6. modularization; try to refactor some of the specific functionality of MainWindow to other classes
+6.5. no globals (done pretty good so far)
+7. documentation
+8. create a window for compiler feedback, use within AudioScriptCompiler
+9. make sure all member data fields are prefixed with "m_"

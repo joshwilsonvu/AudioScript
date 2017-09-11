@@ -1,0 +1,5 @@
+AudioScript is a simple IDE for audio processing.
+
+It provides an intuitive framework for transforming audio with C++. Users may view and edit the provided examples.
+
+If the code compiles, the class it defines will be available to apply to incoming audio in real time.

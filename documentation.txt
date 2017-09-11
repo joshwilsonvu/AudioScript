@@ -1,0 +1,137 @@
+Following is the documentation for the AudioScript class structure.
+
+******************
+
+    MainWindow
+
+MainWindow is the top level window in the application.
+Its purpose is to interface with the menu bar and delegate
+the user's actions to more specialized classes, all of which
+use the MainWindow instance as their parent QObject.
+MainWindow also performs some setup work (see initActions())
+and reads and writes data from and to the application settings.
+
+
+Inherits: QMainWindow
+Defined: mainwindow.h, mainwindow.cpp
+Used in: main()
+
+******************
+
+    AudioScript
+
+AudioScript is the abstract base class for user-defined processing classes.
+The header file is provided to the user, who must implement the
+pure virtual process() function, may override setParameter(),
+or may write other private functions as needed. The user may
+also add member data as they like.
+
+Inherits: N/A
+Defined: audioscript.h, audioscript.cpp
+Used in: AudioScriptEngine, AudioScriptLibrary, AudioScriptCompiler
+
+******************
+
+    AudioScriptEngine
+
+AudioScriptEngine is the class that manages all AudioScript
+instances and the task of playing audio through them. All
+elements of the application that deal with the actual production
+of sound are members of the instance of this class.
+
+Inherits: QObject
+Defined: audioscriptengine.h, audioscriptengine.cpp
+Used in: MainWindow
+
+******************
+
+    AudioScriptLibrary
+
+While there may be many instances of a given AudioScript subclass
+in the program, there is exactly one AudioScriptLibrary per subclass.
+AudioScriptLibrary provides spawn() to return dynamically allocated
+instances of the subclass, as well as information about the subclass
+such as its name. AudioScriptLibrary handles loading shared libraries.
+
+Inherits: N/A
+Defined: audioscriptlibrary.h, audioscriptlibrary.cpp
+Used in: AudioScriptEngine
+
+******************
+
+    AudioScriptCompiler
+
+AudioScriptCompiler is the class that creates shared libraries
+for AudioScriptLibrary instances to load. It uses the same compiler
+that Qt uses to compile its source code to ensure that the
+polymorphic classes in the shared libraries are compatible with
+the polymorphic AudioScript class in the application.
+
+Inherits: N/A
+Defined: audioscriptcompiler.h, audioscriptcompiler.cpp
+Used in: AudioScriptEngine
+
+******************
+
+    CodeTabs
+
+CodeTabs is a passive, customized tab widget that contains a CodeEditor
+for the header file and a CodeEditor for the source file, as well
+as convenience methods for accessing each CodeEditor and determining
+the current displayed tab. It provides no other specialized behavior.
+
+Inherits: QTabWidget
+Defined: codetabs.h, codetabs.cpp
+Used in: MainWindow, ClassLoader
+
+******************
+
+    CodeEditor
+
+CodeEditor is an extended text editor that supports line numbering,
+current line highlighting, and C++ syntax highlighting. It uses the
+familiar interface of setPlainText(QString) and toPlainText(). It
+does not interact directly with files; that is the job of ClassLoader.
+
+CodeEditor uses two private helper classes, Highlighter and
+LineNumberArea, to enhance its appearance, as well as a struct with
+several QTextCharFormat objects to modify its colors.
+
+Inherits: QPlainTextEditor
+Defined: codeeditor.h, codetabs.cpp
+Used in: CodeTabs, ClassLoader, MainWindow
+
+******************
+
+    ClassLoader
+
+ClassLoader is responsible for interfacing with the file system
+and performing tasks including loading and saving classes to and
+from CodeTabs, tracking the available classes in the AudioScript
+directory, and providing the correct files to AudioScriptCompiler.
+It uses a QFileSystemWatcher to ensure that outside changes in
+the directory structure are reflected in the application in real
+time.
+
+The available classes are displayed in a side widget much
+like Qt Creator's Project view. On startup, instead of loading
+the last open class, it will display an empty/disabled CodeTabs
+and wait for a "New" or "Open" action. A "Close" action will
+return the application to the default state.
+
+Inherits: QObject
+Defined: classloader.h, classloader.cpp
+Used in: MainWindow, AudioScriptCompiler
+
+******************
+
+                         MainWindow
+                        /          \
+                       /            \
+      AudioScriptEngine              ClassLoader
+     /               \             /     \      \
+    /                 \         /         \      \
+AudioScript   AudioScriptLibrary        CodeTabs  AudioScriptCompiler
+                                            \
+                                             \
+                                            CodeEditor
