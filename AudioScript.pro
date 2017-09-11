@@ -36,7 +36,9 @@ SOURCES += \
     Sources/Frontend/codeeditor.cpp \
     Sources/Frontend/codetabs.cpp \
     Sources/Frontend/dialogs.cpp \
-    Sources/Frontend/mainwindow.cpp
+    Sources/Frontend/mainwindow.cpp \
+    Sources/Frontend/audioscriptchain.cpp \
+    Sources/Frontend/audiocontrols.cpp
 
 HEADERS += \
     Includes/Backend/audioscript.h \
@@ -49,7 +51,9 @@ HEADERS += \
     Includes/Frontend/codeeditor.h \
     Includes/Frontend/codetabs.h \
     Includes/Frontend/dialogs.h \
-    Includes/Frontend/mainwindow.h
+    Includes/Frontend/mainwindow.h \
+    Includes/Frontend/audioscriptchain.h \
+    Includes/Frontend/audiocontrols.h
 
 FORMS += \
     Forms/mainwindow.ui
