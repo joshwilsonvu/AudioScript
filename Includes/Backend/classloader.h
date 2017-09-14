@@ -8,13 +8,14 @@
 #include "codetabs.h"
 
 class MainWindow;
+class ClassWidget;
 
 class ClassLoader : public QObject
 {
     Q_OBJECT
 
 public:
-    ClassLoader(MainWindow* parent = Q_NULLPTR); // MainWindow
+    ClassLoader(MainWindow* parent);
     virtual ~ClassLoader();
 
     // The monitored directory containing all files used
@@ -38,6 +39,7 @@ signals:
     // connect with AudioScriptCompiler so that it may automatically compile
     void classUpdated(QString); // or added
     void classRemoved(QString); // remove library
+    void directoryChanged(ClassLoader*);
 
 private:
     bool maybeSave();
@@ -52,7 +54,7 @@ private:
     QStringList m_classes;
     // empty if no directory selected, contains path otherwise. Saved
     QString m_directory;
-    // non-owning pointer to ui->editor
+    // non-owning pointer to MainWindow editor
     CodeTabs* m_editor;
     // child QObject monitoring directory
     QFileSystemWatcher* m_fileSystem;

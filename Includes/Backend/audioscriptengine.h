@@ -22,6 +22,8 @@ public slots:
     // creates AudioScriptLibrary, adds to audioScriptLibraries, makes available
     bool registerAudioScript(const QString& name);
 
+    void changeDirectory(const QString& directory);
+
 private:
     QMap<QString, AudioScriptLibrary*> m_audioScriptLibraries;
     QList<AudioScript*> m_activeAudioScripts;

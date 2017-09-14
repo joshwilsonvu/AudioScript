@@ -12,3 +12,4 @@ Future
 7. documentation
 8. create a window for compiler feedback, use within AudioScriptCompiler
 9. make sure all member data fields are prefixed with "m_"
+

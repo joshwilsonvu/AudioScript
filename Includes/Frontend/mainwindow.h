@@ -8,6 +8,10 @@
 #include "audioscriptlibrary.h"
 #include "classloader.h"
 
+class ClassWidget;
+class ApplicationOutput;
+class AudioScriptChain;
+class AudioControls;
 class CodeTabs;
 class QHBoxLayout;
 
@@ -26,30 +30,48 @@ public:
 
     // return non-owning pointers to UI elements
     CodeTabs* editor() const;
+    ClassWidget* classWidget() const;
+    ApplicationOutput* applicationOutput() const;
+    AudioScriptChain* audioScriptChain() const;
+    AudioControls* audioControls() const;
 
 protected:
     virtual void closeEvent(QCloseEvent* event) override;
 
 private slots:
+    // Connected to menu actions
     void newClass();
-    //void openClass();
+    void openClass(const QString& className);
     bool closeClass();
     bool saveClass();
     void about();
-    void documentWasModified();
+
+    void build(const QString& className);
+    void clean(const QString& className);
+    void rebuild(const QString& className);
+
+    // Other slots
+    void onDocumentModified();
+    void onClassNameChanged(const QString& className);
 
 private:
     void setupUi();
+    void setupConnections();
     void initActions();
     void createStatusBar();
 
     void readSettings();
     void writeSettings();
-    void setCurrentClass(const QString& className);
 
+    // Frontend pointers
     Ui::MainWindow* m_ui;
     CodeTabs* m_editor;
+    ClassWidget* m_classWidget;
+    ApplicationOutput* m_appOutput;
+    AudioScriptChain* m_chain;
+    AudioControls* m_audioControls;
 
+    // Backend
     ClassLoader* m_classLoader;
 
     QSet<AudioScriptLibrary>* m_libraries;

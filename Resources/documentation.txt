@@ -135,3 +135,10 @@ AudioScript   AudioScriptLibrary        CodeTabs  AudioScriptCompiler
                                             \
                                              \
                                             CodeEditor
+
+
+
+Following is the documentation for the most common scenarios
+encountered while using AudioScript.
+
+

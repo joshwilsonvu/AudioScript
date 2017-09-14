@@ -2,11 +2,18 @@
 #include <QFile>
 #include <QPlainTextEdit>
 #include <QtDebug>
-#include <QHBoxLayout>
+#include <QGridLayout>
+#include <QSizePolicy>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dialogs.h"
+
+// GUI interfaces on side areas
+#include "classwidget.h"
+#include "applicationoutput.h"
+#include "audioscriptchain.h"
+#include "audiocontrols.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,18 +31,12 @@ MainWindow::MainWindow(QWidget *parent) :
     initActions();
     createStatusBar();
 
-    editor()->header()->setLineWrapMode(QPlainTextEdit::NoWrap);
-    editor()->source()->setLineWrapMode(QPlainTextEdit::NoWrap);
     editor()->header()->setFocus();
 
-    // call documentWasModified when user changes contents of editor
-    connect(editor()->header()->document(), &QTextDocument::contentsChanged,
-            this, &MainWindow::documentWasModified);
-    connect(editor()->source()->document(), &QTextDocument::contentsChanged,
-            this, &MainWindow::documentWasModified);
+    m_classLoader = new ClassLoader(this); // requires editor valid
+    onClassNameChanged(QString());
 
-    m_classLoader = new ClassLoader(this); // requires setupUi() complete
-
+    setupConnections();
 }
 
 MainWindow::~MainWindow()
@@ -64,31 +65,22 @@ void MainWindow::newClass()
 {
     QString className("DEFAULT"); // debug
     NameDialog* dialog = new NameDialog(&className, this);
-    if (dialog->exec() == NameDialog::Accepted &&
-            m_classLoader->newClass(className)) {
-        setCurrentClass(className);
+    if (dialog->exec() == NameDialog::Accepted) {
+        m_classLoader->newClass(className);
     }
     dialog->deleteLater();
     // else, do nothing
 }
 
-/*
-void MainWindow::openClass()
+
+void MainWindow::openClass(const QString& className)
 {
-    QString className("DEFAULT"); // debug
-    ClassDialog* dialog = new ClassDialog(className, this, ClassDialog::Open); // owned by this
-    if (dialog->exec() == ClassDialog::Accepted && maybeSave()) {
-        loadClass(className);
-        setCurrentClass(className);
-    }
-    dialog->deleteLater();
+    m_classLoader->openClass(className);
 }
-*/
 
 bool MainWindow::closeClass()
 {
     if (m_classLoader->closeClass()) {
-        setCurrentClass(QString());
         statusBar()->showMessage(tr("Class closed"), 5000);
         return true;
     }
@@ -98,7 +90,6 @@ bool MainWindow::closeClass()
 bool MainWindow::saveClass()
 {
     if (m_classLoader->saveClass()) {
-        setCurrentClass(m_classLoader->currentClass());
         statusBar()->showMessage(tr("Class saved"), 5000);
         return true;
     } else {
@@ -116,26 +107,85 @@ void MainWindow::about()
     }
 }
 
-void MainWindow::documentWasModified()
+void MainWindow::onDocumentModified()
 {
     setWindowModified(true);
 }
 
+void MainWindow::build(const QString& className)
+{
+
+}
+
+void MainWindow::clean(const QString& className)
+{
+
+}
+
+void MainWindow::rebuild(const QString& className)
+{
+
+}
+
 void MainWindow::setupUi()
 {
-    QHBoxLayout* horizontalLayout = new QHBoxLayout(m_ui->centralWidget);
-    horizontalLayout->setSpacing(6);
-    horizontalLayout->setContentsMargins(11, 11, 11, 11);
+    constexpr int spacing = 0;
+    constexpr int margin_dim = 10;
+    QMargins margins(margin_dim, margin_dim, margin_dim, margin_dim);
+    QSize minSize(QApplication::fontMetrics().averageCharWidth() * 25,
+                  QApplication::fontMetrics().height() * 10);
 
+    m_ui->centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    // Lay out left, center, right
+    QGridLayout* layout = qobject_cast<QGridLayout*>(m_ui->centralWidget->layout());
+    layout->setSpacing(spacing);
+    layout->setContentsMargins(margins);
+
+    // Left side
+    m_classWidget = new ClassWidget();
+    layout->addWidget(m_classWidget, 0, 0);
+
+    m_appOutput = new ApplicationOutput();
+    layout->addWidget(m_appOutput, 1, 0);
+
+    // Center
     m_editor = new CodeTabs();
     m_editor->setObjectName(QStringLiteral("editor"));
     m_editor->setEnabled(true);
-    m_editor->setMinimumSize(QSize(300, 150));
+    m_editor->setMinimumSize(QSize(300, 275));
     m_editor->setFocusPolicy(Qt::StrongFocus);
-    horizontalLayout->addWidget(m_editor);
-    // reparents editor to centralWidget
+    m_editor->header()->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    m_editor->source()->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    layout->addWidget(m_editor, 0, 1, -1, 1);
 
+    // Right side
+    m_chain = new AudioScriptChain();
+    layout->addWidget(m_chain, 0, 2);
 
+    m_audioControls = new AudioControls();
+    layout->addWidget(m_audioControls, 1, 2);
+
+    setMinimumWidth(qMax(m_classWidget->minimumWidth(), m_appOutput->minimumWidth())
+                   + m_editor->minimumWidth()
+                   + qMax(m_chain->minimumWidth(), m_audioControls->minimumWidth()));
+    setMinimumHeight(qMax(m_classWidget->minimumHeight() + m_appOutput->minimumHeight(),
+                        qMax(m_editor->minimumHeight(),
+                             m_chain->minimumHeight() + m_audioControls->minimumHeight())));
+}
+
+void MainWindow::setupConnections() {
+    // call documentWasModified when user changes contents of editor
+    connect(editor()->header()->document(), &QTextDocument::contentsChanged,
+            this, &MainWindow::onDocumentModified);
+    connect(editor()->source()->document(), &QTextDocument::contentsChanged,
+            this, &MainWindow::onDocumentModified);
+
+    // connect the frontend graphics to the backend code
+    connect(m_classWidget, SIGNAL(doubleClicked(QString)), this, SLOT(openClass(QString)));
+    connect(m_classLoader, SIGNAL(classUpdated(QString)), this, SLOT(onClassNameChanged(QString)));
+    connect(m_classLoader, SIGNAL(directoryChanged(ClassLoader*)),
+            m_classWidget, SLOT(onDirectoryChanged(ClassLoader*)));
 }
 
 void MainWindow::initActions() {
@@ -200,8 +250,12 @@ void MainWindow::writeSettings()
     settings.setValue("geometry", saveGeometry());
 }
 
-void MainWindow::setCurrentClass(const QString &className)
+void MainWindow::onClassNameChanged(const QString &className)
 {
     setWindowModified(false);
     setWindowTitle(className);
+
+    bool classOpen = !className.isEmpty();
+    m_ui->actionClose->setEnabled(classOpen);
+    m_ui->actionSave->setEnabled(classOpen);
 }

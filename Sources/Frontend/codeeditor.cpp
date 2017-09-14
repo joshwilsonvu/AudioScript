@@ -12,6 +12,8 @@
 CodeEditor::CodeEditor(QWidget *parent)
     : QPlainTextEdit(parent), lineNumberArea(this), highlighter(this)
 {
+    setLineWrapMode(QPlainTextEdit::NoWrap);
+
     QFont font;
     font.setFamily("Courier");
     font.setStyleHint(QFont::Monospace);
@@ -112,7 +114,7 @@ void CodeEditor::highlightCurrentLine()
 void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
 {
     QPainter painter(&lineNumberArea);
-    painter.fillRect(event->rect(), Qt::white);
+    painter.fillRect(event->rect(), Qt::black);
 
     QTextBlock block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
@@ -153,7 +155,7 @@ CodeEditor::Highlighter::Highlighter(CodeEditor* editor)
 {
     formats.keyword.setForeground(Qt::darkMagenta);
     formats.keyword.setFontWeight(QFont::Bold);
-    formats.function.setForeground(Qt::darkBlue);
+    formats.function.setForeground(Qt::darkCyan);
     formats.quotation.setForeground(Qt::darkRed);
     formats.comment.setForeground(Qt::darkGreen);
     formats.comment.setFontItalic(true);
@@ -210,11 +212,11 @@ void CodeEditor::Highlighter::reset()
                 "else|enum|extern|float|for|goto|if|int|long|register|return|short|"
                 "signed|sizeof|static|struct|switch|typedef|union|unsigned|void|"
                 "volatile|while|"
-                "bool|catch|class|const_cast|delete|dynamic_cast|" // C & C++
-                "explicit|false|friend|inline|mutable|namespace|"
-                "new|operator|private|protected|public|reinterpret_cast|"
-                "static_cast|template|this|throw|true|try|"
-                "typeid|typename|using|virtual)\\b");
+                "bool|catch|class|const_cast|constexpr|delete|dynamic_cast|" // C & C++
+                "explicit|false|final|friend|inline|mutable|namespace|"
+                "new|operator|override|private|protected|public|"
+                "reinterpret_cast|static_cast|template|this|throw|"
+                "true|try|typeid|typename|using|virtual)\\b");
     rule.format = formats.keyword;
     highlightingRules << rule;
 

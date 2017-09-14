@@ -1,17 +1,26 @@
 #ifndef APPLICATIONOUTPUT_H
 #define APPLICATIONOUTPUT_H
 
-#include <QWidget>
+#include "sidewidgetbase.h"
 
-class ApplicationOutput : public QWidget
+class QPlainTextEdit;
+class QGroupBox;
+
+// Graphical user interface that displays compile and link output of user code
+// and provides shortcut buttons to build code.
+class ApplicationOutput : public SideWidgetBase
 {
     Q_OBJECT
 public:
-    explicit ApplicationOutput(QWidget *parent = Q_NULLPTR);
-
-signals:
+    ApplicationOutput(QWidget* parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    virtual ~ApplicationOutput();
 
 public slots:
+    void append(const QString& text);
+
+private:
+    QPlainTextEdit* m_display;
+    QGroupBox* m_groupBox;
 };
 
 #endif // APPLICATIONOUTPUT_H

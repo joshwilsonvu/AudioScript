@@ -38,7 +38,9 @@ SOURCES += \
     Sources/Frontend/dialogs.cpp \
     Sources/Frontend/mainwindow.cpp \
     Sources/Frontend/audioscriptchain.cpp \
-    Sources/Frontend/audiocontrols.cpp
+    Sources/Frontend/audiocontrols.cpp \
+    Sources/Frontend/classwidget.cpp \
+    Sources/Frontend/sidewidgetbase.cpp
 
 HEADERS += \
     Includes/Backend/audioscript.h \
@@ -53,13 +55,16 @@ HEADERS += \
     Includes/Frontend/dialogs.h \
     Includes/Frontend/mainwindow.h \
     Includes/Frontend/audioscriptchain.h \
-    Includes/Frontend/audiocontrols.h
+    Includes/Frontend/audiocontrols.h \
+    Includes/Frontend/classwidget.h \
+    Includes/Frontend/sidewidgetbase.h
 
 FORMS += \
     Forms/mainwindow.ui
 
 RESOURCES += \
-    Resources/resources.qrc
+    Resources/resources.qrc \
+    Resources/style.qrc
 
 INCLUDEPATH += Sources/Backend \
     Sources/Frontend \

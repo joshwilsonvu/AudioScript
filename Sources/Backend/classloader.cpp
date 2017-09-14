@@ -69,10 +69,10 @@ bool ClassLoader::openClass(const QString& className)
     if (!maybeSave()) {
         return false;
     }
-    QString headerText = loadFromFile(m_directory + className + ".hpp");
-    QString sourceText = loadFromFile(m_directory + className + ".cpp");
+    QString headerText = loadFromFile(m_directory + className + "/header");
+    QString sourceText = loadFromFile(m_directory + className + "/source");
     if (headerText.isEmpty() || sourceText.isEmpty()) {
-        qDebug() << "Failed to open default AudioScript file.";
+        qDebug() << "Failed to open AudioScript file.";
         return false;
     }
     m_editor->setPlainText(headerText, sourceText);
@@ -139,9 +139,62 @@ bool ClassLoader::setDirectory(const QString &dirName)
     if (m_directory == dirName) {
         return true; // no change, "success"
     }
-    m_fileSystem->removePath(m_directory);
-    m_directory = dirName;
+    QDir class_directory(dirName);
+    if (!class_directory.exists()) {
+        return false;
+    }
+
     // clear class list and fill with files, watch for changes
+    class_directory.setFilter(QDir::Files | QDir::Readable | QDir::Writable);
+    class_directory.setSorting(QDir::Name);
+    QStringList sources = class_directory.entryList(QStringList()
+                                                    << "*.cpp" << "*.cxx");
+    QStringList headers = class_directory.entryList(QStringList()
+                                                    << "*.hpp" << "*.hxx" << "*.h");
+
+    if (sources.size() > 0 && headers.size() > 0) {
+        foreach(QString& source, sources) {
+            source.resize(source.lastIndexOf('.')); // remove extension
+        }
+        foreach(QString& header, headers) {
+            header.resize(header.lastIndexOf('.')); // remove extension
+        }
+
+        QStringList::iterator s = sources.begin();
+        QStringList::iterator h = headers.end();
+
+        while (s != sources.end() && h != sources.end()) {
+
+        }
+        /*
+    for (QStringList::iterator i = files.begin(); i != files.end(); ++i) {
+        if (i->endsWith(".cpp")) {
+            QString source = *i;
+            source.chop(4);
+            QStringList::iterator j = i + 1;
+            for (j = i + 1; j != files.end() && j->chop(j->lastIndexOf); ++j)
+            source.remove(".cpp");
+            header.remove(".hpp");
+            if (source == header) { // both hold class name alone
+                m_availableClasses << source;
+            }
+        }
+    }
+*/
+    }
+
+    m_classes.clear();
+    m_fileSystem->removePaths(m_fileSystem->files() + m_fileSystem->directories());
+    m_directory = dirName;
+    m_fileSystem->addPath(m_directory);
+    m_fileSystem->addPaths(files);
+
+    emit directoryChanged(this);
+    return true;
+}
+
+
+
     return true;
 }
 

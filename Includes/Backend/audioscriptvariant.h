@@ -6,6 +6,8 @@
 
 class AudioScript;
 
+// Marshals registered parameters, enabling GUI interfaces to change values
+// in real time.
 class AudioScriptVariant
 {
 public:
