@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 
 #include <QString>
+#include <QStringList>
 #include <QtDebug>
 #include <QFile>
 #include <QSaveFile>
@@ -26,6 +27,11 @@ ClassLoader::~ClassLoader()
 {
     // class has already been closed (and maybe saved)
     m_editor = Q_NULLPTR; // non-owning
+}
+
+void ClassLoader::init(ClassWidget* classWidget)
+{
+    m_classWidget = classWidget;
 }
 
 QString ClassLoader::currentDirectory() const
@@ -135,37 +141,60 @@ bool ClassLoader::saveClass()
 
 bool ClassLoader::setDirectory(const QString &dirName)
 {
-    // TODO
-    if (m_directory == dirName) {
-        return true; // no change, "success"
-    }
+    // TODO: Currently, don't check whether we are changing to the same directory;
+    // makes initialization easier
     QDir class_directory(dirName);
     if (!class_directory.exists()) {
         return false;
     }
 
+    m_fileSystem->removePaths(m_fileSystem->files() + m_fileSystem->directories());
+    m_classes.clear();
+    m_directory = dirName;
+    m_fileSystem->addPath(m_directory);
+
     // clear class list and fill with files, watch for changes
     class_directory.setFilter(QDir::Files | QDir::Readable | QDir::Writable);
     class_directory.setSorting(QDir::Name);
     QStringList sources = class_directory.entryList(QStringList()
-                                                    << "*.cpp" << "*.cxx");
+                                                    << "*.cpp" << "*.cxx" << "*.cc");
     QStringList headers = class_directory.entryList(QStringList()
-                                                    << "*.hpp" << "*.hxx" << "*.h");
+                                                    << "*.hpp" << "*.hxx" << "*.hh" << "*.h");
 
+    // only do the following if there are hpp or cpp files
     if (sources.size() > 0 && headers.size() > 0) {
-        foreach(QString& source, sources) {
-            source.resize(source.lastIndexOf('.')); // remove extension
+        foreach(const QString& source, sources) {
+            const_cast<QString&>(source).resize(source.lastIndexOf('.')); // remove extension
         }
-        foreach(QString& header, headers) {
-            header.resize(header.lastIndexOf('.')); // remove extension
+        foreach(const QString& header, headers) {
+            const_cast<QString&>(header).resize(header.lastIndexOf('.')); // remove extension
         }
 
         QStringList::iterator s = sources.begin();
         QStringList::iterator h = headers.end();
 
-        while (s != sources.end() && h != sources.end()) {
-
+        while (s != sources.end() && h != headers.end()) {
+            int cmp = QString::localeAwareCompare(*s, *h);
+            if (cmp == 0) {
+                // strings match, add class
+                if (m_classes.contains(*s)) {
+                    m_classes << *s; // add class
+                    ++s;
+                    ++h;
+                } else {
+                    qDebug() << "Handle duplicate class name!!";
+                }
+            } else if (cmp < 0) {
+                // s is behind h (ex., no header file); skip
+                ++s;
+            } else {
+                // h is behind s (ex., no source file); skip
+                ++h;
+            }
         }
+    }
+
+
         /*
     for (QStringList::iterator i = files.begin(); i != files.end(); ++i) {
         if (i->endsWith(".cpp")) {
@@ -181,20 +210,10 @@ bool ClassLoader::setDirectory(const QString &dirName)
         }
     }
 */
-    }
 
-    m_classes.clear();
-    m_fileSystem->removePaths(m_fileSystem->files() + m_fileSystem->directories());
-    m_directory = dirName;
-    m_fileSystem->addPath(m_directory);
-    m_fileSystem->addPaths(files);
+
 
     emit directoryChanged(this);
-    return true;
-}
-
-
-
     return true;
 }
 
@@ -222,37 +241,19 @@ bool ClassLoader::maybeSave()
     }
 }
 
+// does classloader have everything it needs the first time this is run?
 void ClassLoader::readSettings()
 {
     QSettings settings;
-    m_directory = settings.value("directory", QString()).toString();
-    QDir directory;
+    QString sdirectory = settings.value("directory", QString()).toString();
+    QDir ddirectory;
 
-    // set path in if statement if m_directory not empty, check if directory exists
-    if (m_directory.isEmpty() || (directory.setPath(m_directory), !directory.exists())) {
+    // set path in if statement if sdirectory not empty, check if ddirectory exists
+    if (sdirectory.isEmpty() || (ddirectory.setPath(sdirectory), !ddirectory.exists())) {
         return;
     }
 
-    directory.setFilter(QDir::Files | QDir::Readable | QDir::Writable);
-    QStringList filters;
-    filters << "*.hpp" << "*.cpp";
-    directory.setNameFilters(filters);
-    directory.setSorting(QDir::Name);
-
-    QStringList files = directory.entryList(); // sorted,
-    qDebug() << files;
-    m_classes.clear();
-    for (QStringList::iterator i = files.begin(); i != files.end(); ++i) {
-        if (i->endsWith(".cpp") && (i+1) != files.end() && (i+1)->endsWith(".hpp")) {
-            QString source = *i;
-            QString header = *(++i);
-            source.remove(".cpp");
-            header.remove(".hpp");
-            if (source == header) { // both hold class name alone
-                m_classes << source;
-            }
-        }
-    }
+    setDirectory(sdirectory);
 }
 
 // static

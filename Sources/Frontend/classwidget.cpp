@@ -12,16 +12,14 @@
 ClassWidget::ClassWidget(QWidget* parent, Qt::WindowFlags flags)
     : SideWidgetBase(parent, flags), m_classes(new QListWidget()),
       m_groupBox(new QGroupBox(tr("Available classes"))),
-      m_comboBox(new QComboBox())
+      m_comboBox(new QComboBox()), m_classLoader(Q_NULLPTR)
 {
+    m_classes->setSelectionMode(QListWidget::SingleSelection);
+
     // Create layout with contents
     QVBoxLayout* layout = new QVBoxLayout();
     m_comboBox->addItem(QString());
     QAction* showDialog = new QAction("Select directory...", this);
-    connect(showDialog, SIGNAL(triggered(bool)), [&] () {
-        DirDialog* d = new DirDialog(m_comboBox->itemText(0), this);
-        d->exec();
-        })
     m_comboBox->addAction(showDialog);
     layout->addWidget(m_classes);
 
@@ -30,15 +28,18 @@ ClassWidget::ClassWidget(QWidget* parent, Qt::WindowFlags flags)
 
     connect(m_classes, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
             this, SLOT(onDoubleClicked(QListWidgetItem*)));
+    connect(showDialog, SIGNAL(triggered(bool)),
+            this, SLOT(onDirectorySelectorClicked()));
 }
 
 ClassWidget::~ClassWidget()
 {
 }
 
-void ClassWidget::onDirectoryChanged(ClassLoader* classLoader)
+void ClassWidget::init(ClassLoader *classLoader)
 {
-    m_comboBox->setItemText(0, classLoader->currentClass());
+    m_classLoader = classLoader;
+
 }
 
 void ClassWidget::onDoubleClicked(QListWidgetItem* item)
@@ -46,3 +47,13 @@ void ClassWidget::onDoubleClicked(QListWidgetItem* item)
     emit doubleClicked(item->text());
 }
 
+void ClassWidget::onDirectorySelectorClicked() {
+    DirDialog* d = new DirDialog(m_comboBox->itemText(0), this);
+    if (d->exec() == DirDialog::Accepted && m_classLoader) {
+        m_classLoader->setDirectory(d->selectedFiles().first());
+        m_classes->clear();
+        m_classes->addItems(m_classLoader->classes());
+        m_comboBox->setCurrentIndex(0);
+        m_comboBox->setCurrentText(m_classLoader->currentDirectory());
+    }
+}

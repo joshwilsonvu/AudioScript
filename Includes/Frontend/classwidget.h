@@ -21,9 +21,10 @@ class ClassWidget : public SideWidgetBase
 public:
     ClassWidget(QWidget* parent = 0, Qt::WindowFlags flags = 0);
     virtual ~ClassWidget();
+    void init(ClassLoader* classLoader); // IMPORTANT: must be set before running
 
-public slots:
-    void onDirectoryChanged(ClassLoader* classLoader);
+private slots:
+    void onDirectorySelectorClicked();
 
 private slots:
     void onDoubleClicked(QListWidgetItem* item);
@@ -36,6 +37,8 @@ private:
     QListWidget* m_classes;
     QGroupBox* m_groupBox;
     QComboBox* m_comboBox;
+
+    ClassLoader* m_classLoader;
 };
 
 #endif // CLASSWIDGET_H

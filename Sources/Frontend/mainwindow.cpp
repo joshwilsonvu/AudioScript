@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     editor()->header()->setFocus();
 
     m_classLoader = new ClassLoader(this); // requires editor valid
+    m_classWidget->init(m_classLoader);
+    m_classLoader->init(m_classWidget); // link frontend and backend
     onClassNameChanged(QString());
 
     setupConnections();

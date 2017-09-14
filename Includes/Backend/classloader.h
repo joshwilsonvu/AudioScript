@@ -18,6 +18,8 @@ public:
     ClassLoader(MainWindow* parent);
     virtual ~ClassLoader();
 
+    void init(ClassWidget* classWidget);
+
     // The monitored directory containing all files used
     QString currentDirectory() const;
     // The class that is currently open in the editor, or empty string
@@ -54,8 +56,9 @@ private:
     QStringList m_classes;
     // empty if no directory selected, contains path otherwise. Saved
     QString m_directory;
-    // non-owning pointer to MainWindow editor
+    // non-owning pointers to MainWindow GUIS
     CodeTabs* m_editor;
+    ClassWidget* m_classWidget;
     // child QObject monitoring directory
     QFileSystemWatcher* m_fileSystem;
 };
