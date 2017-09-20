@@ -24,7 +24,7 @@ public:
     bool isSource() const;
 
     // convenience functions
-    void setPlainText(const QString& headerText, const QString& sourceText);
+    void setPlainText(QString headerText, QString sourceText);
 
     void toPlainText(QString& headerText, QString& sourceText) const;
 

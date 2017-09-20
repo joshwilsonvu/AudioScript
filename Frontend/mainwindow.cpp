@@ -75,7 +75,7 @@ void MainWindow::newClass()
 }
 
 
-void MainWindow::openClass(const QString& className)
+void MainWindow::openClass(QString className)
 {
     m_classLoader->openClass(className);
 }
@@ -114,19 +114,34 @@ void MainWindow::onDocumentModified()
     setWindowModified(true);
 }
 
-void MainWindow::build(const QString& className)
+void MainWindow::build(QString className)
 {
-
+    m_compiler->build(className);
 }
 
-void MainWindow::clean(const QString& className)
+void MainWindow::buildAll(const QStringList &classes)
 {
-
+    m_compiler->buildAll(classes);
 }
 
-void MainWindow::rebuild(const QString& className)
+void MainWindow::clean(QString className)
 {
+    m_compiler->clean(className);
+}
 
+void MainWindow::cleanAll(const QStringList &classes)
+{
+    m_compiler->cleanAll(classes);
+}
+
+void MainWindow::rebuild(QString className)
+{
+    m_compiler->rebuild(className);
+}
+
+void MainWindow::rebuildAll(const QStringList classes)
+{
+    m_compiler->rebuildAll(classes);
 }
 
 void MainWindow::setupUi()
@@ -186,8 +201,6 @@ void MainWindow::setupConnections() {
     // connect the frontend graphics to the backend code
     connect(m_classWidget, SIGNAL(doubleClicked(QString)), this, SLOT(openClass(QString)));
     connect(m_classLoader, SIGNAL(classUpdated(QString)), this, SLOT(onClassNameChanged(QString)));
-    connect(m_classLoader, SIGNAL(directoryChanged(ClassLoader*)),
-            m_classWidget, SLOT(onDirectoryChanged(ClassLoader*)));
 }
 
 void MainWindow::initActions() {
@@ -252,7 +265,7 @@ void MainWindow::writeSettings()
     settings.setValue("geometry", saveGeometry());
 }
 
-void MainWindow::onClassNameChanged(const QString &className)
+void MainWindow::onClassNameChanged(QStringclassName)
 {
     setWindowModified(false);
     setWindowTitle(className);

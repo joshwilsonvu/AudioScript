@@ -27,7 +27,7 @@ ApplicationOutput::~ApplicationOutput()
 {
 }
 
-void ApplicationOutput::append(const QString& text)
+void ApplicationOutput::append(QString text)
 {
     m_display->appendPlainText(text);
 }

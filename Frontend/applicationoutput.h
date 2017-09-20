@@ -16,7 +16,7 @@ public:
     virtual ~ApplicationOutput();
 
 public slots:
-    void append(const QString& text);
+    void append(QString text);
 
 private:
     QPlainTextEdit* m_display;

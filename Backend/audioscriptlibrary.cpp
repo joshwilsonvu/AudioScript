@@ -2,7 +2,7 @@
 #include "audioscriptlibrary.h"
 
 // class AudioScriptLibrary
-AudioScriptLibrary::AudioScriptLibrary(const QString &name)
+AudioScriptLibrary::AudioScriptLibrary(QString name)
     : m_name(name),
       m_library(name),
       m_spawnFunction(Q_NULLPTR)

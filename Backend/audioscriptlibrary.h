@@ -13,7 +13,7 @@ class AudioScript;
 // immutable, one-to-one library and AudioScript subclass
 class AudioScriptLibrary {
 public:
-    AudioScriptLibrary(const QString& name);
+    AudioScriptLibrary(QString name);
     ~AudioScriptLibrary();
 
     QString name() const; // the name of the class subclassing AudioScript

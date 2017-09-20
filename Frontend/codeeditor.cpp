@@ -90,8 +90,6 @@ void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
         updateLineNumberAreaWidth(0);
 }
 
-
-
 void CodeEditor::highlightCurrentLine()
 {
     QList<QTextEdit::ExtraSelection> extraSelections;
@@ -99,7 +97,7 @@ void CodeEditor::highlightCurrentLine()
     if (!isReadOnly()) {
         QTextEdit::ExtraSelection selection;
 
-        QColor lineColor = QColor(220, 255, 255); // light cyan
+        QColor lineColor(Qt::black);
 
         selection.format.setBackground(lineColor);
         selection.format.setProperty(QTextFormat::FullWidthSelection, true);
@@ -153,16 +151,16 @@ void CodeEditor::setTextCharFormatPack(const TextCharFormatPack& format)
 CodeEditor::Highlighter::Highlighter(CodeEditor* editor)
     : QSyntaxHighlighter(editor->document())
 {
-    formats.keyword.setForeground(Qt::darkMagenta);
+    formats.keyword.setForeground(QColor(210, 180, 210));
     formats.keyword.setFontWeight(QFont::Bold);
-    formats.function.setForeground(Qt::darkCyan);
-    formats.quotation.setForeground(Qt::darkRed);
-    formats.comment.setForeground(Qt::darkGreen);
+    formats.function.setForeground(QColor(180, 210, 210));
+    formats.quotation.setForeground(QColor(220, 180, 180));
+    formats.comment.setForeground(QColor(180, 220, 180));
     formats.comment.setFontItalic(true);
-    formats.preprocessor.setForeground(Qt::darkGray);
+    formats.preprocessor.setForeground(QColor(180, 180, 180));
 }
 
-void CodeEditor::Highlighter::highlightBlock(const QString &text)
+void CodeEditor::Highlighter::highlightBlock(QStringtext)
 {
     // All rules
     foreach (const HighlightingRule &rule, highlightingRules) {
@@ -175,7 +173,7 @@ void CodeEditor::Highlighter::highlightBlock(const QString &text)
     handleMultiLineComments(text);
 }
 
-void CodeEditor::Highlighter::handleMultiLineComments(const QString& text)
+void CodeEditor::Highlighter::handleMultiLineComments(QString text)
 {
     setCurrentBlockState(0); // state of last highlight: 0 = un-block-commented, 1 = block-commented
     int startIndex = 0;

@@ -25,39 +25,39 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += qt debug
 
 SOURCES += \
-    Sources/Backend/audioscript.cpp \
-    Sources/Backend/audioscriptcompiler.cpp \
-    Sources/Backend/audioscriptengine.cpp \
-    Sources/Backend/audioscriptlibrary.cpp \
-    Sources/Backend/audioscriptvariant.cpp \
-    Sources/Backend/classloader.cpp \
-    Sources/Backend/main.cpp \
-    Sources/Frontend/applicationoutput.cpp \
-    Sources/Frontend/codeeditor.cpp \
-    Sources/Frontend/codetabs.cpp \
-    Sources/Frontend/dialogs.cpp \
-    Sources/Frontend/mainwindow.cpp \
-    Sources/Frontend/audioscriptchain.cpp \
-    Sources/Frontend/audiocontrols.cpp \
-    Sources/Frontend/classwidget.cpp \
-    Sources/Frontend/sidewidgetbase.cpp
+    Backend/audioscript.cpp \
+    Backend/audioscriptcompiler.cpp \
+    Backend/audioscriptengine.cpp \
+    Backend/audioscriptlibrary.cpp \
+    Backend/audioscriptvariant.cpp \
+    Backend/classloader.cpp \
+    Backend/main.cpp \
+    Frontend/applicationoutput.cpp \
+    Frontend/audiocontrols.cpp \
+    Frontend/audioscriptchain.cpp \
+    Frontend/classwidget.cpp \
+    Frontend/codeeditor.cpp \
+    Frontend/codetabs.cpp \
+    Frontend/dialogs.cpp \
+    Frontend/mainwindow.cpp \
+    Frontend/sidewidgetbase.cpp
 
 HEADERS += \
-    Includes/Backend/audioscript.h \
-    Includes/Backend/audioscriptcompiler.h \
-    Includes/Backend/audioscriptengine.h \
-    Includes/Backend/audioscriptlibrary.h \
-    Includes/Backend/audioscriptvariant.h \
-    Includes/Backend/classloader.h \
-    Includes/Frontend/applicationoutput.h \
-    Includes/Frontend/codeeditor.h \
-    Includes/Frontend/codetabs.h \
-    Includes/Frontend/dialogs.h \
-    Includes/Frontend/mainwindow.h \
-    Includes/Frontend/audioscriptchain.h \
-    Includes/Frontend/audiocontrols.h \
-    Includes/Frontend/classwidget.h \
-    Includes/Frontend/sidewidgetbase.h
+    Backend/audioscript.h \
+    Backend/audioscriptcompiler.h \
+    Backend/audioscriptengine.h \
+    Backend/audioscriptlibrary.h \
+    Backend/audioscriptvariant.h \
+    Backend/classloader.h \
+    Frontend/applicationoutput.h \
+    Frontend/audiocontrols.h \
+    Frontend/audioscriptchain.h \
+    Frontend/classwidget.h \
+    Frontend/codeeditor.h \
+    Frontend/codetabs.h \
+    Frontend/dialogs.h \
+    Frontend/mainwindow.h \
+    Frontend/sidewidgetbase.h
 
 FORMS += \
     Forms/mainwindow.ui
@@ -66,7 +66,6 @@ RESOURCES += \
     Resources/resources.qrc \
     Resources/style.qrc
 
-INCLUDEPATH += Sources/Backend \
-    Sources/Frontend \
-    Includes/Backend \
-    Includes/Frontend
+INCLUDEPATH += \
+    Backend \
+    Frontend

@@ -35,7 +35,7 @@ NameDialog::NameDialog(QString* value, QWidget* parent)
 }
 
 // slot
-void NameDialog::validate(const QString& className) {
+void NameDialog::validate(QString className) {
     static const QRegularExpression regex("^[A-Z][a-zA-Z0-9]*$");
     m_okay->setEnabled(className != "AudioScript"
             && regex.match(className).hasMatch());
@@ -44,7 +44,7 @@ void NameDialog::validate(const QString& className) {
     }
 }
 
-DirDialog::DirDialog(const QString& directory, QWidget* parent)
+DirDialog::DirDialog(QString directory, QWidget* parent)
     : QFileDialog(parent, "Select a directory for your AudioScripts",
                   directory)
 {

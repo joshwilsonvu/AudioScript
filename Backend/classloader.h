@@ -28,14 +28,14 @@ public:
     QStringList classes() const;
 
     // Class is not open in editor
-    bool newClass(const QString& className); // name dialog
-    bool openClass(const QString& className); // fail dialog?
-    //void deleteClass(const QString& className);
+    bool newClass(QString className); // name dialog
+    bool openClass(QString className); // fail dialog?
+    //void deleteClass(QString className);
     // Class is open in editor
     bool closeClass();
     bool saveClass();
 
-    bool setDirectory(const QString& dirName);
+    bool setDirectory(QString dirName);
 
 signals:
     // connect with AudioScriptCompiler so that it may automatically compile
@@ -47,8 +47,8 @@ private:
     bool maybeSave();
     void readSettings();
 
-    static QString loadFromFile(const QString& fileName);
-    static bool saveToFile(const QString& text, const QString& fileName);
+    static QString loadFromFile(QString fileName);
+    static bool saveToFile(QString text, QString fileName);
 
     // null if no class open, contains name of open class otherwise
     QString m_className;

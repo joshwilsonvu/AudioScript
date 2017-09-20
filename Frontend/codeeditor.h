@@ -76,10 +76,10 @@ private:
         TextCharFormatPack formats;
 
     protected:
-        void highlightBlock(const QString& text) override;
+        virtual void highlightBlock(QString text) override;
 
     private:
-        void handleMultiLineComments(const QString& text);
+        void handleMultiLineComments(QString text);
 
         struct HighlightingRule
         {

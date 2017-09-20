@@ -20,7 +20,7 @@ signals:
 public slots:
     // make the engine aware of a new library
     // creates AudioScriptLibrary, adds to audioScriptLibraries, makes available
-    bool registerAudioScript(const QString& name);
+    bool registerAudioScript(QString name);
 
 private:
     QMap<QString, AudioScriptLibrary*> m_audioScriptLibraries;

@@ -22,7 +22,7 @@ AudioScriptEngine::~AudioScriptEngine()
 }
 
 
-bool AudioScriptEngine::registerAudioScript(const QString& name)
+bool AudioScriptEngine::registerAudioScript(QString name)
 {
     AudioScriptLibrary* lib = new AudioScriptLibrary(name);
     if (!lib->spawnable()) {

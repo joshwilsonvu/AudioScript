@@ -17,7 +17,7 @@ public:
     NameDialog(QString* value, QWidget* parent = Q_NULLPTR);
 
 private slots:
-    void validate(const QString& className);
+    void validate(QString className);
 
 private:
     QLabel* m_label;
@@ -31,7 +31,7 @@ class DirDialog : public QFileDialog
     Q_OBJECT
 
 public:
-    DirDialog(const QString& directory = QString(), QWidget* parent = Q_NULLPTR);
+    DirDialog(QString directory = QString(), QWidget* parent = Q_NULLPTR);
 
 };
 

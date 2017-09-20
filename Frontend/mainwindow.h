@@ -41,18 +41,21 @@ protected:
 private slots:
     // Connected to menu actions
     void newClass();
-    void openClass(const QString& className);
+    void openClass(QString className);
     bool closeClass();
     bool saveClass();
     void about();
 
-    void build(const QString& className);
-    void clean(const QString& className);
-    void rebuild(const QString& className);
+    void build(QString className);
+    void buildAll(const QStringList& classes);
+    void clean(QString className);
+    void cleanAll(const QStringList& classes);
+    void rebuild(QString className);
+    void rebuildAll(const QStringList classes);
 
     // Other slots
     void onDocumentModified();
-    void onClassNameChanged(const QString& className);
+    void onClassNameChanged(QString className);
 
 private:
     void setupUi();

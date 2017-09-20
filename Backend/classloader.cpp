@@ -50,7 +50,7 @@ QStringList ClassLoader::classes() const
 }
 
 // Class is not open in editor
-bool ClassLoader::newClass(const QString &className)
+bool ClassLoader::newClass(QStringclassName)
 {
     if (!maybeSave()) {
         return false;
@@ -70,7 +70,7 @@ bool ClassLoader::newClass(const QString &className)
 
 }
 
-bool ClassLoader::openClass(const QString& className)
+bool ClassLoader::openClass(QString className)
 {
     if (!maybeSave()) {
         return false;
@@ -88,7 +88,7 @@ bool ClassLoader::openClass(const QString& className)
 }
 
 /*
-void ClassLoader::deleteClass(const QString& className)
+void ClassLoader::deleteClass(QString className)
 {
     if (className == m_className) {
         // TODO display "Can't delete open class" message
@@ -139,7 +139,7 @@ bool ClassLoader::saveClass()
     return good;
 }
 
-bool ClassLoader::setDirectory(const QString &dirName)
+bool ClassLoader::setDirectory(QStringdirName)
 {
     // TODO: Currently, don't check whether we are changing to the same directory;
     // makes initialization easier
@@ -163,10 +163,10 @@ bool ClassLoader::setDirectory(const QString &dirName)
 
     // only do the following if there are hpp or cpp files
     if (sources.size() > 0 && headers.size() > 0) {
-        foreach(const QString& source, sources) {
+        foreach(QString source, sources) {
             const_cast<QString&>(source).resize(source.lastIndexOf('.')); // remove extension
         }
-        foreach(const QString& header, headers) {
+        foreach(QString header, headers) {
             const_cast<QString&>(header).resize(header.lastIndexOf('.')); // remove extension
         }
 
@@ -193,25 +193,6 @@ bool ClassLoader::setDirectory(const QString &dirName)
             }
         }
     }
-
-
-        /*
-    for (QStringList::iterator i = files.begin(); i != files.end(); ++i) {
-        if (i->endsWith(".cpp")) {
-            QString source = *i;
-            source.chop(4);
-            QStringList::iterator j = i + 1;
-            for (j = i + 1; j != files.end() && j->chop(j->lastIndexOf); ++j)
-            source.remove(".cpp");
-            header.remove(".hpp");
-            if (source == header) { // both hold class name alone
-                m_availableClasses << source;
-            }
-        }
-    }
-*/
-
-
 
     emit directoryChanged(this);
     return true;
@@ -257,7 +238,7 @@ void ClassLoader::readSettings()
 }
 
 // static
-QString ClassLoader::loadFromFile(const QString& fileName)
+QString ClassLoader::loadFromFile(QString fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -277,7 +258,7 @@ QString ClassLoader::loadFromFile(const QString& fileName)
 }
 
 // static
-bool ClassLoader::saveToFile(const QString& text, const QString& fileName)
+bool ClassLoader::saveToFile(QString text, QString fileName)
 {
     QSaveFile file(fileName);
 

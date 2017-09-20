@@ -15,12 +15,9 @@ int main(int argc, char *argv[])
 
 #ifdef USE_QDARKSTYLE
     QFile f(":qdarkstyle/style.qss");
-    if (!f.exists())
-    {
+    if (!f.exists()) {
         printf("Unable to set stylesheet, file not found\n");
-    }
-    else
-    {
+    } else {
         f.open(QFile::ReadOnly | QFile::Text);
         app.setStyleSheet(f.readAll());
     }

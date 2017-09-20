@@ -12,20 +12,18 @@ class AudioScriptCompiler : public QObject
 public:
     explicit AudioScriptCompiler(QObject* parent = Q_NULLPTR);
     ~AudioScriptCompiler() override;
-/*
-public slots:
-    bool build(const QString& className);
+
+    bool build(QString className);
     bool buildAll(const QStringList& classes);
 
-    bool clean(const QString& className);
+    bool clean(QString className);
     bool cleanAll(const QStringList& classes);
 
-    bool rebuild(const QString& className); // clean && build
+    bool rebuild(QString className); // clean && build
     bool rebuildAll(const QStringList& classes);
 
 private:
 
-*/
 };
 
 #endif // AUDIOSCRIPTCOMPILER_H
