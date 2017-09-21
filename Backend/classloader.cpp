@@ -50,7 +50,7 @@ QStringList ClassLoader::classes() const
 }
 
 // Class is not open in editor
-bool ClassLoader::newClass(QStringclassName)
+bool ClassLoader::newClass(QString className)
 {
     if (!maybeSave()) {
         return false;
@@ -139,7 +139,7 @@ bool ClassLoader::saveClass()
     return good;
 }
 
-bool ClassLoader::setDirectory(QStringdirName)
+bool ClassLoader::setDirectory(QString dirName)
 {
     // TODO: Currently, don't check whether we are changing to the same directory;
     // makes initialization easier

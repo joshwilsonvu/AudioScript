@@ -46,7 +46,7 @@ bool CodeTabs::isSource() const
     return currentIndex();
 }
 
-void CodeTabs::setPlainText(QStringheaderText, QStringsourceText)
+void CodeTabs::setPlainText(QString headerText, QString sourceText)
 {
     header()->setPlainText(headerText);
     source()->setPlainText(sourceText);

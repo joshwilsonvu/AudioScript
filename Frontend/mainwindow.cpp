@@ -265,7 +265,7 @@ void MainWindow::writeSettings()
     settings.setValue("geometry", saveGeometry());
 }
 
-void MainWindow::onClassNameChanged(QStringclassName)
+void MainWindow::onClassNameChanged(QString className)
 {
     setWindowModified(false);
     setWindowTitle(className);

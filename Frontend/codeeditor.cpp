@@ -160,7 +160,7 @@ CodeEditor::Highlighter::Highlighter(CodeEditor* editor)
     formats.preprocessor.setForeground(QColor(180, 180, 180));
 }
 
-void CodeEditor::Highlighter::highlightBlock(QStringtext)
+void CodeEditor::Highlighter::highlightBlock(QString text)
 {
     // All rules
     foreach (const HighlightingRule &rule, highlightingRules) {
