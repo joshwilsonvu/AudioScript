@@ -13,3 +13,4 @@ Future
 8. create a window for compiler feedback, use within AudioScriptCompiler
 9. make sure all member data fields are prefixed with "m_"
 
+10. create a streamlined, academic, consistent way to connect frontend and backend

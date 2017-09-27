@@ -8,17 +8,17 @@
 #include "codetabs.h"
 
 class MainWindow;
-class ClassWidget;
+class ClassDialog;
 
 class ClassLoader : public QObject
 {
     Q_OBJECT
 
 public:
-    ClassLoader(MainWindow* parent);
+    ClassLoader(CodeTabs* editor, QObject* parent = Q_NULLPTR);
     virtual ~ClassLoader();
 
-    void init(ClassWidget* classWidget);
+    void init(ClassDialog* classWidget);
 
     // The monitored directory containing all files used
     QString currentDirectory() const;
@@ -58,7 +58,7 @@ private:
     QString m_directory;
     // non-owning pointers to MainWindow GUIS
     CodeTabs* m_editor;
-    ClassWidget* m_classWidget;
+    ClassDialog* m_classWidget;
     // child QObject monitoring directory
     QFileSystemWatcher* m_fileSystem;
 };

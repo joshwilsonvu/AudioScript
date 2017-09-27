@@ -27,32 +27,11 @@ public:
 
 // Protected methods: methods for use in derived classes
 protected:
-    /*
-     * example code for setParameter(parameter, value) {
-     *     SetParameter sp(parameter, value); // construct with parameter to set and value
-     *     return sp("foo", foo) || sp("bar", bar); // if passed "foo", sets foo to value, else go to bar
-     * }
+    void registerDouble(std::function<double (AudioScript*)> getter, std::function<void (AudioScript*, double)> setter, const std::string& name);
+    void registerFloat(std::function<float (AudioScript*)> getter, std::function<void (AudioScript*, float)> setter, const std::string& name);
+    void registerBool(std::function<bool (AudioScript*)> getter, std::function<void (AudioScript*, bool)> setter, const std::string& name);
+    void registerInt(std::function<int (AudioScript*)> getter, std::function<void (AudioScript*, int)> setter, const std::string& name);
 
-    class SetParameter {
-    public:
-        SetParameter(const std::string& param, const void* value);
-        template <typename T>
-        bool operator() (const std::string& fieldName, T& field);
-    private:
-        const std::string& m_param;
-        const void* m_value;
-    };
-    */
-
-    // need name of AudioScript, name of member, pointer to member, type of member
-    template <typename Derived>
-    void registerMember(double Derived::* d_member, const std::string& name);
-    template <typename Derived>
-    void registerMember(float Derived::* f_member, const std::string& name);
-    template <typename Derived>
-    void registerMember(bool Derived::* b_member, const std::string& name);
-    template <typename Derived>
-    void registerMember(int Derived::* i_member, const std::string& name);
 
 // Private methods: only used in base class or by friend classes, not derived classes
 private:
@@ -79,7 +58,7 @@ bool AudioScript::SetParameter::operator() (const std::string& fieldName, T& fie
     return false;
 }
 */
-
+/*
 template <typename Derived>
 void AudioScript::registerMember(double Derived::* d_member, const std::string& name)
 {
@@ -103,5 +82,9 @@ void AudioScript::registerMember(int Derived::* i_member, const std::string& nam
 {
     getLibrary()->registerMember(AudioScriptVariant(static_cast<int AudioScript::*>(i_member), name));
 }
+*/
+
+
+
 
 #endif // AUDIOSCRIPT_H

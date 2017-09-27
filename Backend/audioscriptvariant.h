@@ -2,7 +2,16 @@
 #define AUDIOSCRIPTVARIANT_H
 
 #include <string>
+#include <functional>
+#include <exception>
 #include <QString>
+
+class bad_variant_access : public std::exception
+{
+public:
+    virtual const char* what() const noexcept override;
+    virtual ~bad_variant_access();
+};
 
 class AudioScript;
 
@@ -10,12 +19,27 @@ class AudioScript;
 // in real time.
 class AudioScriptVariant
 {
+private:
+    typedef std::function<unsigned char(AudioScript*)> GenericGetter;
+    typedef std::function<void(AudioScript*, unsigned char)> GenericSetter;
+    typedef std::function<double(AudioScript*)> DoubleGetter;
+    typedef std::function<void(AudioScript*, double)> DoubleSetter;
+    typedef std::function<float(AudioScript*)> FloatGetter;
+    typedef std::function<void(AudioScript*, float)> FloatSetter;
+    typedef std::function<bool(AudioScript*)> BoolGetter;
+    typedef std::function<void(AudioScript*, bool)> BoolSetter;
+    typedef std::function<int(AudioScript*)> IntGetter;
+    typedef std::function<void(AudioScript*, int)> IntSetter;
 public:
     AudioScriptVariant();
-    AudioScriptVariant(double AudioScript::* p_member, const std::string& name);
-    AudioScriptVariant(float AudioScript::* p_member, const std::string& name);
-    AudioScriptVariant(int AudioScript::* p_member, const std::string& name);
-    AudioScriptVariant(bool AudioScript::* p_member, const std::string& name);
+    AudioScriptVariant(DoubleGetter getter,
+                       DoubleSetter setter);
+    AudioScriptVariant(FloatGetter getter,
+                       FloatSetter setter);
+    AudioScriptVariant(BoolGetter getter,
+                       BoolSetter setter);
+    AudioScriptVariant(IntGetter getter,
+                       IntSetter setter);
 
     enum MemberType {
         Double,
@@ -25,20 +49,21 @@ public:
         None
     };
     MemberType type() const;
-    QString name() const;
 
-    // Return Q_NULLPTR if type() does not match
-    double* toDouble(AudioScript* audioScript);
-    float* toFloat(AudioScript* audioScript);
-    int* toInt(AudioScript* audioScript);
-    bool* toBool(AudioScript* audioScript);
+    // throw bad type() does not match
+    double getDouble(AudioScript* audioScript);
+    void setDouble(AudioScript* audioScript, double value);
+    float getFloat(AudioScript* audioScript);
+    void setFloat(AudioScript* audioScript, float value);
+    int getInt(AudioScript* audioScript);
+    void setInt(AudioScript* audioScript, int value);
+    bool getBool(AudioScript* audioScript);
+    void setBool(AudioScript* audioScript, bool value);
 
 private:
     MemberType m_type;
-
-    unsigned char AudioScript::* m_ptrToMember;
-
-    QString m_name;
+    GenericGetter m_getter;
+    GenericSetter m_setter;
 };
 
 #endif // AUDIOSCRIPTVARIANT_H

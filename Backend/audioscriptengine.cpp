@@ -21,6 +21,17 @@ AudioScriptEngine::~AudioScriptEngine()
     m_activeAudioScripts.clear();
 }
 
+void AudioScriptEngine::clear()
+{
+    m_activeAudioScripts.clear();
+}
+
+void AudioScriptEngine::setAllEnabled(bool enabled)
+{
+    for (AudioScript* audioScript : m_activeAudioScripts) {
+        audioScript->setEnabled(enabled);
+    }
+}
 
 bool AudioScriptEngine::registerAudioScript(QString name)
 {

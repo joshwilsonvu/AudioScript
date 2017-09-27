@@ -17,6 +17,7 @@ ApplicationOutput::ApplicationOutput(QWidget* parent, Qt::WindowFlags flags)
     m_display->setMaximumBlockCount(128);
     m_display->setCenterOnScroll(true);
     m_display->setMinimumHeight(m_display->fontMetrics().height() * 8);
+    m_display->setFixedHeight(100);
     layout->addWidget(m_display, 1);
 
     // Add to titled GroupBox

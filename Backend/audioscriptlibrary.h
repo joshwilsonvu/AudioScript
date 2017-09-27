@@ -1,9 +1,11 @@
 #ifndef AUDIOSCRIPTLIBRARY_H
 #define AUDIOSCRIPTLIBRARY_H
 
+#include <string>
+
 #include <QLibrary>
 #include <QString>
-#include <QVector>
+#include <QMap>
 
 #include "audioscriptvariant.h"
 
@@ -22,8 +24,7 @@ public:
     bool spawnable() const;
     AudioScript* spawn(); // dynamically allocated
 
-    // need name of member, pointer to member, type of member
-    void registerMember(AudioScriptVariant&& member);
+    void registerMember(AudioScriptVariant&& member, const std::string& name);
 
 private:
     typedef AudioScript* (*SpawnFunction)(void);
@@ -32,7 +33,7 @@ private:
     QLibrary m_library;
     SpawnFunction m_spawnFunction;
 
-    QVector<AudioScriptVariant> m_members;
+    QMap<QString, AudioScriptVariant> m_members;
 };
 
 

@@ -3,8 +3,8 @@
 
 #include "sidewidgetbase.h"
 
-class QPlainTextEdit;
-class QGroupBox;
+#include <QPlainTextEdit>
+#include <QGroupBox>
 
 // Graphical user interface that displays compile and link output of user code
 // and provides shortcut buttons to build code.

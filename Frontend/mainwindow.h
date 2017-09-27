@@ -8,7 +8,7 @@
 #include "audioscriptlibrary.h"
 #include "classloader.h"
 
-class ClassWidget;
+class ClassDialog;
 class ApplicationOutput;
 class AudioScriptChain;
 class AudioControls;
@@ -29,8 +29,6 @@ public:
     virtual ~MainWindow();
 
     // return non-owning pointers to UI elements
-    CodeTabs* editor() const;
-    ClassWidget* classWidget() const;
     ApplicationOutput* applicationOutput() const;
     AudioScriptChain* audioScriptChain() const;
     AudioControls* audioControls() const;
@@ -39,19 +37,24 @@ protected:
     virtual void closeEvent(QCloseEvent* event) override;
 
 private slots:
-    // Connected to menu actions
+    // The only reason MainWindow is delegating these
+    // functions is because they are connected to UI actions;
+    // for inter-object communication, store pointers and provide link()
     void newClass();
-    void openClass(QString className);
+    void openClass();
     bool closeClass();
     bool saveClass();
     void about();
 
-    void build(QString className);
-    void buildAll(const QStringList& classes);
-    void clean(QString className);
-    void cleanAll(const QStringList& classes);
-    void rebuild(QString className);
-    void rebuildAll(const QStringList classes);
+    void build();
+    void clean();
+
+    void play();
+    void stop();
+
+    void clear();
+    void enableAll();
+    void disableAll();
 
     // Other slots
     void onDocumentModified();
@@ -69,7 +72,6 @@ private:
     // Frontend pointers
     Ui::MainWindow* m_ui;
     CodeTabs* m_editor;
-    ClassWidget* m_classWidget;
     ApplicationOutput* m_appOutput;
     AudioScriptChain* m_chain;
     AudioControls* m_audioControls;
@@ -81,5 +83,12 @@ private:
     AudioScriptEngine* m_engine;
     AudioScriptCompiler* m_compiler;
 };
+
+// the generic function
+template <class T1, class T2>
+void link(T1* t1, T2* t2) {
+    t1->link(t2);
+    t2->link(t1);
+}
 
 #endif // MAINWINDOW_H

@@ -45,7 +45,10 @@ AudioScript* AudioScriptLibrary::spawn()
     return audioScript;
 }
 
-void AudioScriptLibrary::registerMember(AudioScriptVariant&& member)
+void AudioScriptLibrary::registerMember(AudioScriptVariant&& variant, const std::string& name)
 {
-    m_members.push_back(std::move(member));
+    QString qstring_name = QString::fromStdString(name);
+    if (!m_members.contains(qstring_name)) {
+        m_members.insert(qstring_name, variant);
+    }
 }

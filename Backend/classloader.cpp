@@ -14,8 +14,8 @@
 
 // Public
 // Precondition: parent->editor() must be valid
-ClassLoader::ClassLoader(MainWindow* parent)
-    : QObject(parent), m_editor(parent->editor()),
+ClassLoader::ClassLoader(CodeTabs* editor, QObject* parent)
+    : QObject(parent), m_editor(editor),
       m_fileSystem(new QFileSystemWatcher(this))
 {
     closeClass();
@@ -29,7 +29,7 @@ ClassLoader::~ClassLoader()
     m_editor = Q_NULLPTR; // non-owning
 }
 
-void ClassLoader::init(ClassWidget* classWidget)
+void ClassLoader::init(ClassDialog* classWidget)
 {
     m_classWidget = classWidget;
 }

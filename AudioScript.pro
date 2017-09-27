@@ -37,12 +37,12 @@ SOURCES += \
     Frontend/applicationoutput.cpp \
     Frontend/audiocontrols.cpp \
     Frontend/audioscriptchain.cpp \
-    Frontend/classwidget.cpp \
     Frontend/codeeditor.cpp \
     Frontend/codetabs.cpp \
     Frontend/dialogs.cpp \
     Frontend/mainwindow.cpp \
-    Frontend/sidewidgetbase.cpp
+    Frontend/sidewidgetbase.cpp \
+    Frontend/classdialog.cpp
 
 HEADERS += \
     Backend/audioscript.h \
@@ -54,12 +54,12 @@ HEADERS += \
     Frontend/applicationoutput.h \
     Frontend/audiocontrols.h \
     Frontend/audioscriptchain.h \
-    Frontend/classwidget.h \
     Frontend/codeeditor.h \
     Frontend/codetabs.h \
     Frontend/dialogs.h \
     Frontend/mainwindow.h \
-    Frontend/sidewidgetbase.h
+    Frontend/sidewidgetbase.h \
+    Frontend/classdialog.h
 
 FORMS += \
     Forms/mainwindow.ui

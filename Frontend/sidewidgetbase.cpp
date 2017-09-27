@@ -1,7 +1,7 @@
 #include <limits>
 #include "sidewidgetbase.h"
 
-const QSize SideWidgetBase::m_size = QSize(300, 275);
+const QSize SideWidgetBase::m_size = QSize(300, 150);
 
 SideWidgetBase::SideWidgetBase(QWidget *parent, Qt::WindowFlags flags)
     : QWidget(parent, flags)

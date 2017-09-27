@@ -32,7 +32,6 @@ class DirDialog : public QFileDialog
 
 public:
     DirDialog(QString directory = QString(), QWidget* parent = Q_NULLPTR);
-
 };
 
 #endif // DIALOGS_H

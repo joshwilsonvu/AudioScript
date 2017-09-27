@@ -6,6 +6,7 @@ void* spawn() {
 
 // The constructor. Initialize your data fields here.
 CLASSNAME::CLASSNAME() {
+    // ex. registerDouble(&CLASSNAME::getGain, &CLASSNAME::setGain, "Gain");
 
 }
 

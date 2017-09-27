@@ -3,7 +3,7 @@
 #include <QFile>
 #include <QIcon>
 
-#define USE_QDARKSTYLE
+//#define USE_QDARKSTYLE
 
 int main(int argc, char *argv[])
 {

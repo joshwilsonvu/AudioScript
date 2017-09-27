@@ -15,7 +15,7 @@ CodeEditor::CodeEditor(QWidget *parent)
     setLineWrapMode(QPlainTextEdit::NoWrap);
 
     QFont font;
-    font.setFamily("Courier");
+    font.setFamily("Monaco");
     font.setStyleHint(QFont::Monospace);
     font.setFixedPitch(true);
     setFont(font);
@@ -27,10 +27,8 @@ CodeEditor::CodeEditor(QWidget *parent)
 
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
-    connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
 
     updateLineNumberAreaWidth(0);
-    highlightCurrentLine();
 }
 
 int CodeEditor::lineNumberAreaWidth()
@@ -90,29 +88,10 @@ void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
         updateLineNumberAreaWidth(0);
 }
 
-void CodeEditor::highlightCurrentLine()
-{
-    QList<QTextEdit::ExtraSelection> extraSelections;
-
-    if (!isReadOnly()) {
-        QTextEdit::ExtraSelection selection;
-
-        QColor lineColor(Qt::black);
-
-        selection.format.setBackground(lineColor);
-        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-        selection.cursor = textCursor();
-        selection.cursor.clearSelection();
-        extraSelections.append(selection);
-    }
-
-    setExtraSelections(extraSelections);
-}
-
-void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
+void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent* event)
 {
     QPainter painter(&lineNumberArea);
-    painter.fillRect(event->rect(), Qt::black);
+    painter.fillRect(event->rect(), Qt::white);
 
     QTextBlock block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
@@ -151,13 +130,13 @@ void CodeEditor::setTextCharFormatPack(const TextCharFormatPack& format)
 CodeEditor::Highlighter::Highlighter(CodeEditor* editor)
     : QSyntaxHighlighter(editor->document())
 {
-    formats.keyword.setForeground(QColor(210, 180, 210));
+    formats.keyword.setForeground(QColor(128, 0, 128));
     formats.keyword.setFontWeight(QFont::Bold);
-    formats.function.setForeground(QColor(180, 210, 210));
-    formats.quotation.setForeground(QColor(220, 180, 180));
-    formats.comment.setForeground(QColor(180, 220, 180));
+    formats.function.setForeground(QColor(0, 64, 196));
+    formats.quotation.setForeground(QColor(128, 0, 0));
+    formats.comment.setForeground(QColor(0, 128, 0));
     formats.comment.setFontItalic(true);
-    formats.preprocessor.setForeground(QColor(180, 180, 180));
+    formats.preprocessor.setForeground(QColor(128, 128, 0));
 }
 
 void CodeEditor::Highlighter::highlightBlock(QString text)

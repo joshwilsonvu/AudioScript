@@ -14,16 +14,11 @@ public:
     ~AudioScriptCompiler() override;
 
     bool build(QString className);
-    bool buildAll(const QStringList& classes);
 
     bool clean(QString className);
-    bool cleanAll(const QStringList& classes);
-
-    bool rebuild(QString className); // clean && build
-    bool rebuildAll(const QStringList& classes);
 
 private:
-
+    // pointer to corresponding
 };
 
 #endif // AUDIOSCRIPTCOMPILER_H

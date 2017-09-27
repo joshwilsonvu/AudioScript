@@ -10,7 +10,7 @@
 #include "dialogs.h"
 
 // GUI interfaces on side areas
-#include "classwidget.h"
+#include "classdialog.h"
 #include "applicationoutput.h"
 #include "audioscriptchain.h"
 #include "audiocontrols.h"
@@ -31,11 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
     initActions();
     createStatusBar();
 
-    editor()->header()->setFocus();
+    m_editor->header()->setFocus();
 
-    m_classLoader = new ClassLoader(this); // requires editor valid
-    m_classWidget->init(m_classLoader);
-    m_classLoader->init(m_classWidget); // link frontend and backend
+    m_classLoader = new ClassLoader(m_editor, this); // requires editor valid
     onClassNameChanged(QString());
 
     setupConnections();
@@ -45,11 +43,6 @@ MainWindow::~MainWindow()
 {
     delete m_ui;
     m_ui = Q_NULLPTR;
-}
-
-CodeTabs* MainWindow::editor() const
-{
-    return m_editor;
 }
 
 // Override
@@ -75,9 +68,12 @@ void MainWindow::newClass()
 }
 
 
-void MainWindow::openClass(QString className)
+void MainWindow::openClass()
 {
-    m_classLoader->openClass(className);
+    ClassDialog* dialog = new ClassDialog(m_classLoader, this);
+    if (dialog->exec() == ClassDialog::Accepted) {
+        m_classLoader->openClass(dialog->selectedClass());
+    }
 }
 
 bool MainWindow::closeClass()
@@ -109,39 +105,44 @@ void MainWindow::about()
     }
 }
 
+void MainWindow::build()
+{
+    m_compiler->build(m_classLoader->currentClass());
+}
+
+void MainWindow::clean()
+{
+    m_compiler->clean(m_classLoader->currentClass());
+}
+
+void MainWindow::play()
+{
+
+}
+
+void MainWindow::stop()
+{
+
+}
+
+void MainWindow::clear()
+{
+    m_engine->clear();
+}
+
+void MainWindow::enableAll()
+{
+    m_engine->setAllEnabled(true);
+}
+
+void MainWindow::disableAll()
+{
+    m_engine->setAllEnabled(false);
+}
+
 void MainWindow::onDocumentModified()
 {
     setWindowModified(true);
-}
-
-void MainWindow::build(QString className)
-{
-    m_compiler->build(className);
-}
-
-void MainWindow::buildAll(const QStringList &classes)
-{
-    m_compiler->buildAll(classes);
-}
-
-void MainWindow::clean(QString className)
-{
-    m_compiler->clean(className);
-}
-
-void MainWindow::cleanAll(const QStringList &classes)
-{
-    m_compiler->cleanAll(classes);
-}
-
-void MainWindow::rebuild(QString className)
-{
-    m_compiler->rebuild(className);
-}
-
-void MainWindow::rebuildAll(const QStringList classes)
-{
-    m_compiler->rebuildAll(classes);
 }
 
 void MainWindow::setupUi()
@@ -160,11 +161,14 @@ void MainWindow::setupUi()
     layout->setContentsMargins(margins);
 
     // Left side
-    m_classWidget = new ClassWidget();
-    layout->addWidget(m_classWidget, 0, 0);
+    m_chain = new AudioScriptChain();
+    layout->addWidget(m_chain, 0, 0);
 
     m_appOutput = new ApplicationOutput();
     layout->addWidget(m_appOutput, 1, 0);
+
+    m_audioControls = new AudioControls();
+    layout->addWidget(m_audioControls, 2, 0);
 
     // Center
     m_editor = new CodeTabs();
@@ -176,30 +180,21 @@ void MainWindow::setupUi()
     m_editor->source()->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     layout->addWidget(m_editor, 0, 1, -1, 1);
 
-    // Right side
-    m_chain = new AudioScriptChain();
-    layout->addWidget(m_chain, 0, 2);
 
-    m_audioControls = new AudioControls();
-    layout->addWidget(m_audioControls, 1, 2);
 
-    setMinimumWidth(qMax(m_classWidget->minimumWidth(), m_appOutput->minimumWidth())
-                   + m_editor->minimumWidth()
-                   + qMax(m_chain->minimumWidth(), m_audioControls->minimumWidth()));
-    setMinimumHeight(qMax(m_classWidget->minimumHeight() + m_appOutput->minimumHeight(),
-                        qMax(m_editor->minimumHeight(),
-                             m_chain->minimumHeight() + m_audioControls->minimumHeight())));
+    setMinimumWidth(qMax(m_appOutput->minimumWidth(), qMax(m_chain->minimumWidth(), m_audioControls->minimumWidth())) + m_editor->minimumWidth());
+    setMinimumHeight(qMax(m_appOutput->minimumHeight() + m_chain->minimumHeight() + m_audioControls->minimumHeight(),
+                        m_editor->minimumHeight()));
 }
 
 void MainWindow::setupConnections() {
     // call documentWasModified when user changes contents of editor
-    connect(editor()->header()->document(), &QTextDocument::contentsChanged,
+    connect(m_editor->header()->document(), &QTextDocument::contentsChanged,
             this, &MainWindow::onDocumentModified);
-    connect(editor()->source()->document(), &QTextDocument::contentsChanged,
+    connect(m_editor->source()->document(), &QTextDocument::contentsChanged,
             this, &MainWindow::onDocumentModified);
 
     // connect the frontend graphics to the backend code
-    connect(m_classWidget, SIGNAL(doubleClicked(QString)), this, SLOT(openClass(QString)));
     connect(m_classLoader, SIGNAL(classUpdated(QString)), this, SLOT(onClassNameChanged(QString)));
 }
 
@@ -209,12 +204,10 @@ void MainWindow::initActions() {
     connect(m_ui->actionNew, SIGNAL(triggered(bool)),
             this, SLOT(newClass()));
 
-    /*
     m_ui->actionOpen->setShortcut(QKeySequence::Open);
     m_ui->actionOpen->setStatusTip(tr("Open an existing class"));
     connect(m_ui->actionOpen, SIGNAL(triggered(bool)),
-            this, SLOT(openClass());
-    */
+            this, SLOT(openClass()));
 
     m_ui->actionSave->setShortcut(QKeySequence::Save);
     m_ui->actionSave->setStatusTip(tr("Save the open class"));
