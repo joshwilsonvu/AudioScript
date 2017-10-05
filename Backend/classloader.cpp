@@ -1,5 +1,5 @@
 #include "classloader.h"
-#include "mainwindow.h"
+#include "scriptwindow.h"
 #include "ui_mainwindow.h"
 
 #include <QString>
@@ -11,6 +11,8 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QSettings>
+#include <QFileSystemWatcher>
+
 
 // Public
 // Precondition: parent->editor() must be valid
@@ -20,18 +22,18 @@ ClassLoader::ClassLoader(CodeTabs* editor, QObject* parent)
 {
     closeClass();
 
-    readSettings();
+    QSettings settings;
+    QString directory = settings.value("directory", QString()).toString();
+    // set path in if statement if directory not empty, check if ddirectory exists
+    if (!directory.isEmpty() && QDir(directory).exists()) {
+        setDirectory(directory);
+    }
 }
 
 ClassLoader::~ClassLoader()
 {
     // class has already been closed (and maybe saved)
     m_editor = Q_NULLPTR; // non-owning
-}
-
-void ClassLoader::init(ClassDialog* classWidget)
-{
-    m_classWidget = classWidget;
 }
 
 QString ClassLoader::currentDirectory() const
@@ -66,6 +68,7 @@ bool ClassLoader::newClass(QString className)
     m_editor->setPlainText(headerText, sourceText);
     m_editor->setReadOnly(false);
     m_className = className;
+    emit currentClassChanged(m_className);
     return true;
 
 }
@@ -75,15 +78,16 @@ bool ClassLoader::openClass(QString className)
     if (!maybeSave()) {
         return false;
     }
-    QString headerText = loadFromFile(m_directory + className + "/header");
-    QString sourceText = loadFromFile(m_directory + className + "/source");
+    QString headerText = loadFromFile(m_directory + QDir::separator() + className + ".hpp");
+    QString sourceText = loadFromFile(m_directory + QDir::separator() + className + ".cpp");
     if (headerText.isEmpty() || sourceText.isEmpty()) {
-        qDebug() << "Failed to open AudioScript file.";
+        qDebug() << "Failed to open AudioScript class.";
         return false;
     }
     m_editor->setPlainText(headerText, sourceText);
     m_editor->setReadOnly(false);
     m_className = className;
+    emit currentClassChanged(m_className);
     return true;
 }
 
@@ -118,6 +122,7 @@ bool ClassLoader::closeClass()
     QString introText = loadFromFile(":/defaults/intro");
     m_editor->setPlainText(introText, introText);
     m_className.clear(); // signify no class open
+    emit currentClassChanged(m_className);
     return true;
 }
 
@@ -129,13 +134,15 @@ bool ClassLoader::saveClass()
     bool headerModified = m_editor->header()->document()->isModified();
     bool sourceModified = m_editor->source()->document()->isModified();
 
-    // assume good if not modified, only save if not modified
-    bool good = (!headerModified ||
-                 saveToFile(m_editor->header()->toPlainText(), m_directory + m_className + ".hpp")) &&
-            (!sourceModified ||
-             saveToFile(m_editor->source()->toPlainText(), m_directory + m_className + ".cpp"));
+    bool good = saveToFile(m_editor->header()->toPlainText(),
+                           currentDirectory() + QDir::separator() + m_className + ".hpp")
+            &&  saveToFile(m_editor->source()->toPlainText(),
+                           currentDirectory() + QDir::separator() + m_className + ".cpp");
     m_editor->header()->document()->setModified(!good && headerModified);
     m_editor->source()->document()->setModified(!good && sourceModified);
+    if (good && (headerModified || sourceModified)) {
+            emit classSaved(m_className);
+    }
     return good;
 }
 
@@ -148,8 +155,16 @@ bool ClassLoader::setDirectory(QString dirName)
         return false;
     }
 
-    m_fileSystem->removePaths(m_fileSystem->files() + m_fileSystem->directories());
+    QStringList removables = m_fileSystem->files() + m_fileSystem->directories();
+    if (!removables.empty()) {
+        m_fileSystem->removePaths(m_fileSystem->files() + m_fileSystem->directories());
+    }
     m_classes.clear();
+
+    {
+        QSettings settings;
+        settings.setValue("directory", dirName);
+    }
     m_directory = dirName;
     m_fileSystem->addPath(m_directory);
 
@@ -177,7 +192,7 @@ bool ClassLoader::setDirectory(QString dirName)
             int cmp = QString::localeAwareCompare(*s, *h);
             if (cmp == 0) {
                 // strings match, add class
-                if (m_classes.contains(*s)) {
+                if (!m_classes.contains(*s)) {
                     m_classes << *s; // add class
                     ++s;
                     ++h;
@@ -208,7 +223,7 @@ bool ClassLoader::maybeSave()
             !m_editor->source()->document()->isModified())
         return true;
     const QMessageBox::StandardButton ret
-            = QMessageBox::warning(qobject_cast<MainWindow*>(parent()), tr("Application"),
+            = QMessageBox::warning(qobject_cast<QWidget*>(parent()), tr("AudioScript"),
                                    tr("The class has been modified.\n"
                                       "Do you want to save your changes?"),
                                    QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
@@ -220,21 +235,6 @@ bool ClassLoader::maybeSave()
     default:
         return true;
     }
-}
-
-// does classloader have everything it needs the first time this is run?
-void ClassLoader::readSettings()
-{
-    QSettings settings;
-    QString sdirectory = settings.value("directory", QString()).toString();
-    QDir ddirectory;
-
-    // set path in if statement if sdirectory not empty, check if ddirectory exists
-    if (sdirectory.isEmpty() || (ddirectory.setPath(sdirectory), !ddirectory.exists())) {
-        return;
-    }
-
-    setDirectory(sdirectory);
 }
 
 // static

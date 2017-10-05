@@ -4,13 +4,14 @@
 #include <QPushButton>
 #include <QtDebug>
 #include <QRegularExpression>
-
-#include "dialogs.h"
-
 #include <QString>
 
-NameDialog::NameDialog(QString* value, QWidget* parent)
-    : QDialog(parent), m_value(value)
+#include "dialogs.h"
+#include "classloader.h"
+
+
+NameDialog::NameDialog(ClassLoader* classLoader, QWidget* parent)
+    : QDialog(parent), m_classLoader(classLoader)
 {
     setSizeGripEnabled(true);
     setModal(true); // use exec() not show()
@@ -34,21 +35,31 @@ NameDialog::NameDialog(QString* value, QWidget* parent)
     setLayout(layout);
 }
 
+QString NameDialog::getName() const
+{
+    return m_name;
+}
+
 // slot
 void NameDialog::validate(QString className) {
     static const QRegularExpression regex("^[A-Z][a-zA-Z0-9]*$");
     m_okay->setEnabled(className != "AudioScript"
-            && regex.match(className).hasMatch());
+            && regex.match(className).hasMatch()
+            && !m_classLoader->classes().contains(className));
     if (m_okay->isEnabled()) {
-        *m_value = className;
+        m_name = className;
     }
 }
 
 DirDialog::DirDialog(QString directory, QWidget* parent)
-    : QFileDialog(parent, "Select a directory for your AudioScripts",
+    : QFileDialog(parent, "Set AudioScript directory",
                   directory)
 {
     setFileMode(QFileDialog::Directory);
-    setAcceptMode(QFileDialog::AcceptSave);
+    setAcceptMode(QFileDialog::AcceptOpen);
     setOption(QFileDialog::ShowDirsOnly);
+}
+
+DirDialog::~DirDialog()
+{
 }

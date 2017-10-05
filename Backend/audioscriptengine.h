@@ -2,7 +2,6 @@
 #define AUDIOSCRIPTENGINE_H
 
 #include <QObject>
-#include <QString>
 #include <QMap>
 #include <QList>
 

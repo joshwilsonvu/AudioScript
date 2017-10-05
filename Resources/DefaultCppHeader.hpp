@@ -21,7 +21,7 @@ public:
     virtual ~CLASSNAME();
 
     // Apply this AudioScript to the range of samples provided.
-    virtual void process(std::vector<sample_t>& samples) override;
+    virtual sample_t process(sample_t sample) override;
 
 protected:
     // Declare any helper functions your AudioScript uses.

@@ -7,8 +7,7 @@
 
 ApplicationOutput::ApplicationOutput(QWidget* parent, Qt::WindowFlags flags)
     : SideWidgetBase(parent, flags),
-      m_display(new QPlainTextEdit(tr("Application output will be displayed here.\n"))),
-      m_groupBox(new QGroupBox(tr("Application output"), this))
+      m_display(new QPlainTextEdit(tr("Application output will be displayed here.\n")))
 {
     // Create layout with contents
     QVBoxLayout* layout = new QVBoxLayout(this);
@@ -17,11 +16,7 @@ ApplicationOutput::ApplicationOutput(QWidget* parent, Qt::WindowFlags flags)
     m_display->setMaximumBlockCount(128);
     m_display->setCenterOnScroll(true);
     m_display->setMinimumHeight(m_display->fontMetrics().height() * 8);
-    m_display->setFixedHeight(100);
     layout->addWidget(m_display, 1);
-
-    // Add to titled GroupBox
-    m_groupBox->setLayout(layout);
 }
 
 ApplicationOutput::~ApplicationOutput()

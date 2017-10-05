@@ -1,4 +1,6 @@
 
+#include "CLASSNAME.hpp"
+
 // Required function.
 void* spawn() {
     return static_cast<AudioScript*>(new CLASSNAME());
@@ -16,7 +18,7 @@ CLASSNAME::~CLASSNAME() {
 }
 
 // Apply this AudioScript to the range of samples provided.
-void CLASSNAME::process(std::vector<sample_t>& samples) {
+sample_t CLASSNAME::process(sample_t sample) {
 
 }
 

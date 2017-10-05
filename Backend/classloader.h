@@ -2,13 +2,13 @@
 #define CLASSLOADER_H
 
 #include <QObject>
-#include <QFileSystemWatcher>
 #include <QStringList>
 
 #include "codetabs.h"
 
-class MainWindow;
+class ScriptWindow;
 class ClassDialog;
+class QFileSystemWatcher;
 
 class ClassLoader : public QObject
 {
@@ -17,8 +17,6 @@ class ClassLoader : public QObject
 public:
     ClassLoader(CodeTabs* editor, QObject* parent = Q_NULLPTR);
     virtual ~ClassLoader();
-
-    void init(ClassDialog* classWidget);
 
     // The monitored directory containing all files used
     QString currentDirectory() const;
@@ -30,7 +28,7 @@ public:
     // Class is not open in editor
     bool newClass(QString className); // name dialog
     bool openClass(QString className); // fail dialog?
-    //void deleteClass(QString className);
+
     // Class is open in editor
     bool closeClass();
     bool saveClass();
@@ -39,13 +37,12 @@ public:
 
 signals:
     // connect with AudioScriptCompiler so that it may automatically compile
-    void classUpdated(QString); // or added
-    void classRemoved(QString); // remove library
+    void currentClassChanged(QString);
+    void classSaved(QString);
     void directoryChanged(ClassLoader*);
 
 private:
     bool maybeSave();
-    void readSettings();
 
     static QString loadFromFile(QString fileName);
     static bool saveToFile(QString text, QString fileName);
@@ -58,7 +55,6 @@ private:
     QString m_directory;
     // non-owning pointers to MainWindow GUIS
     CodeTabs* m_editor;
-    ClassDialog* m_classWidget;
     // child QObject monitoring directory
     QFileSystemWatcher* m_fileSystem;
 };

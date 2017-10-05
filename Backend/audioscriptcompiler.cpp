@@ -1,6 +1,7 @@
 #include <QDir>
 #include <QProcess>
 #include <QtDebug>
+#include <QString>
 
 #include "audioscriptcompiler.h"
 

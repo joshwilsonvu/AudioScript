@@ -8,13 +8,15 @@
 class QLabel;
 class QLineEdit;
 class QPushButton;
+class ClassLoader;
 
 class NameDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    NameDialog(QString* value, QWidget* parent = Q_NULLPTR);
+    NameDialog(ClassLoader* classLoader, QWidget* parent = Q_NULLPTR);
+    QString getName() const;
 
 private slots:
     void validate(QString className);
@@ -23,7 +25,8 @@ private:
     QLabel* m_label;
     QLineEdit* m_classInput;
     QPushButton* m_okay;
-    QString* m_value; // non-owning
+    ClassLoader* m_classLoader; // non-owning
+    QString m_name;
 };
 
 class DirDialog : public QFileDialog
@@ -32,6 +35,7 @@ class DirDialog : public QFileDialog
 
 public:
     DirDialog(QString directory = QString(), QWidget* parent = Q_NULLPTR);
+    ~DirDialog();
 };
 
 #endif // DIALOGS_H

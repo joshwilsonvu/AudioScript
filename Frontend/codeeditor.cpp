@@ -1,10 +1,9 @@
 
-#include <QMessageBox>
-#include <QDebug>
-#include <QDir>
+#include <QPaintEvent>
+#include <QResizeEvent>
+#include <QWidget>
 #include <QPainter>
 #include <QKeyEvent>
-#include <QApplication>
 
 #include "codeeditor.h"
 

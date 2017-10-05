@@ -8,8 +8,8 @@ bad_variant_access::~bad_variant_access() {}
 
 AudioScriptVariant::AudioScriptVariant()
     : m_type(AudioScriptVariant::None),
-      m_getter(Q_NULLPTR),
-      m_setter(Q_NULLPTR)
+      m_getter(nullptr),
+      m_setter(nullptr)
 {
 }
 

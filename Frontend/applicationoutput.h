@@ -3,8 +3,7 @@
 
 #include "sidewidgetbase.h"
 
-#include <QPlainTextEdit>
-#include <QGroupBox>
+class QPlainTextEdit;
 
 // Graphical user interface that displays compile and link output of user code
 // and provides shortcut buttons to build code.
@@ -20,7 +19,6 @@ public slots:
 
 private:
     QPlainTextEdit* m_display;
-    QGroupBox* m_groupBox;
 };
 
 #endif // APPLICATIONOUTPUT_H

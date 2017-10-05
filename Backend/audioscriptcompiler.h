@@ -1,8 +1,6 @@
 #ifndef AUDIOSCRIPTCOMPILER_H
 #define AUDIOSCRIPTCOMPILER_H
 
-#include <QString>
-#include <QStringList>
 #include <QObject>
 
 class AudioScriptCompiler : public QObject

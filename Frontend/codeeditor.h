@@ -1,16 +1,14 @@
 #ifndef CODEEDITOR_H
 #define CODEEDITOR_H
 
-#include <QPlainTextEdit>
 #include <QObject>
-#include <QSyntaxHighlighter>
-#include <QVector>
-#include <QRegularExpression>
-#include <QPaintEvent>
-#include <QResizeEvent>
-#include <QSize>
-#include <QWidget>
 #include <QTextCharFormat>
+#include <QPlainTextEdit>
+#include <QSyntaxHighlighter>
+#include <QRegularExpression>
+
+class QPaintEvent;
+class QResizeEvent;
 
 struct TextCharFormatPack
 {

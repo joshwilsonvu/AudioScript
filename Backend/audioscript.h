@@ -21,9 +21,9 @@ public:
     AudioScript();
     virtual ~AudioScript();
 
-    virtual void process(std::vector<sample_t>& samples) = 0;
+    virtual sample_t process(sample_t sample) = 0;
 
-    QString name() const;
+    virtual QString name() const final;
 
 // Protected methods: methods for use in derived classes
 protected:
@@ -46,45 +46,5 @@ private:
     AudioScriptLibrary* m_library; // non-owning
     bool m_enabled;
 };
-
-/*
-template <typename T>
-bool AudioScript::SetParameter::operator() (const std::string& fieldName, T& field)
-{
-    if (m_value && m_param == fieldName) {
-        field = *reinterpret_cast<const T*>(m_value);
-        return true;
-    }
-    return false;
-}
-*/
-/*
-template <typename Derived>
-void AudioScript::registerMember(double Derived::* d_member, const std::string& name)
-{
-    getLibrary()->registerMember(AudioScriptVariant(static_cast<double AudioScript::*>(d_member), name));
-}
-
-template <typename Derived>
-void AudioScript::registerMember(float Derived::* f_member, const std::string& name)
-{
-    getLibrary()->registerMember(AudioScriptVariant(static_cast<float AudioScript::*>(f_member), name));
-}
-
-template <typename Derived>
-void AudioScript::registerMember(bool Derived::* b_member, const std::string& name)
-{
-    getLibrary()->registerMember(AudioScriptVariant(static_cast<bool AudioScript::*>(b_member), name));
-}
-
-template <typename Derived>
-void AudioScript::registerMember(int Derived::* i_member, const std::string& name)
-{
-    getLibrary()->registerMember(AudioScriptVariant(static_cast<int AudioScript::*>(i_member), name));
-}
-*/
-
-
-
 
 #endif // AUDIOSCRIPT_H

@@ -1,14 +1,11 @@
 #include <limits>
 #include "sidewidgetbase.h"
 
-const QSize SideWidgetBase::m_size = QSize(300, 150);
-
 SideWidgetBase::SideWidgetBase(QWidget *parent, Qt::WindowFlags flags)
     : QWidget(parent, flags)
 {
-    setFixedWidth(m_size.width());
-    setMinimumHeight(m_size.height());
-    setMaximumHeight(QWidget::maximumHeight());
+    setFixedWidth(300);
+    setMinimumHeight(200);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
 }
 

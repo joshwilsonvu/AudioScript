@@ -1,5 +1,6 @@
 #include <QMessageBox>
 #include <QMapIterator>
+#include <QString>
 
 #include "audioscriptengine.h"
 #include "audioscript.h"

@@ -1,3 +1,4 @@
+#include "scriptwindow.h"
 #include "mainwindow.h"
 #include <QApplication>
 #include <QFile>
@@ -26,9 +27,11 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("VUSE Solutions");
     QCoreApplication::setApplicationName("AudioScript");
 
-    MainWindow w;
+    MainWindow m;
+    ScriptWindow s;
 
-    w.show();
+    m.show();
+    s.show();
 
     return app.exec();
 }

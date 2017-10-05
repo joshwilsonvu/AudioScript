@@ -1,0 +1,83 @@
+#ifndef SCRIPTWINDOW_H
+#define SCRIPTWINDOW_H
+
+#include <QMainWindow>
+
+#include "audioscriptcompiler.h"
+#include "audioscriptengine.h"
+#include "audioscriptlibrary.h"
+#include "classloader.h"
+
+class ClassDialog;
+class ApplicationOutput;
+class AudioControls;
+class CodeTabs;
+class QHBoxLayout;
+
+namespace Ui {
+class ScriptWindow;
+}
+
+// See documentation.txt for details
+class ScriptWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    explicit ScriptWindow(QWidget *parent = 0);
+    virtual ~ScriptWindow();
+
+    // return non-owning pointers to UI elements
+    ApplicationOutput* applicationOutput() const;
+    AudioControls* audioControls() const;
+
+protected:
+    virtual void closeEvent(QCloseEvent* event) override;
+
+private slots:
+    // The only reason MainWindow is delegating these
+    // functions is because they are connected to UI actions;
+    void newClass();
+    void openClass();
+    bool closeClass();
+    bool saveClass();
+    void setDirectory();
+    void about();
+
+    void build();
+    void clean();
+
+    void play();
+    void stop();
+
+    void clear();
+    void enableAll();
+    void disableAll();
+
+    // Other slots
+    void onDocumentModified();
+    void onClassNameChanged(QString className);
+
+private:
+    void setupUi();
+    void setupConnections();
+    void initActions();
+    void createStatusBar();
+
+    void readSettings();
+    void writeSettings();
+
+    // Frontend pointers
+    Ui::ScriptWindow* m_ui;
+    CodeTabs* m_editor;
+    ApplicationOutput* m_appOutput;
+
+    // Backend
+    ClassLoader* m_classLoader;
+
+    QSet<AudioScriptLibrary>* m_libraries;
+    AudioScriptEngine* m_engine;
+    AudioScriptCompiler* m_compiler;
+};
+
+#endif // SCRIPTWINDOW_H

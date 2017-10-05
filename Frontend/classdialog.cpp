@@ -17,7 +17,7 @@ ClassDialog::ClassDialog(ClassLoader* classLoader, QWidget* parent, Qt::WindowFl
 
     // Create layout with contents
     QVBoxLayout* groupLayout = new QVBoxLayout(this);
-    groupLayout->addWidget(m_classes);
+    groupLayout->addWidget(m_classes, 1);
 
     // Add to titled GroupBox
     m_groupBox->setLayout(groupLayout);
@@ -28,7 +28,6 @@ ClassDialog::ClassDialog(ClassLoader* classLoader, QWidget* parent, Qt::WindowFl
 
     connect(m_classes, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
             this, SLOT(onDoubleClicked(QListWidgetItem*)));
-    qDebug() << "Class widget constructed.";
 }
 
 ClassDialog::~ClassDialog()

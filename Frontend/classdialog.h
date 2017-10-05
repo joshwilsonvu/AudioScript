@@ -2,7 +2,7 @@
 #define CLASSWIDGET_H
 
 #include "sidewidgetbase.h"
-#include "mainwindow.h"
+#include "scriptwindow.h"
 #include "classloader.h"
 
 #include <QDialog>

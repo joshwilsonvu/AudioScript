@@ -1,10 +1,8 @@
 #ifndef AUDIOSCRIPTVARIANT_H
 #define AUDIOSCRIPTVARIANT_H
 
-#include <string>
 #include <functional>
 #include <exception>
-#include <QString>
 
 class bad_variant_access : public std::exception
 {
