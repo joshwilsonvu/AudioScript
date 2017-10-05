@@ -13,21 +13,12 @@ CodeTabs::CodeTabs(QWidget* parent) : QTabWidget(parent)
 CodeEditor* CodeTabs::header() const
 {
    CodeEditor* h = qobject_cast<CodeEditor*>(widget(0));
-   if (!h) {
-       qDebug() << "widget(0) failed cast to CodeEditor*";
-       h = (CodeEditor*) widget(0);
-   }
-
    return h;
 }
 
 CodeEditor* CodeTabs::source() const
 {
     CodeEditor* s = qobject_cast<CodeEditor*>(widget(1));
-    if (!s) {
-        qDebug() << "widget(1) failed cast to CodeEditor*";
-        s = (CodeEditor*) widget(1);
-    }
     return s;
 }
 

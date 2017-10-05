@@ -1,7 +1,8 @@
 #ifndef SCRIPTWINDOW_H
 #define SCRIPTWINDOW_H
 
-#include <QMainWindow>
+//#include <QMainWindow>
+#include <QWidget>
 
 #include "audioscriptcompiler.h"
 #include "audioscriptengine.h"
@@ -19,7 +20,7 @@ class ScriptWindow;
 }
 
 // See documentation.txt for details
-class ScriptWindow : public QMainWindow
+class ScriptWindow : public QWidget
 {
     Q_OBJECT
 
@@ -62,7 +63,6 @@ private:
     void setupUi();
     void setupConnections();
     void initActions();
-    void createStatusBar();
 
     void readSettings();
     void writeSettings();

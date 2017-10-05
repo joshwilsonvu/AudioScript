@@ -1,21 +1,23 @@
 #include <QPlainTextEdit>
-#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QGroupBox>
 #include <QFontMetrics>
 
 #include "applicationoutput.h"
 
 ApplicationOutput::ApplicationOutput(QWidget* parent, Qt::WindowFlags flags)
-    : SideWidgetBase(parent, flags),
+    : QWidget(parent, flags),
       m_display(new QPlainTextEdit(tr("Application output will be displayed here.\n")))
 {
     // Create layout with contents
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QHBoxLayout* layout = new QHBoxLayout(this);
     m_display->setReadOnly(true);
     m_display->setAutoFillBackground(false);
-    m_display->setMaximumBlockCount(128);
+    m_display->setMaximumBlockCount(1024);
     m_display->setCenterOnScroll(true);
-    m_display->setMinimumHeight(m_display->fontMetrics().height() * 8);
+    m_display->setFixedHeight(m_display->fontMetrics().height() * 8);
+    m_display->setMaximumWidth(QWidget::maximumWidth());
+    m_display->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     layout->addWidget(m_display, 1);
 }
 

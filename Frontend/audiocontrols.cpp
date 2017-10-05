@@ -6,7 +6,7 @@
 #include <QGridLayout>
 
 AudioControls::AudioControls(QWidget* parent, Qt::WindowFlags flags)
-    : SideWidgetBase(parent, flags),
+    : QWidget(parent, flags),
       m_play_b(new QToolButton(this)),
       m_pause_b(new QToolButton(this)),
       m_groupBox(new QGroupBox(tr("Audio Controls")))

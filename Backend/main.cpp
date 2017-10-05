@@ -1,4 +1,3 @@
-#include "scriptwindow.h"
 #include "mainwindow.h"
 #include <QApplication>
 #include <QFile>
@@ -28,10 +27,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("AudioScript");
 
     MainWindow m;
-    ScriptWindow s;
-
     m.show();
-    s.show();
 
     return app.exec();
 }

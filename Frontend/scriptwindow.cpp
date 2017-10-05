@@ -15,7 +15,7 @@
 #include "audiocontrols.h"
 
 ScriptWindow::ScriptWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QWidget(parent),
     m_ui(new Ui::ScriptWindow()), m_editor(Q_NULLPTR), m_classLoader(Q_NULLPTR),
     m_libraries(Q_NULLPTR), m_engine(Q_NULLPTR), m_compiler(Q_NULLPTR)
 {
@@ -28,7 +28,6 @@ ScriptWindow::ScriptWindow(QWidget *parent) :
     readSettings();
 
     initActions();
-    createStatusBar();
 
     m_editor->header()->setFocus();
 
@@ -77,7 +76,6 @@ void ScriptWindow::openClass()
 bool ScriptWindow::closeClass()
 {
     if (m_classLoader->closeClass()) {
-        //statusBar()->showMessage(tr("Class closed"), 5000);
         m_appOutput->append(tr("Class closed."));
         return true;
     }
@@ -100,7 +98,6 @@ void ScriptWindow::setDirectory()
     DirDialog* d = new DirDialog(m_classLoader->currentDirectory(), this);
     if (d->exec() == DirDialog::Accepted) {
         m_classLoader->setDirectory(d->selectedFiles().first());
-        //statusBar()->showMessage(m_classLoader->currentDirectory());
         m_appOutput->append(m_classLoader->currentDirectory());
     }
 }
@@ -159,21 +156,13 @@ void ScriptWindow::setupUi()
     constexpr int spacing = 6;
     constexpr int margin_dim = 10;
     QMargins margins(margin_dim, margin_dim, margin_dim, margin_dim);
-    //QSize minSize(QApplication::fontMetrics().averageCharWidth() * 25,
-    //              QApplication::fontMetrics().height() * 10);
-
-    m_ui->centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     // Lay out left, right
-    QGridLayout* layout = qobject_cast<QGridLayout*>(m_ui->centralWidget->layout());
+    QGridLayout* layout = m_ui->gridLayout;
     layout->setSpacing(spacing);
     layout->setContentsMargins(margins);
 
-    // Left side
-    m_appOutput = new ApplicationOutput(this);
-    layout->addWidget(m_appOutput, 0, 0);
-
-    // Right side
+    // Top
     m_editor = new CodeTabs();
     m_editor->setObjectName(QStringLiteral("editor"));
     m_editor->setEnabled(true);
@@ -181,7 +170,13 @@ void ScriptWindow::setupUi()
     m_editor->setFocusPolicy(Qt::StrongFocus);
     m_editor->header()->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     m_editor->source()->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    layout->addWidget(m_editor, 0, 1, -1, 1);
+    layout->addWidget(m_editor, 0, 0);
+    layout->setColumnStretch(0, 1);
+
+    // Bottom
+    m_appOutput = new ApplicationOutput(this);
+    layout->addWidget(m_appOutput, 1, 0);
+    layout->setColumnStretch(1, 0);
 
     setMinimumWidth(m_appOutput->minimumWidth() + m_editor->minimumWidth());
     setMinimumHeight(qMax(m_appOutput->minimumHeight(), m_editor->minimumHeight()));
@@ -235,11 +230,6 @@ void ScriptWindow::initActions() {
     m_ui->actionAbout_Qt->setStatusTip(tr("Show the Qt library's about box"));
     connect(m_ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
 
-}
-
-void ScriptWindow::createStatusBar()
-{
-    //statusBar()->showMessage(tr("Ready"), 5000);
 }
 
 void ScriptWindow::readSettings()

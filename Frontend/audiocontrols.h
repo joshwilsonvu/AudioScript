@@ -1,14 +1,14 @@
 #ifndef AUDIOCONTROLS_H
 #define AUDIOCONTROLS_H
 
-#include "sidewidgetbase.h"
+#include <QWidget>
 
 class QGroupBox;
 class QToolButton;
 
 // Graphical user interface that contains controls to play, pause, and otherwise
 // control audio processing and playback.
-class AudioControls : public SideWidgetBase
+class AudioControls : public QWidget
 {
     Q_OBJECT
 

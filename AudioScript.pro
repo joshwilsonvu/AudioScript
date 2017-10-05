@@ -39,7 +39,6 @@ SOURCES += \
     Frontend/codeeditor.cpp \
     Frontend/codetabs.cpp \
     Frontend/dialogs.cpp \
-    Frontend/sidewidgetbase.cpp \
     Frontend/classdialog.cpp \
     Frontend/scriptwindow.cpp \
     Frontend/mainwindow.cpp
@@ -56,7 +55,6 @@ HEADERS += \
     Frontend/codeeditor.h \
     Frontend/codetabs.h \
     Frontend/dialogs.h \
-    Frontend/sidewidgetbase.h \
     Frontend/classdialog.h \
     Frontend/scriptwindow.h \
     Frontend/mainwindow.h
