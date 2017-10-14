@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPointer>
+
+#include "scriptwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -15,8 +18,29 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void openScriptWindow();
+    void scriptWindowClosed();
+
+    void play();
+    void stop();
+
+    void reset();
+
 private:
+    // sets up editor and side windows
+    void setupUi();
+
+    // connects the menu bar actions to MainWindow slots
+    void initActions();
+
+    // connects internal components together
+    void setupConnections();
+
+    void readSettings();
+
     Ui::MainWindow *m_ui;
+    ScriptWindow* m_scriptWindow;
 };
 
 #endif // MAINWINDOW_H

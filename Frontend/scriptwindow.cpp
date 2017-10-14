@@ -19,9 +19,9 @@ ScriptWindow::ScriptWindow(QWidget *parent) :
     m_ui(new Ui::ScriptWindow()), m_editor(Q_NULLPTR), m_classLoader(Q_NULLPTR),
     m_libraries(Q_NULLPTR), m_engine(Q_NULLPTR), m_compiler(Q_NULLPTR)
 {
-    m_ui->setupUi(this); // sets up menu bar, status bar, actions
+    m_ui->setupUi(this); // sets up actions
 
-    setupUi(); // sets up editor and side windows
+    setupUi(); // sets up editor and output window
 
     setWindowIcon(QIcon(":/icons/application"));
 
@@ -121,30 +121,7 @@ void ScriptWindow::clean()
     m_compiler->clean(m_classLoader->currentClass());
 }
 
-void ScriptWindow::play()
-{
 
-}
-
-void ScriptWindow::stop()
-{
-
-}
-
-void ScriptWindow::clear()
-{
-    m_engine->clear();
-}
-
-void ScriptWindow::enableAll()
-{
-    m_engine->setAllEnabled(true);
-}
-
-void ScriptWindow::disableAll()
-{
-    m_engine->setAllEnabled(false);
-}
 
 void ScriptWindow::onDocumentModified()
 {
@@ -195,7 +172,7 @@ void ScriptWindow::setupConnections() {
 
 void ScriptWindow::initActions() {
     m_ui->actionNew->setShortcut(QKeySequence::New);
-    m_ui->actionNew->setWhatsThis(tr("Create a new class"));
+    m_ui->actionNew->setStatusTip(tr("Create a new class"));
     connect(m_ui->actionNew, SIGNAL(triggered(bool)),
             this, SLOT(newClass()));
 
@@ -220,7 +197,7 @@ void ScriptWindow::initActions() {
 
     m_ui->actionQuit->setShortcut(QKeySequence::Quit);
     connect(m_ui->actionQuit, SIGNAL(triggered(bool)),
-            this, SLOT(close()));
+            QApplication::instance(), SLOT(quit()));
 
     m_ui->actionAbout->setShortcut(QKeySequence::HelpContents);
     m_ui->actionAbout->setStatusTip(tr("About AudioScript"));

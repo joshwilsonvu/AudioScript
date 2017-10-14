@@ -1,6 +1,5 @@
 TODO
 Bugs
-DONE use QObject::disconnect to take care of closing errors where emitted signals like changed() cause slots to be called on destroyed objects
 DONE fix replacement in files so that the entered class name actually replaces CLASSNAME in the default file
 Future
 create a class list widget in which double-clicking opens the class
@@ -24,4 +23,4 @@ their parameters. By supplying a library of AudioScripts, users will be able to
 use the application without having to write any code.
 --Make the current MainWindow (coding AudioScripts) the secondary window to the
 new branch (linking AudioScripts together).
---Adjust AudioScript process() function to take and return a single sample, take care of buffering behind the scenes. Get rid of the ugly std::vector<sample_t>& parameter and take sample_t instead.
+--Decouple ClassLoader and CodeTabs using signals containing text to be loaded/text to be saved.

@@ -48,13 +48,6 @@ private slots:
     void build();
     void clean();
 
-    void play();
-    void stop();
-
-    void clear();
-    void enableAll();
-    void disableAll();
-
     // Other slots
     void onDocumentModified();
     void onClassNameChanged(QString className);

@@ -17,6 +17,7 @@ CodeEditor::CodeEditor(QWidget *parent)
     font.setFamily("Monaco");
     font.setStyleHint(QFont::Monospace);
     font.setFixedPitch(true);
+    font.setPointSize(11);
     setFont(font);
     int tabWidth = 4;
     QFontMetrics metrics(font);
