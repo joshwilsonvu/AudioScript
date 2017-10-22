@@ -41,7 +41,8 @@ SOURCES += \
     Frontend/dialogs.cpp \
     Frontend/classdialog.cpp \
     Frontend/scriptwindow.cpp \
-    Frontend/mainwindow.cpp
+    Frontend/mainwindow.cpp \
+    Frontend/utils.cpp
 
 HEADERS += \
     Backend/audioscript.h \
@@ -57,7 +58,8 @@ HEADERS += \
     Frontend/dialogs.h \
     Frontend/classdialog.h \
     Frontend/scriptwindow.h \
-    Frontend/mainwindow.h
+    Frontend/mainwindow.h \
+    Frontend/utils.h
 
 FORMS += \
     Frontend/mainwindow.ui \
@@ -70,3 +72,5 @@ RESOURCES += \
 INCLUDEPATH += \
     Backend \
     Frontend
+
+DEFINES +=

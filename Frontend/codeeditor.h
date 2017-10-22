@@ -73,7 +73,7 @@ private:
         TextCharFormatPack formats;
 
     protected:
-        virtual void highlightBlock(QString text) override;
+        virtual void highlightBlock(const QString& text) override;
 
     private:
         void handleMultiLineComments(QString text);
