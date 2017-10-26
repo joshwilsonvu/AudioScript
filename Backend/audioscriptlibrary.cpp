@@ -35,12 +35,12 @@ bool AudioScriptLibrary::spawnable() const
     return m_spawnFunction;
 }
 
-AudioScript* AudioScriptLibrary::spawn()
+std::unique_ptr<AudioScript> AudioScriptLibrary::spawn()
 {
     if (!spawnable()) {
         return Q_NULLPTR;
     }
-    AudioScript* audioScript = m_spawnFunction();
+    std::unique_ptr<AudioScript> audioScript(m_spawnFunction());
     audioScript->setLibrary(this);
     return audioScript;
 }

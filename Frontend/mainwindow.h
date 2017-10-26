@@ -27,6 +27,9 @@ public slots:
 
     void reset();
 
+protected:
+    virtual void closeEvent(QCloseEvent* event) override;
+
 private:
     // sets up editor and side windows
     void setupUi();

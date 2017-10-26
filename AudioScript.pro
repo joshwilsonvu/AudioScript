@@ -74,3 +74,6 @@ INCLUDEPATH += \
     Frontend
 
 DEFINES +=
+
+DISTFILES += \
+    README.md

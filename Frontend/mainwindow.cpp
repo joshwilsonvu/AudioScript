@@ -57,6 +57,16 @@ void MainWindow::reset()
 
 }
 
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    if ((!m_scriptWindow || m_scriptWindow->close())/* && more*/) {
+        event->accept();
+        QApplication::instance()->quit();
+    } else {
+        event->ignore();
+    }
+}
+
 void MainWindow::setupUi()
 {
 

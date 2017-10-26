@@ -49,6 +49,7 @@ void ScriptWindow::closeEvent(QCloseEvent *event)
     if (m_classLoader->closeClass()) {
         writeSettings();
         event->accept();
+        deleteLater();
     } else {
         event->ignore();
     }

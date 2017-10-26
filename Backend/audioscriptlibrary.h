@@ -2,6 +2,7 @@
 #define AUDIOSCRIPTLIBRARY_H
 
 #include <string>
+#include <memory>
 
 #include <QLibrary>
 #include <QString>
@@ -22,7 +23,7 @@ public:
     QString errorString() const; // the string reported if the library has an error
 
     bool spawnable() const;
-    AudioScript* spawn(); // dynamically allocated
+    std::unique_ptr<AudioScript> spawn();
 
     void registerMember(AudioScriptVariant&& member, const std::string& name);
 
