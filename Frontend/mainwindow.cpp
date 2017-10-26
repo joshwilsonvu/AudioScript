@@ -69,6 +69,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::setupUi()
 {
+    m_blockArea = new BlockArea(this);
 
 }
 

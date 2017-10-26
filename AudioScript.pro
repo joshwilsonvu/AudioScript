@@ -42,7 +42,8 @@ SOURCES += \
     Frontend/classdialog.cpp \
     Frontend/scriptwindow.cpp \
     Frontend/mainwindow.cpp \
-    Frontend/utils.cpp
+    Frontend/utils.cpp \
+    Frontend/blockarea.cpp
 
 HEADERS += \
     Backend/audioscript.h \
@@ -59,7 +60,8 @@ HEADERS += \
     Frontend/classdialog.h \
     Frontend/scriptwindow.h \
     Frontend/mainwindow.h \
-    Frontend/utils.h
+    Frontend/utils.h \
+    Frontend/blockarea.h
 
 FORMS += \
     Frontend/mainwindow.ui \

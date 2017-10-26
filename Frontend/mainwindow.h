@@ -5,6 +5,7 @@
 #include <QPointer>
 
 #include "scriptwindow.h"
+#include "blockarea.h"
 
 namespace Ui {
 class MainWindow;
@@ -44,6 +45,7 @@ private:
 
     Ui::MainWindow *m_ui;
     ScriptWindow* m_scriptWindow;
+    BlockArea* m_blockArea;
 };
 
 #endif // MAINWINDOW_H

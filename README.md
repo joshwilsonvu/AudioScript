@@ -1,8 +1,8 @@
-#AudioScript
+# AudioScript
 
 *A scriptable, real-time audio processing playground.*
 
-![./audioscript512.png)](./audioscript512.png)
+![AudioScript Logo)](Resources/audioscript512.png)
 
 Mission Statement: To provide software that makes real-time audio
 processing intuitive, simple, and responsive for all users, while
