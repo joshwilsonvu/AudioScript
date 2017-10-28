@@ -1,22 +1,20 @@
 #ifndef AUDIOSCRIPTCOMPILER_H
 #define AUDIOSCRIPTCOMPILER_H
 
-#include <QObject>
+#include <QString>
 
-class AudioScriptCompiler : public QObject
+class AudioScriptCompiler
 {
-    Q_OBJECT
-
 public:
-    explicit AudioScriptCompiler(QObject* parent = Q_NULLPTR);
-    ~AudioScriptCompiler() override;
 
-    bool build(QString className);
+    static bool build(QString className);
 
-    bool clean(QString className);
+    static bool clean(QString className);
 
 private:
-    // pointer to corresponding
+    AudioScriptCompiler() = delete;
+    ~AudioScriptCompiler() = delete;
+
 };
 
 #endif // AUDIOSCRIPTCOMPILER_H

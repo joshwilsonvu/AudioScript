@@ -6,8 +6,12 @@
 
 #include "codetabs.h"
 
-class ScriptWindow;
-class ClassDialog;
+// change ClassLoader to FilesLoader, on slot load(QStringList filenames)
+// emit signal loaded(QStringList files)
+// load files atomically -- true if all succeed, false and no change otherwise
+// slot save(QStringList filenames, QStringList files);
+// emit signal saved(QStringList files)
+
 class QFileSystemWatcher;
 
 class ClassLoader : public QObject

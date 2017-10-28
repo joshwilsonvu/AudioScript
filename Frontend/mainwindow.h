@@ -2,10 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPointer>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
 #include "scriptwindow.h"
-#include "blockarea.h"
 
 namespace Ui {
 class MainWindow;
@@ -45,7 +45,8 @@ private:
 
     Ui::MainWindow *m_ui;
     ScriptWindow* m_scriptWindow;
-    BlockArea* m_blockArea;
+    QGraphicsScene* m_graphicsScene;
+    QGraphicsView* m_graphicsView;
 };
 
 #endif // MAINWINDOW_H

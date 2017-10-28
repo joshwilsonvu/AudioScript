@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+namespace AS {
 
 // converts dBFS to positive linear amplitude (sample)
 float dB2amp(float dB);
@@ -15,7 +16,6 @@ float clamp(float x, float low, float high);
 // returns x clamped between -1 and 1, inclusive
 float clamp(float x);
 
-
-
+}
 
 #endif // UTILS_H

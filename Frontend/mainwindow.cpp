@@ -1,10 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "graphicsblock.h"
+
+#include <QGraphicsScene>
+#include <QGridLayout>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
-    m_scriptWindow(Q_NULLPTR)
+    m_scriptWindow(Q_NULLPTR),
+    m_graphicsScene(new QGraphicsScene(0,0,1,1,this))
 {
     m_ui->setupUi(this); // sets up menu bar, status bar, actions
 
@@ -69,8 +74,26 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::setupUi()
 {
-    m_blockArea = new BlockArea(this);
 
+    m_graphicsScene->setBackgroundBrush(Qt::white);
+
+    m_graphicsView = new QGraphicsView(m_graphicsScene, this);
+    m_graphicsView->setRenderHint(QPainter::Antialiasing);
+    m_graphicsView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+
+    constexpr int spacing = 6;
+    constexpr int margin_dim = 10;
+    QMargins margins(margin_dim, margin_dim, margin_dim, margin_dim);
+
+    QGridLayout* layout = new QGridLayout(m_ui->centralwidget);
+
+    layout->setSpacing(spacing);
+    layout->setContentsMargins(margins);
+
+    layout->addWidget(m_graphicsView, 0, 0);
+    layout->setColumnStretch(0, 1);
+
+    m_graphicsScene->addItem(new GraphicsBlock(0, "Hello"));
 }
 
 void MainWindow::initActions()

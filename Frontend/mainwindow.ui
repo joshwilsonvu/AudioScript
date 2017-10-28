@@ -44,7 +44,6 @@
    <addaction name="menuFile"/>
    <addaction name="menuScript"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
    <property name="text">
     <string>New</string>
