@@ -93,7 +93,7 @@ void MainWindow::setupUi()
     layout->addWidget(m_graphicsView, 0, 0);
     layout->setColumnStretch(0, 1);
 
-    m_graphicsScene->addItem(new AudioBlock(0, "Hello"));
+    m_graphicsScene->addItem(new AudioBlock(Q_NULLPTR));
 }
 
 void MainWindow::initActions()

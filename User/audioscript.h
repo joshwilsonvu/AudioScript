@@ -21,7 +21,7 @@ public:
     AudioScript();
     virtual ~AudioScript();
 
-    virtual sample_t process(sample_t sample) = 0;
+    virtual sample_t process(sample_t sample);
 
     virtual QString name() const final;
 

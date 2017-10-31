@@ -27,53 +27,58 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += qt debug
 
 SOURCES += \
-    Backend/audioscript.cpp \
-    Backend/audioscriptcompiler.cpp \
-    Backend/audioscriptengine.cpp \
-    Backend/audioscriptlibrary.cpp \
-    Backend/audioscriptvariant.cpp \
-    Backend/classloader.cpp \
-    Backend/main.cpp \
-    Frontend/applicationoutput.cpp \
-    Frontend/audiocontrols.cpp \
-    Frontend/codeeditor.cpp \
-    Frontend/codetabs.cpp \
-    Frontend/dialogs.cpp \
-    Frontend/classdialog.cpp \
-    Frontend/scriptwindow.cpp \
-    Frontend/mainwindow.cpp \
-    Frontend/utils.cpp \
-    Frontend/audioblock.cpp
+    BlockArea/audioblock.cpp \
+    Compilation/audioscriptcompiler.cpp \
+    Editor/applicationoutput.cpp \
+    Editor/classdialog.cpp \
+    Editor/classloader.cpp \
+    Editor/codeeditor.cpp \
+    Editor/codetabs.cpp \
+    Editor/dialogs.cpp \
+    Editor/scriptwindow.cpp \
+    Engine/audioscriptengine.cpp \
+    Engine/audioscriptlibrary.cpp \
+    Engine/audioscriptvariant.cpp \
+    Main/main.cpp \
+    Main/mainwindow.cpp \
+    User/audioscript.cpp \
+    User/utils.cpp
+
 
 HEADERS += \
-    Backend/audioscript.h \
-    Backend/audioscriptcompiler.h \
-    Backend/audioscriptengine.h \
-    Backend/audioscriptlibrary.h \
-    Backend/audioscriptvariant.h \
-    Backend/classloader.h \
-    Frontend/applicationoutput.h \
-    Frontend/audiocontrols.h \
-    Frontend/codeeditor.h \
-    Frontend/codetabs.h \
-    Frontend/dialogs.h \
-    Frontend/classdialog.h \
-    Frontend/scriptwindow.h \
-    Frontend/mainwindow.h \
-    Frontend/utils.h \
-    Frontend/audioblock.h
+    BlockArea/audioblock.h \
+    Compilation/audioscriptcompiler.h \
+    Editor/applicationoutput.h \
+    Editor/classdialog.h \
+    Editor/classloader.h \
+    Editor/codeeditor.h \
+    Editor/codetabs.h \
+    Editor/dialogs.h \
+    Editor/scriptwindow.h \
+    Engine/audioscriptengine.h \
+    Engine/audioscriptlibrary.h \
+    Engine/audioscriptvariant.h \
+    Main/mainwindow.h \
+    User/audioscript.h \
+    User/utils.h
+
 
 FORMS += \
-    Frontend/mainwindow.ui \
-    Frontend/scriptwindow.ui
+    Editor/scriptwindow.ui \
+    Main/mainwindow.ui
+
 
 RESOURCES += \
     Resources/resources.qrc \
     Resources/style.qrc
 
 INCLUDEPATH += \
-    Backend \
-    Frontend
+    BlockArea \
+    Compilation \
+    Editor \
+    Engine \
+    Main \
+    User
 
 DEFINES +=
 

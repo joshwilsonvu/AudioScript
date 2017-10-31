@@ -7,6 +7,12 @@ AudioScript::AudioScript()
 // virtual
 AudioScript::~AudioScript() {}
 
+// virtual
+sample_t AudioScript::process(sample_t sample)
+{
+    return sample;
+}
+
 /*
 bool AudioScript::setParameter(const std::string &parameter, void *value) {
      // example code

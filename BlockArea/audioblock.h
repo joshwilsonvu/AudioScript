@@ -38,6 +38,8 @@ private:
 
     QString m_text;
     QPointF m_sz;
+
+    static const int k_spacing = 10;
 };
 
 // removes block from its chain but does not break the chain

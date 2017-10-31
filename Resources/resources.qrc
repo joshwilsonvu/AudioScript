@@ -13,7 +13,7 @@
         <file alias="application">audioscript512.png</file>
     </qresource>
     <qresource prefix="/cpp">
-        <file alias="audioscript.h">../Backend/audioscript.h</file>
-        <file alias="audioscript.cpp">../Backend/audioscript.cpp</file>
+        <file alias="audioscript.h">../User/audioscript.h</file>
+        <file alias="audioscript.cpp">../User/audioscript.cpp</file>
     </qresource>
 </RCC>

@@ -1,6 +1,8 @@
 #include "audioblock.h"
 #include "audioscript.h"
 
+#include <QApplication>
+#include <QFontMetrics>
 #include <QPainter>
 #include <QPointF>
 #include <QStyleOptionGraphicsItem>
@@ -8,13 +10,20 @@
 AudioBlock::AudioBlock(AudioScript* script, QGraphicsItem* parent)
     : AudioBlock(script, Q_NULLPTR, Q_NULLPTR, parent)
 {
+
 }
 
 AudioBlock::AudioBlock(AudioScript* script, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
-    : QGraphicsItem(parent), m_script(script), m_sz()
+    : QGraphicsItem(parent), m_script(script), m_text("DEFAULT")
 {
     link(this, next);
     link(prev, this);
+    if (m_script) {
+        m_text = m_script->name();
+    }
+
+    m_sz = QPointF(QApplication::fontMetrics().width(m_text) + 2 * k_spacing,
+                   QApplication::fontMetrics().height() + 2 * k_spacing);
 }
 
 AudioBlock::~AudioBlock()
@@ -41,7 +50,7 @@ void AudioBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     rect.adjust(0.5f*pw,0.5f*pw, -0.5f*pw, -0.5f*pw);
     painter->setBrush(Qt::lightGray);
     painter->setPen(QPen(Qt::black, pw));
-    painter->drawRoundedRect(rect, rect.width()/5, rect.height()/5);
+    painter->drawRoundedRect(rect, k_spacing, k_spacing);
     painter->drawText(rect, m_text, QTextOption(Qt::AlignCenter));
 }
 
@@ -60,7 +69,7 @@ AudioBlock* AudioBlock::prev() const
     return m_prev;
 }
 
-void AudioBlock::link(AudioBlock* first, AudioBlock* second)
+void link(AudioBlock* first, AudioBlock* second)
 {
     if (first) {
         if (first->m_next) {
