@@ -4,7 +4,7 @@
 
 ![AudioScript Logo)](Resources/audioscript512.png)
 
-Mission Statement: To provide software that makes real-time audio
+**Mission:** To provide software that makes real-time audio
 processing intuitive, simple, and responsive for all users, while
 enabling users familiar with C++ to create and integrate their
 own audio processing code.

@@ -43,7 +43,7 @@ SOURCES += \
     Frontend/scriptwindow.cpp \
     Frontend/mainwindow.cpp \
     Frontend/utils.cpp \
-    Frontend/graphicsblock.cpp
+    Frontend/audioblock.cpp
 
 HEADERS += \
     Backend/audioscript.h \
@@ -61,7 +61,7 @@ HEADERS += \
     Frontend/scriptwindow.h \
     Frontend/mainwindow.h \
     Frontend/utils.h \
-    Frontend/graphicsblock.h
+    Frontend/audioblock.h
 
 FORMS += \
     Frontend/mainwindow.ui \

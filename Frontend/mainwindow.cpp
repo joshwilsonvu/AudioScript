@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "graphicsblock.h"
+#include "audioblock.h"
 
 #include <QGraphicsScene>
 #include <QGridLayout>
@@ -93,7 +93,7 @@ void MainWindow::setupUi()
     layout->addWidget(m_graphicsView, 0, 0);
     layout->setColumnStretch(0, 1);
 
-    m_graphicsScene->addItem(new GraphicsBlock(0, "Hello"));
+    m_graphicsScene->addItem(new AudioBlock(0, "Hello"));
 }
 
 void MainWindow::initActions()
