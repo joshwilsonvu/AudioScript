@@ -42,7 +42,9 @@ SOURCES += \
     Main/main.cpp \
     Main/mainwindow.cpp \
     User/audioscript.cpp \
-    User/utils.cpp
+    User/utils.cpp \
+    User/audioscriptfactory.cpp \
+    Engine/audioscriptwrapper.cpp
 
 
 HEADERS += \
@@ -60,7 +62,9 @@ HEADERS += \
     Engine/audioscriptvariant.h \
     Main/mainwindow.h \
     User/audioscript.h \
-    User/utils.h
+    User/utils.h \
+    User/audioscriptfactory.h \
+    Engine/audioscriptwrapper.h
 
 
 FORMS += \

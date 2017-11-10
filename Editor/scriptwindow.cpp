@@ -12,7 +12,6 @@
 // GUI interfaces on side areas
 #include "classdialog.h"
 #include "applicationoutput.h"
-#include "audiocontrols.h"
 
 ScriptWindow::ScriptWindow(QWidget *parent) :
     QWidget(parent),

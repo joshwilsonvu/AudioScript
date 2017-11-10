@@ -3,6 +3,7 @@
         <file alias="header">DefaultCppHeader.hpp</file>
         <file alias="source">DefaultCppSource.cpp</file>
         <file alias="intro">Intro.h</file>
+        <file alias="pro">DefaultProFile.pro</file>
     </qresource>
     <qresource prefix="/docs">
         <file alias="about">about.txt</file>

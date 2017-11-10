@@ -2,17 +2,18 @@
 #include "audioscriptlibrary.h"
 
 // class AudioScriptLibrary
-AudioScriptLibrary::AudioScriptLibrary(QString name)
-    : m_name(name),
-      m_library(name),
-      m_spawnFunction(Q_NULLPTR)
+AudioScriptLibrary::AudioScriptLibrary(QPluginLoader&& plugin)
+    : m_plugin(plugin)
 {
-    if (!m_library.isLoaded()) {
-        return;
-    }
-    m_spawnFunction = reinterpret_cast<SpawnFunction>
-            (m_library.resolve("spawn"));
-    // m_spawnFunction only non-Q_NULLPTR if everything has gone well
+    m_factory = qobject_cast<AudioScriptFactory*>(m_plugin.instance());
+    // m_factory only non-Q_NULLPTR if everything has gone well
+}
+
+AudioScriptLibrary::AudioScriptLibrary(QPluginLoader&& plugin)
+    : m_plugin(plugin), m_spawnFunction(Q_NULLPTR)
+{
+    AudioScript* instance = qobject_cast<AudioScript*>(m_plugin.instance());
+
 }
 
 AudioScriptLibrary::~AudioScriptLibrary()

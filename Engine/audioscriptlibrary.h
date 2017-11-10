@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 
-#include <QLibrary>
+#include <QPluginLoader>
 #include <QString>
 #include <QMap>
 
@@ -16,25 +16,25 @@ class AudioScript;
 // immutable, one-to-one library and AudioScript subclass
 class AudioScriptLibrary {
 public:
-    AudioScriptLibrary(QString name);
+    AudioScriptLibrary(QPluginLoader&& plugin);
     ~AudioScriptLibrary();
 
     QString name() const; // the name of the class subclassing AudioScript
-    QString errorString() const; // the string reported if the library has an error
+    /*debug*/QString errorString() const; // the string reported if the library has an error
 
     bool spawnable() const;
     std::unique_ptr<AudioScript> spawn();
 
-    void registerMember(AudioScriptVariant&& member, const std::string& name);
+    //void registerMember(AudioScriptVariant&& member, const std::string& name);
 
 private:
     typedef AudioScript* (*SpawnFunction)(void);
 
     QString m_name;
-    QLibrary m_library;
-    SpawnFunction m_spawnFunction;
+    QPluginLoader m_plugin;
+    AudioScriptFactory* m_factory;
 
-    QMap<QString, AudioScriptVariant> m_members;
+    //QMap<QString, AudioScriptVariant> m_members;
 };
 
 

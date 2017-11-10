@@ -1,7 +1,6 @@
 #ifndef CLASSWIDGET_H
 #define CLASSWIDGET_H
 
-#include "sidewidgetbase.h"
 #include "scriptwindow.h"
 #include "classloader.h"
 
