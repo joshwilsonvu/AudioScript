@@ -14,9 +14,6 @@ public:
     explicit AudioScriptEngine(QObject *parent = Q_NULLPTR);
     ~AudioScriptEngine();
 
-    void clear();
-
-    void setAllEnabled(bool enabled);
 
 signals:
 

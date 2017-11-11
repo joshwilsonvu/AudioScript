@@ -9,6 +9,7 @@
 #include <QMap>
 
 #include "audioscriptvariant.h"
+#include "audioscriptfactory.h"
 
 class AudioScript;
 

@@ -11,4 +11,7 @@ public:
     virtual std::string name();
 };
 
+// tells meta-object system about interface
+Q_DECLARE_INTERFACE(AudioScriptFactory, "com.VUSESolutions.AudioScript.AudioScriptFactory/1.0")
+
 #endif // AUDIOSCRIPTFACTORY_H

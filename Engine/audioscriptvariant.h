@@ -48,7 +48,7 @@ public:
     };
     MemberType type() const;
 
-    // throw bad type() does not match
+    // throw bad type() if type does not match
     double getDouble(AudioScript* audioScript);
     void setDouble(AudioScript* audioScript, double value);
     float getFloat(AudioScript* audioScript);

@@ -3,22 +3,15 @@
 
 // class AudioScriptLibrary
 AudioScriptLibrary::AudioScriptLibrary(QPluginLoader&& plugin)
-    : m_plugin(plugin)
+    : m_plugin(plugin.fileName())
 {
     m_factory = qobject_cast<AudioScriptFactory*>(m_plugin.instance());
     // m_factory only non-Q_NULLPTR if everything has gone well
 }
 
-AudioScriptLibrary::AudioScriptLibrary(QPluginLoader&& plugin)
-    : m_plugin(plugin), m_spawnFunction(Q_NULLPTR)
-{
-    AudioScript* instance = qobject_cast<AudioScript*>(m_plugin.instance());
-
-}
-
 AudioScriptLibrary::~AudioScriptLibrary()
 {
-    m_library.unload(); // release memory
+    m_plugin.unload(); // release memory
 }
 
 QString AudioScriptLibrary::name() const
@@ -28,12 +21,12 @@ QString AudioScriptLibrary::name() const
 
 QString AudioScriptLibrary::errorString() const
 {
-    return m_library.errorString();
+    return m_plugin.errorString();
 }
 
 bool AudioScriptLibrary::spawnable() const
 {
-    return m_spawnFunction;
+    return m_factory;
 }
 
 std::unique_ptr<AudioScript> AudioScriptLibrary::spawn()
@@ -41,11 +34,10 @@ std::unique_ptr<AudioScript> AudioScriptLibrary::spawn()
     if (!spawnable()) {
         return Q_NULLPTR;
     }
-    std::unique_ptr<AudioScript> audioScript(m_spawnFunction());
-    audioScript->setLibrary(this);
+    std::unique_ptr<AudioScript> audioScript(m_factory->spawn());
     return audioScript;
 }
-
+/*
 void AudioScriptLibrary::registerMember(AudioScriptVariant&& variant, const std::string& name)
 {
     QString qstring_name = QString::fromStdString(name);
@@ -53,3 +45,4 @@ void AudioScriptLibrary::registerMember(AudioScriptVariant&& variant, const std:
         m_members.insert(qstring_name, variant);
     }
 }
+*/

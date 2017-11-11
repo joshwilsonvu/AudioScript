@@ -43,4 +43,7 @@ protected:
     void registerInt(std::function<int (AudioScript*)> getter, std::function<void (AudioScript*, int)> setter, const std::string& name);
 };
 
+// tells meta-object system about interface
+Q_DECLARE_INTERFACE(AudioScript, "com.VUSESolutions.AudioScript.AudioScript/1.0")
+
 #endif // AUDIOSCRIPT_H

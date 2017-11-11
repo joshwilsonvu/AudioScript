@@ -1,23 +1,15 @@
 #include "audioscript.h"
 #include "audioscriptengine.h"
 
-AudioScript::AudioScript()
-    : m_library(Q_NULLPTR), m_enabled(true) {}
+typedef typename AudioScript::sample_t sample_t;
+
+AudioScript::AudioScript() {}
 
 AudioScript::~AudioScript() {}
 
 sample_t AudioScript::process(sample_t sample)
 {
     return sample;
-}
-
-AudioScriptLibrary* AudioScript::getLibrary() {
-    return m_library;
-}
-
-// called by spawning library immediately after construction
-void AudioScript::setLibrary(AudioScriptLibrary* library) {
-    m_library = library;
 }
 
 

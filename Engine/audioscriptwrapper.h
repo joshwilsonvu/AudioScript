@@ -13,6 +13,8 @@ public:
     typedef typename AudioScript::sample_t sample_t;
     sample_t process(sample_t);
 
+    //bool has_vector_process();
+
 private:
     std::unique_ptr<AudioScript> m_audioScript;
     AudioScriptLibrary* m_library;
