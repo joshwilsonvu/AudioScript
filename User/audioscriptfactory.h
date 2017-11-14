@@ -6,9 +6,11 @@
 class AudioScriptFactory
 {
 public:
-    virtual AudioScript* spawn();
+    virtual ~AudioScriptFactory() = 0;
 
-    virtual std::string name();
+    virtual AudioScript* spawn() = 0;
+
+    virtual std::string name() = 0;
 };
 
 // tells meta-object system about interface

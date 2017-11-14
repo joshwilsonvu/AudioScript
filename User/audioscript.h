@@ -8,39 +8,37 @@
 // A default dialog is generated for the getter-setter pairs registered.
 //**********************
 
-// STL includes
-#include <string>
-#include <vector>
 
 #include "audioscriptlibrary.h"
 #include "audioscriptvariant.h"
 
-class QString;
-class AudioScriptEngine;
+//#define AS_ENABLE_DIALOG_METHOD
+//#define AS_ENABLE_REGISTER_METHODS
 
 class AudioScript
 {
-// Public methods: only the methods required by the UI
 public:
-
-    AudioScript();
-    virtual ~AudioScript();
-
-    // floating point sample type
+    // floating point sample type, valid range [-1, 1]
     typedef float sample_t;
 
-    virtual sample_t process(sample_t sample);
+    virtual ~AudioScript() = 0;
 
-    virtual QString name() const = 0;
+    virtual sample_t process(sample_t sample) = 0;
 
-    virtual void dialog(QWidget* );
+    virtual void reset() = 0;
 
-// Protected methods: methods for use in derived classes
+#ifdef AS_ENABLE_DIALOG_METHOD
+    virtual void dialog(QWidget* parent);
+#endif
+
+#ifdef AS_ENABLE_REGISTER_METHODS
 protected:
     void registerDouble(std::function<double (AudioScript*)> getter, std::function<void (AudioScript*, double)> setter, const std::string& name);
     void registerFloat(std::function<float (AudioScript*)> getter, std::function<void (AudioScript*, float)> setter, const std::string& name);
     void registerBool(std::function<bool (AudioScript*)> getter, std::function<void (AudioScript*, bool)> setter, const std::string& name);
     void registerInt(std::function<int (AudioScript*)> getter, std::function<void (AudioScript*, int)> setter, const std::string& name);
+#endif
+
 };
 
 // tells meta-object system about interface

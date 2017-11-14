@@ -5,21 +5,29 @@
 #include <QPointF>
 #include <QRectF>
 
-class AudioScript;
+class AudioScriptWrapper;
 
 class AudioBlock : public QGraphicsItem
 {
 public:
-    AudioBlock(AudioScript* script, QGraphicsItem* parent = 0);
-    AudioBlock(AudioScript* script, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
-    virtual ~AudioBlock();
+    typedef typename AudioScript::sample_t sample_t;
 
-    virtual QRectF boundingRect() const;
+    AudioBlock(AudioScript* script, AudioScriptLibrary* library, QGraphicsItem* parent = 0);
+    AudioBlock(AudioScriptWrapper* script, AudioScriptLibrary* library, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
+    virtual ~AudioBlock() override;
+
+    virtual QRectF boundingRect() const override;
 
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-                   QWidget *widget);
+                   QWidget *widget) override;
 
-    AudioScript* script() const;
+    sample_t process(sample_t);
+
+    void reset();
+
+    QString name() const;
+
+    AudioScriptWrapper* script() const;
 
     AudioBlock* next() const;
 
@@ -32,11 +40,10 @@ public:
 
 private:
     AudioScript* m_script;
+    AudioScriptLibrary* m_library;
     AudioBlock* m_next;
     AudioBlock* m_prev;
 
-
-    QString m_text;
     QPointF m_sz;
 
     static const int k_spacing = 10;

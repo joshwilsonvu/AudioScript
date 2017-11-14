@@ -1,5 +1,6 @@
 #include "audioblock.h"
 #include "audioscript.h"
+#include "audioscriptwrapper.h"
 
 #include <QApplication>
 #include <QFontMetrics>
@@ -7,23 +8,22 @@
 #include <QPointF>
 #include <QStyleOptionGraphicsItem>
 
-AudioBlock::AudioBlock(AudioScript* script, QGraphicsItem* parent)
-    : AudioBlock(script, Q_NULLPTR, Q_NULLPTR, parent)
+AudioBlock(AudioScript* script, AudioScriptLibrary* library, QGraphicsItem* parent)
+    : AudioBlock(script, library, Q_NULLPTR, Q_NULLPTR, parent)
 {
 
 }
-
-AudioBlock::AudioBlock(AudioScript* script, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
-    : QGraphicsItem(parent), m_script(script), m_text("DEFAULT")
+AudioBlock(AudioScriptWrapper* script, AudioScriptLibrary* library,
+           AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
+    : QGraphicsItem(parent), m_script(script), m_library(library)
 {
     link(this, next);
     link(prev, this);
-    if (m_script) {
-        m_text = m_script->name();
-    }
 
-    m_sz = QPointF(QApplication::fontMetrics().width(m_text) + 2 * k_spacing,
-                   QApplication::fontMetrics().height() + 2 * k_spacing);
+    if (m_library) {
+        m_sz = QPointF(QApplication::fontMetrics().width(m_library->name()) + 2 * k_spacing,
+                       QApplication::fontMetrics().height() + 2 * k_spacing);
+    }
 }
 
 AudioBlock::~AudioBlock()
@@ -54,7 +54,7 @@ void AudioBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     painter->drawText(rect, m_text, QTextOption(Qt::AlignCenter));
 }
 
-AudioScript* AudioBlock::script() const
+AudioScriptWrapper* AudioBlock::script() const
 {
     return m_script;
 }

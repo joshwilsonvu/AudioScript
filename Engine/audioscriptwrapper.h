@@ -9,9 +9,15 @@
 class AudioScriptWrapper
 {
 public:
-    AudioScriptWrapper(AudioScript* audioScript);
+    AudioScriptWrapper(AudioScript* audioScript, AudioScriptLibrary* library);
+
     typedef typename AudioScript::sample_t sample_t;
+
     sample_t process(sample_t);
+
+    void reset();
+
+    QString name() const;
 
     //bool has_vector_process();
 

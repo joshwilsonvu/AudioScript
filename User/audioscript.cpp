@@ -1,17 +1,6 @@
 #include "audioscript.h"
-#include "audioscriptengine.h"
 
-typedef typename AudioScript::sample_t sample_t;
-
-AudioScript::AudioScript() {}
-
-AudioScript::~AudioScript() {}
-
-sample_t AudioScript::process(sample_t sample)
-{
-    return sample;
-}
-
+#ifdef AS_ENABLE_REGISTER_METHODS
 
 void AudioScript::registerDouble(std::function<double(AudioScript*)> getter,
                                  std::function<void(AudioScript*, double)> setter,
@@ -38,3 +27,5 @@ void AudioScript::registerInt(std::function<int(AudioScript*)> getter,
 {
     getLibrary()->registerMember(AudioScriptVariant(getter, setter), name);
 }
+
+#endif
