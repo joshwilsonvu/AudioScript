@@ -7,15 +7,13 @@
 #include <QPointF>
 #include <QStyleOptionGraphicsItem>
 
-AudioBlock::AudioBlock(AudioScript* script, AudioScriptLibrary* library, QGraphicsItem* parent)
-    : AudioBlock(script, library, Q_NULLPTR, Q_NULLPTR, parent)
-{
+AudioBlock::AudioBlock(AudioScriptLibrary& library, QGraphicsItem* parent)
+    : AudioBlock(library, Q_NULLPTR, Q_NULLPTR, parent)
+{}
 
-}
-
-AudioBlock::AudioBlock(AudioScript* script, AudioScriptLibrary* library,
+AudioBlock::AudioBlock(AudioScriptLibrary& library,
            AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
-    : QGraphicsItem(parent), m_script(script), m_library(library),
+    : QGraphicsItem(parent), m_script(Q_NULLPTR), m_library(library),
       m_next(Q_NULLPTR), m_prev(Q_NULLPTR)
 {
     link(this, next);
@@ -23,12 +21,16 @@ AudioBlock::AudioBlock(AudioScript* script, AudioScriptLibrary* library,
 
     m_sz = QPointF(QApplication::fontMetrics().width(name()) + 2 * k_spacing,
                        QApplication::fontMetrics().height() + 2 * k_spacing);
+
+    if (m_library.spawnable()) {
+        m_script = m_library.spawn(); // generate script, owned
+    }
 }
 
 AudioBlock::~AudioBlock()
 {
-    // owns AudioScript instance
     unlink(this);
+    delete m_script;
 }
 
 QRectF AudioBlock::boundingRect() const
@@ -42,28 +44,33 @@ void AudioBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     Q_UNUSED(widget);
 
     QRectF rect = boundingRect();
-    qreal pw = 1.0f;
+    qreal penw = 1.f;
     // shrink drawing area for pen width
-    rect.adjust(0.5f*pw,0.5f*pw, -0.5f*pw, -0.5f*pw);
+    rect.adjust(0.5f*penw,0.5f*penw, -0.5f*penw, -0.5f*penw);
     painter->setBrush(Qt::lightGray);
-    painter->setPen(QPen(Qt::black, pw));
+    painter->setPen(QPen(Qt::black, penw));
     painter->drawRoundedRect(rect, k_spacing, k_spacing);
     painter->drawText(rect, name(), QTextOption(Qt::AlignCenter));
 }
 
 typename AudioBlock::sample_t AudioBlock::process(typename AudioBlock::sample_t sample)
 {
-    return m_script ? m_script->process(sample) : sample;
+    return m_script ? m_script->process(sample) : 0.f;
 }
 
 QString AudioBlock::name() const
 {
-    return m_library ? m_library->name() : "UNNAMED";
+    return m_library.name();
+}
+
+const AudioScriptLibrary& AudioBlock::library() const
+{
+    return m_library;
 }
 
 AudioScript* AudioBlock::script() const
 {
-    return m_script.get();
+    return m_script;
 }
 
 AudioBlock* AudioBlock::next() const

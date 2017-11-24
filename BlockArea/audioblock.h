@@ -15,8 +15,8 @@ class AudioBlock : public QGraphicsItem
 public:
     typedef typename AudioScript::sample_t sample_t;
 
-    AudioBlock(AudioScript* script, AudioScriptLibrary* library, QGraphicsItem* parent = 0);
-    AudioBlock(AudioScript* script, AudioScriptLibrary* library, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
+    AudioBlock(AudioScriptLibrary& library, QGraphicsItem* parent = 0);
+    AudioBlock(AudioScriptLibrary& library, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
     virtual ~AudioBlock() override;
 
     virtual QRectF boundingRect() const override;
@@ -30,6 +30,8 @@ public:
 
     QString name() const;
 
+    const AudioScriptLibrary& library() const;
+
     AudioScript* script() const;
 
     AudioBlock* next() const;
@@ -42,8 +44,10 @@ public:
 
 
 private:
-    std::unique_ptr<AudioScript> m_script;
-    AudioScriptLibrary* m_library;
+    // owns AudioScript instance
+    AudioScript* m_script;
+
+    AudioScriptLibrary& m_library;
     AudioBlock* m_next;
     AudioBlock* m_prev;
 
