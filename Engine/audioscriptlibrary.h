@@ -1,14 +1,13 @@
 #ifndef AUDIOSCRIPTLIBRARY_H
 #define AUDIOSCRIPTLIBRARY_H
 
-#include <string>
 #include <memory>
 
 #include <QPluginLoader>
 #include <QString>
-#include <QMap>
+//#include <QMap>
 
-#include "audioscriptvariant.h"
+#include "audioscript.h"
 #include "audioscriptfactory.h"
 
 class AudioScript;
@@ -29,10 +28,8 @@ public:
     //void registerMember(AudioScriptVariant&& member, const std::string& name);
 
 private:
-    typedef AudioScript* (*SpawnFunction)(void);
-
-    QString m_name;
     QPluginLoader m_plugin;
+    QString m_name;
     AudioScriptFactory* m_factory;
 
     //QMap<QString, AudioScriptVariant> m_members;

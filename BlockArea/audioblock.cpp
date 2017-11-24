@@ -1,6 +1,5 @@
 #include "audioblock.h"
 #include "audioscript.h"
-#include "audioscriptwrapper.h"
 
 #include <QApplication>
 #include <QFontMetrics>
@@ -8,30 +7,28 @@
 #include <QPointF>
 #include <QStyleOptionGraphicsItem>
 
-AudioBlock(AudioScript* script, AudioScriptLibrary* library, QGraphicsItem* parent)
+AudioBlock::AudioBlock(AudioScript* script, AudioScriptLibrary* library, QGraphicsItem* parent)
     : AudioBlock(script, library, Q_NULLPTR, Q_NULLPTR, parent)
 {
 
 }
-AudioBlock(AudioScriptWrapper* script, AudioScriptLibrary* library,
+
+AudioBlock::AudioBlock(AudioScript* script, AudioScriptLibrary* library,
            AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
-    : QGraphicsItem(parent), m_script(script), m_library(library)
+    : QGraphicsItem(parent), m_script(script), m_library(library),
+      m_next(Q_NULLPTR), m_prev(Q_NULLPTR)
 {
     link(this, next);
     link(prev, this);
 
-    if (m_library) {
-        m_sz = QPointF(QApplication::fontMetrics().width(m_library->name()) + 2 * k_spacing,
+    m_sz = QPointF(QApplication::fontMetrics().width(name()) + 2 * k_spacing,
                        QApplication::fontMetrics().height() + 2 * k_spacing);
-    }
 }
 
 AudioBlock::~AudioBlock()
 {
     // owns AudioScript instance
-    link(prev(), Q_NULLPTR);
-
-    delete m_script;
+    unlink(this);
 }
 
 QRectF AudioBlock::boundingRect() const
@@ -51,12 +48,22 @@ void AudioBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     painter->setBrush(Qt::lightGray);
     painter->setPen(QPen(Qt::black, pw));
     painter->drawRoundedRect(rect, k_spacing, k_spacing);
-    painter->drawText(rect, m_text, QTextOption(Qt::AlignCenter));
+    painter->drawText(rect, name(), QTextOption(Qt::AlignCenter));
 }
 
-AudioScriptWrapper* AudioBlock::script() const
+typename AudioBlock::sample_t AudioBlock::process(typename AudioBlock::sample_t sample)
 {
-    return m_script;
+    return m_script ? m_script->process(sample) : sample;
+}
+
+QString AudioBlock::name() const
+{
+    return m_library ? m_library->name() : "UNNAMED";
+}
+
+AudioScript* AudioBlock::script() const
+{
+    return m_script.get();
 }
 
 AudioBlock* AudioBlock::next() const

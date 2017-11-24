@@ -1,9 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "audioblock.h"
+#include "audioscriptlibrary.h"
 
 #include <QGraphicsScene>
 #include <QGridLayout>
+#include <QtDebug>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -93,7 +96,18 @@ void MainWindow::setupUi()
     layout->addWidget(m_graphicsView, 0, 0);
     layout->setColumnStretch(0, 1);
 
-    m_graphicsScene->addItem(new AudioBlock(Q_NULLPTR));
+    QPluginLoader loader("/Users/Josh/QProjects/build-MyScript-Desktop_Qt_5_9_2_clang_64bit-Debug/libMyScript.dylib");
+    qDebug() << loader.errorString();
+
+    AudioScriptLibrary* lib = Q_NULLPTR;
+    std::unique_ptr<AudioScript> script = Q_NULLPTR;
+    if (loader.isLoaded()) {
+        lib = new AudioScriptLibrary(std::move(loader));
+        if (lib->spawnable()) {
+            script = lib->spawn();
+        }
+    }
+    m_graphicsScene->addItem(new AudioBlock(script.get(), lib, Q_NULLPTR));
 }
 
 void MainWindow::initActions()

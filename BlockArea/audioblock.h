@@ -1,5 +1,8 @@
-#ifndef GRAPHICSBLOCK_H
-#define GRAPHICSBLOCK_H
+#ifndef AUDIOBLOCK_H
+#define AUDIOBLOCK_H
+
+#include "audioscript.h"
+#include "audioscriptlibrary.h"
 
 #include <QGraphicsItem>
 #include <QPointF>
@@ -13,7 +16,7 @@ public:
     typedef typename AudioScript::sample_t sample_t;
 
     AudioBlock(AudioScript* script, AudioScriptLibrary* library, QGraphicsItem* parent = 0);
-    AudioBlock(AudioScriptWrapper* script, AudioScriptLibrary* library, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
+    AudioBlock(AudioScript* script, AudioScriptLibrary* library, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
     virtual ~AudioBlock() override;
 
     virtual QRectF boundingRect() const override;
@@ -21,13 +24,13 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                    QWidget *widget) override;
 
-    sample_t process(sample_t);
+    sample_t process(sample_t sample);
 
     void reset();
 
     QString name() const;
 
-    AudioScriptWrapper* script() const;
+    AudioScript* script() const;
 
     AudioBlock* next() const;
 
@@ -39,7 +42,7 @@ public:
 
 
 private:
-    AudioScript* m_script;
+    std::unique_ptr<AudioScript> m_script;
     AudioScriptLibrary* m_library;
     AudioBlock* m_next;
     AudioBlock* m_prev;
@@ -54,4 +57,4 @@ void unlink(AudioBlock* block);
 // removes block from its chain and leaves chain broken
 void cut(AudioBlock* block);
 
-#endif // GRAPHICSBLOCK_H
+#endif // AUDIOBLOCK_H

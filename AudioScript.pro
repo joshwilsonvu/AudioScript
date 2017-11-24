@@ -41,10 +41,8 @@ SOURCES += \
     Engine/audioscriptvariant.cpp \
     Main/main.cpp \
     Main/mainwindow.cpp \
-    User/audioscript.cpp \
     User/utils.cpp \
-    User/audioscriptfactory.cpp \
-    Engine/audioscriptwrapper.cpp
+    User/audioscriptgui.cpp
 
 
 HEADERS += \
@@ -64,7 +62,7 @@ HEADERS += \
     User/audioscript.h \
     User/utils.h \
     User/audioscriptfactory.h \
-    Engine/audioscriptwrapper.h
+    User/audioscriptgui.h
 
 
 FORMS += \
@@ -82,7 +80,8 @@ INCLUDEPATH += \
     Editor \
     Engine \
     Main \
-    User
+    User \
+    Plugins
 
 DEFINES +=
 

@@ -1,5 +1,5 @@
-#ifndef CLASSWIDGET_H
-#define CLASSWIDGET_H
+#ifndef CLASSDIALOG_H
+#define CLASSDIALOG_H
 
 #include "scriptwindow.h"
 #include "classloader.h"
@@ -33,4 +33,4 @@ private:
     QString m_selectedClass;
 };
 
-#endif // CLASSWIDGET_H
+#endif // CLASSDIALOG_H
