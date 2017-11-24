@@ -2,7 +2,7 @@
 
 *A scriptable, real-time audio processing playground.*
 
-![AudioScript Logo)](Resources/audioscript512.png)
+![AudioScript Logo)](App/Resources/audioscript512.png)
 
 **Mission:** To provide software that makes real-time audio
 processing intuitive, simple, and responsive for all users, while
