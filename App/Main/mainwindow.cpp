@@ -6,6 +6,7 @@
 #include <QGraphicsScene>
 #include <QGridLayout>
 #include <QtDebug>
+#include <QDir>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -83,9 +84,10 @@ void MainWindow::setupUi()
     m_graphicsView = new QGraphicsView(m_graphicsScene, this);
     m_graphicsView->setRenderHint(QPainter::Antialiasing);
     m_graphicsView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    m_graphicsView->setFocusPolicy(Qt::NoFocus);
 
-    constexpr int spacing = 6;
-    constexpr int margin_dim = 10;
+    constexpr int spacing = 10;
+    constexpr int margin_dim = 30;
     QMargins margins(margin_dim, margin_dim, margin_dim, margin_dim);
 
     QGridLayout* layout = new QGridLayout(m_ui->centralwidget);
@@ -97,7 +99,7 @@ void MainWindow::setupUi()
     layout->setColumnStretch(0, 1);
 
     // debug code
-    AudioScriptLibrary* lib = new AudioScriptLibrary(QString("/Users/Josh/QProjects/build-MyScript-Desktop_Qt_5_9_2_clang_64bit-Debug/libMyScript.dylib"));
+    AudioScriptLibrary* lib = new AudioScriptLibrary(QString("../../../../BasicScript/libBasicScript.dylib"));
     m_graphicsScene->addItem(new AudioBlock(*lib, Q_NULLPTR)); // TODO fix memory leak
 }
 

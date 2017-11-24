@@ -16,7 +16,7 @@ public:
 
     virtual AudioScript* spawn() = 0;
 
-    virtual std::string name() = 0;
+    virtual const char* name() = 0;
 
     virtual void setupGUI(AudioScriptGUI& gui) = 0;
 };

@@ -11,7 +11,7 @@ AudioScriptLibrary::AudioScriptLibrary(QString filename)
         // m_factory only non-Q_NULLPTR if everything has gone well
         m_factory = qobject_cast<AudioScriptFactory*>(m_plugin.instance());
         // initialize m_name, only use const_cast in constructor
-        const_cast<QString&>(m_name) = QString::fromStdString(m_factory->name());
+        const_cast<QString&>(m_name) = m_factory->name();
     } else {
         qDebug() << "Failed to load plugin: " << errorString();
     }
