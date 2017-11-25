@@ -7,6 +7,9 @@
 #include <QtPlugin>
 
 #define AUDIOSCRIPTFACTORY_IID "com.VUSESolutions.AudioScript.AudioScriptFactory"
+#define AUDIOSCRIPTFACTORY Q_OBJECT \
+        Q_PLUGIN_METADATA(IID AUDIOSCRIPTFACTORY_IID) \
+        Q_INTERFACES(AudioScriptFactory)
 
 class AudioScriptFactory
 {

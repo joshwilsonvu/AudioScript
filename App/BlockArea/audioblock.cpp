@@ -7,11 +7,11 @@
 #include <QPointF>
 #include <QStyleOptionGraphicsItem>
 
-AudioBlock::AudioBlock(AudioScriptLibrary& library, QGraphicsItem* parent)
+AudioBlock::AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent)
     : AudioBlock(library, Q_NULLPTR, Q_NULLPTR, parent)
 {}
 
-AudioBlock::AudioBlock(AudioScriptLibrary& library,
+AudioBlock::AudioBlock(AudioScriptPlugin& library,
            AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
     : QGraphicsItem(parent), m_script(Q_NULLPTR), m_library(library),
       m_next(Q_NULLPTR), m_prev(Q_NULLPTR)
@@ -19,12 +19,14 @@ AudioBlock::AudioBlock(AudioScriptLibrary& library,
     link(this, next);
     link(prev, this);
 
-    m_sz = QPointF(QApplication::fontMetrics().width(name()) + 2 * k_spacing,
-                       QApplication::fontMetrics().height() + 2 * k_spacing);
+    m_sz.setY(QApplication::fontMetrics().height() + 2 * k_spacing);
+    m_sz.setX(qMin(QApplication::fontMetrics().width(name()) + 2 * k_spacing, (int)m_sz.y()));
 
     if (m_library.spawnable()) {
         m_script = m_library.spawn(); // generate script, owned
     }
+
+
 }
 
 AudioBlock::~AudioBlock()
@@ -63,7 +65,7 @@ QString AudioBlock::name() const
     return m_library.name();
 }
 
-const AudioScriptLibrary& AudioBlock::library() const
+const AudioScriptPlugin& AudioBlock::library() const
 {
     return m_library;
 }

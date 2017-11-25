@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "audioblock.h"
-#include "audioscriptlibrary.h"
+#include "audioscriptplugin.h"
 
 #include <QGraphicsScene>
 #include <QGridLayout>
@@ -13,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
     m_scriptWindow(Q_NULLPTR),
-    m_graphicsScene(new QGraphicsScene(0,0,1,1,this))
+    m_graphicsScene(new QGraphicsScene(0,0,1,1,this)),
+    m_engine(new AudioScriptEngine(this))
 {
     m_ui->setupUi(this); // sets up menu bar, status bar, actions
 
@@ -26,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     initActions();
 
     setupConnections();
+
+    m_engine->findPlugins();
 }
 
 MainWindow::~MainWindow()
@@ -49,6 +52,11 @@ void MainWindow::scriptWindowClosed()
 {
     m_scriptWindow = Q_NULLPTR;
     m_ui->actionOpen_Editor->setEnabled(true);
+}
+
+void MainWindow::onPluginFound(AudioScriptPlugin& plugin)
+{
+    m_graphicsScene->addItem(new AudioBlock(plugin));
 }
 
 void MainWindow::play()
@@ -99,8 +107,8 @@ void MainWindow::setupUi()
     layout->setColumnStretch(0, 1);
 
     // debug code
-    AudioScriptLibrary* lib = new AudioScriptLibrary(QString("../../../../BasicScript/libBasicScript.dylib"));
-    m_graphicsScene->addItem(new AudioBlock(*lib, Q_NULLPTR)); // TODO fix memory leak
+    //AudioScriptPlugin* lib = new AudioScriptPlugin(QString("../../../../BasicScript/libBasicScript.dylib"));
+    //m_graphicsScene->addItem(new AudioBlock(*lib, Q_NULLPTR)); // TODO fix memory leak
 }
 
 void MainWindow::initActions()
@@ -111,11 +119,14 @@ void MainWindow::initActions()
 
     connect(m_ui->actionOpen_Editor, SIGNAL(triggered(bool)),
             this, SLOT(openScriptWindow()));
+
+    connect(m_ui->actionOpenPlugin, SIGNAL(triggered(bool)),
+            m_engine, SLOT(findPlugins()));
 }
 
 void MainWindow::setupConnections()
 {
-
+    connect(m_engine, SIGNAL(pluginFound(AudioScriptPlugin&)), this, SLOT(onPluginFound(AudioScriptPlugin&)));
 }
 
 void MainWindow::readSettings()

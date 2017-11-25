@@ -2,7 +2,10 @@
 #include "basicscript.h"
 #include <iostream>
 
-BasicScriptFactory::~BasicScriptFactory() noexcept {}
+BasicScriptFactory::~BasicScriptFactory() noexcept
+{
+
+}
 
 AudioScript* BasicScriptFactory::spawn()
 {
@@ -11,7 +14,7 @@ AudioScript* BasicScriptFactory::spawn()
 
 const char* BasicScriptFactory::name()
 {
-    return "BasicScript";
+    return "BS";
 }
 
 void BasicScriptFactory::setupGUI(AudioScriptGUI& gui)

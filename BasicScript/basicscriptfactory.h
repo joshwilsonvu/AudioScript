@@ -6,9 +6,7 @@
 
 class BasicScriptFactory : public QObject, public AudioScriptFactory
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID AUDIOSCRIPTFACTORY_IID)
-    Q_INTERFACES(AudioScriptFactory)
+    AUDIOSCRIPTFACTORY
 
 public:
     ~BasicScriptFactory() noexcept override;

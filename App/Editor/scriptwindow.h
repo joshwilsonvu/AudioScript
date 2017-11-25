@@ -6,7 +6,7 @@
 
 #include "audioscriptcompiler.h"
 #include "audioscriptengine.h"
-#include "audioscriptlibrary.h"
+#include "audioscriptplugin.h"
 #include "classloader.h"
 
 class ClassDialog;
@@ -68,7 +68,7 @@ private:
     // Backend
     ClassLoader* m_classLoader;
 
-    QSet<AudioScriptLibrary>* m_libraries;
+    QSet<AudioScriptPlugin>* m_libraries;
     AudioScriptEngine* m_engine;
     AudioScriptCompiler* m_compiler;
 };

@@ -37,12 +37,12 @@ SOURCES += \
     Editor/dialogs.cpp \
     Editor/scriptwindow.cpp \
     Engine/audioscriptengine.cpp \
-    Engine/audioscriptlibrary.cpp \
     Engine/audioscriptvariant.cpp \
     Main/main.cpp \
     Main/mainwindow.cpp \
     User/utils.cpp \
-    User/audioscriptgui.cpp
+    User/audioscriptgui.cpp \
+    Engine/audioscriptplugin.cpp
 
 
 HEADERS += \
@@ -56,13 +56,13 @@ HEADERS += \
     Editor/dialogs.h \
     Editor/scriptwindow.h \
     Engine/audioscriptengine.h \
-    Engine/audioscriptlibrary.h \
     Engine/audioscriptvariant.h \
     Main/mainwindow.h \
     User/audioscript.h \
     User/utils.h \
     User/audioscriptfactory.h \
-    User/audioscriptgui.h
+    User/audioscriptgui.h \
+    Engine/audioscriptplugin.h
 
 
 FORMS += \

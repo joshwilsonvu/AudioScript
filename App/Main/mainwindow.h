@@ -6,6 +6,7 @@
 #include <QGraphicsView>
 
 #include "scriptwindow.h"
+#include "audioscriptengine.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +23,7 @@ public:
 public slots:
     void openScriptWindow();
     void scriptWindowClosed();
+    void onPluginFound(AudioScriptPlugin&);
 
     void play();
     void stop();
@@ -47,6 +49,7 @@ private:
     ScriptWindow* m_scriptWindow;
     QGraphicsScene* m_graphicsScene;
     QGraphicsView* m_graphicsView;
+    AudioScriptEngine* m_engine;
 };
 
 #endif // MAINWINDOW_H

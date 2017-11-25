@@ -12,12 +12,13 @@
 
 class AudioScript;
 
-// AudioScriptLibrary contains
-// immutable, one-to-one library and AudioScript subclass
-class AudioScriptLibrary {
+// AudioScriptPlugin
+// one-to-one library and AudioScript subclass
+class AudioScriptPlugin {
 public:
-    AudioScriptLibrary(QString filename);
-    ~AudioScriptLibrary();
+    AudioScriptPlugin(QString filename);
+    AudioScriptPlugin(AudioScriptPlugin&& rhs);
+    ~AudioScriptPlugin();
 
     QString name() const; // the name of the class subclassing AudioScript
     /*debug*/QString errorString() const; // the string reported if the library has an error
@@ -25,14 +26,10 @@ public:
     bool spawnable() const;
     AudioScript* spawn();
 
-    //void registerMember(AudioScriptVariant&& member, const std::string& name);
-
 private:
     QPluginLoader m_plugin;
     const QString m_name; // retrieved from plugin once, guaranteed constant
     AudioScriptFactory* m_factory;
-
-    //QMap<QString, AudioScriptVariant> m_members;
 };
 
 

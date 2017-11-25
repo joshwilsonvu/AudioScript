@@ -41,8 +41,15 @@
     </property>
     <addaction name="actionOpen_Editor"/>
    </widget>
+   <widget class="QMenu" name="menuPlugins">
+    <property name="title">
+     <string>Plugins</string>
+    </property>
+    <addaction name="actionOpenPlugin"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuScript"/>
+   <addaction name="menuPlugins"/>
   </widget>
   <action name="actionNew">
    <property name="text">
@@ -77,6 +84,11 @@
   <action name="actionOpen_Editor">
    <property name="text">
     <string>Open Editor</string>
+   </property>
+  </action>
+  <action name="actionOpenPlugin">
+   <property name="text">
+    <string>Open</string>
    </property>
   </action>
  </widget>

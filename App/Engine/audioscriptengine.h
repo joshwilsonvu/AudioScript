@@ -2,10 +2,10 @@
 #define AUDIOSCRIPTENGINE_H
 
 #include <QObject>
-#include <QMap>
+#include <map>
 #include <QList>
 
-#include "audioscriptlibrary.h"
+#include "audioscriptplugin.h"
 
 class AudioScriptEngine : public QObject
 {
@@ -16,15 +16,20 @@ public:
 
 
 signals:
+    void pluginFound(AudioScriptPlugin&);
 
 public slots:
     // make the engine aware of a new library
     // creates AudioScriptLibrary, adds to audioScriptLibraries, makes available
     //bool registerAudioScript(QString name);
+    void findPlugins();
 
 private:
-    QMap<QString, AudioScriptLibrary*> m_audioScriptLibraries;
-    QList<AudioScript*> m_activeAudioScripts;
+
+
+
+
+    std::map<QString, AudioScriptPlugin> m_audioScriptPlugins;
 };
 
 #endif // AUDIOSCRIPTENGINE_H

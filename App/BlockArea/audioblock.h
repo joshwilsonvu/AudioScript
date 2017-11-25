@@ -2,7 +2,7 @@
 #define AUDIOBLOCK_H
 
 #include "audioscript.h"
-#include "audioscriptlibrary.h"
+#include "audioscriptplugin.h"
 
 #include <QGraphicsItem>
 #include <QPointF>
@@ -15,8 +15,8 @@ class AudioBlock : public QGraphicsItem
 public:
     typedef typename AudioScript::sample_t sample_t;
 
-    AudioBlock(AudioScriptLibrary& library, QGraphicsItem* parent = 0);
-    AudioBlock(AudioScriptLibrary& library, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
+    AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent = 0);
+    AudioBlock(AudioScriptPlugin& library, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
     virtual ~AudioBlock() override;
 
     virtual QRectF boundingRect() const override;
@@ -30,7 +30,7 @@ public:
 
     QString name() const;
 
-    const AudioScriptLibrary& library() const;
+    const AudioScriptPlugin& library() const;
 
     AudioScript* script() const;
 
@@ -47,7 +47,7 @@ private:
     // owns AudioScript instance
     AudioScript* m_script;
 
-    AudioScriptLibrary& m_library;
+    AudioScriptPlugin& m_library;
     AudioBlock* m_next;
     AudioBlock* m_prev;
 
