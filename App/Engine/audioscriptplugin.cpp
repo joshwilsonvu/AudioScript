@@ -10,8 +10,9 @@ AudioScriptPlugin::AudioScriptPlugin(QString filename)
         // only use const_cast in constructor
         // m_factory only non-null if everything has gone well
         m_factory = qobject_cast<AudioScriptFactory*>(m_plugin.instance());
-        // initialize m_name
+        // initialize m_name and m_info
         const_cast<QString&>(m_name) = m_factory->name();
+        //const_cast<QString&>(m_info) = m_factory->scriptInfo();
     } else {
         qDebug() << "Failed to load plugin: " << errorString();
     }
@@ -33,6 +34,11 @@ AudioScriptPlugin::~AudioScriptPlugin()
 QString AudioScriptPlugin::name() const
 {
     return m_name;
+}
+
+QString AudioScriptPlugin::info() const
+{
+    return m_info;
 }
 
 QString AudioScriptPlugin::errorString() const

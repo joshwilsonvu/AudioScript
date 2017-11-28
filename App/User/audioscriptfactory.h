@@ -3,23 +3,27 @@
 
 #include "audioscript.h"
 #include "audioscriptgui.h"
+//#include "audioscript_global.h"
 #include <QObject>
 #include <QtPlugin>
 
-#define AUDIOSCRIPTFACTORY_IID "com.VUSESolutions.AudioScript.AudioScriptFactory"
+#define AUDIOSCRIPTFACTORY_IID "AudioScriptApp.AudioScriptFactory"
+
+// macro to be included in private section of subclasses
 #define AUDIOSCRIPTFACTORY Q_OBJECT \
-        Q_PLUGIN_METADATA(IID AUDIOSCRIPTFACTORY_IID) \
-        Q_INTERFACES(AudioScriptFactory)
+    Q_PLUGIN_METADATA(IID AUDIOSCRIPTFACTORY_IID) \
+    Q_INTERFACES(AudioScriptFactory)
 
 class AudioScriptFactory
 {
-
 public:
     virtual ~AudioScriptFactory() noexcept {}
 
     virtual AudioScript* spawn() = 0;
 
     virtual const char* name() = 0;
+
+    //virtual const char* scriptInfo() = 0;
 
     virtual void setupGUI(AudioScriptGUI& gui) = 0;
 };

@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QPointF>
 #include <QStyleOptionGraphicsItem>
+#include <QtDebug>
 
 AudioBlock::AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent)
     : AudioBlock(library, Q_NULLPTR, Q_NULLPTR, parent)
@@ -13,7 +14,7 @@ AudioBlock::AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent)
 
 AudioBlock::AudioBlock(AudioScriptPlugin& library,
            AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
-    : QGraphicsItem(parent), m_script(Q_NULLPTR), m_library(library),
+    : QGraphicsItem(parent), m_script(Q_NULLPTR), m_plugin(library),
       m_next(Q_NULLPTR), m_prev(Q_NULLPTR)
 {
     link(this, next);
@@ -22,8 +23,8 @@ AudioBlock::AudioBlock(AudioScriptPlugin& library,
     m_sz.setY(QApplication::fontMetrics().height() + 2 * k_spacing);
     m_sz.setX(qMin(QApplication::fontMetrics().width(name()) + 2 * k_spacing, (int)m_sz.y()));
 
-    if (m_library.spawnable()) {
-        m_script = m_library.spawn(); // generate script, owned
+    if (m_plugin.spawnable()) {
+        m_script = m_plugin.spawn(); // generate script, owned
     }
 
 
@@ -62,12 +63,19 @@ typename AudioBlock::sample_t AudioBlock::process(typename AudioBlock::sample_t 
 
 QString AudioBlock::name() const
 {
-    return m_library.name();
+    return m_plugin.name();
 }
+
+/*
+QString AudioBlock::info() const
+{
+    return m_plugin.info();
+}
+*/
 
 const AudioScriptPlugin& AudioBlock::library() const
 {
-    return m_library;
+    return m_plugin;
 }
 
 AudioScript* AudioBlock::script() const
@@ -83,6 +91,14 @@ AudioBlock* AudioBlock::next() const
 AudioBlock* AudioBlock::prev() const
 {
     return m_prev;
+}
+
+void AudioBlock::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+{
+    // TODO make real implementation
+    Q_UNUSED(event);
+    //qDebug() << name() << ":" << info();
+    qDebug() << name();
 }
 
 void link(AudioBlock* first, AudioBlock* second)

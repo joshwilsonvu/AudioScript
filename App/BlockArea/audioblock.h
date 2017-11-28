@@ -24,12 +24,16 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                    QWidget *widget) override;
 
+    // wrappers around member instance methods
     sample_t process(sample_t sample);
 
     void reset();
 
     QString name() const;
 
+    //QString info() const;
+
+    // utility methods
     const AudioScriptPlugin& library() const;
 
     AudioScript* script() const;
@@ -42,12 +46,14 @@ public:
     // first->next() == second, second->prev() == first
     friend void link(AudioBlock* first, AudioBlock* second);
 
+protected:
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
 
 private:
     // owns AudioScript instance
     AudioScript* m_script;
 
-    AudioScriptPlugin& m_library;
+    AudioScriptPlugin& m_plugin;
     AudioBlock* m_next;
     AudioBlock* m_prev;
 

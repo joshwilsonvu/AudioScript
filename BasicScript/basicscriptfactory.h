@@ -6,7 +6,7 @@
 
 class BasicScriptFactory : public QObject, public AudioScriptFactory
 {
-    AUDIOSCRIPTFACTORY
+    AUDIOSCRIPTFACTORY // macro required in private section of implementation
 
 public:
     ~BasicScriptFactory() noexcept override;
@@ -14,6 +14,8 @@ public:
     AudioScript* spawn() override;
 
     const char* name() override;
+
+    //const char* scriptInfo() override;
 
     void setupGUI(AudioScriptGUI& gui) override;
 };

@@ -22,7 +22,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x050902    # disables all the APIs deprecated before Qt 5.9.2
 
 CONFIG += qt debug
 
@@ -62,7 +62,8 @@ HEADERS += \
     User/utils.h \
     User/audioscriptfactory.h \
     User/audioscriptgui.h \
-    Engine/audioscriptplugin.h
+    Engine/audioscriptplugin.h \
+    User/audioscript_global.h
 
 
 FORMS += \
@@ -83,7 +84,9 @@ INCLUDEPATH += \
     User \
     Plugins
 
-DEFINES += USE_QDARKSTYLE
+DEFINES += \
+    USE_QDARKSTYLE \
+    AUDIOSCRIPT_LIBRARY # for audioscript_global.h
 
 DISTFILES += \
     README.md

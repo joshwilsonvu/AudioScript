@@ -27,8 +27,6 @@ MainWindow::MainWindow(QWidget *parent) :
     initActions();
 
     setupConnections();
-
-    m_engine->findPlugins();
 }
 
 MainWindow::~MainWindow()

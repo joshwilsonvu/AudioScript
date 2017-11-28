@@ -21,6 +21,7 @@ public:
     ~AudioScriptPlugin();
 
     QString name() const; // the name of the class subclassing AudioScript
+    QString info() const; // information about the class subclassing AudioScript
     /*debug*/QString errorString() const; // the string reported if the library has an error
 
     bool spawnable() const;
@@ -29,6 +30,7 @@ public:
 private:
     QPluginLoader m_plugin;
     const QString m_name; // retrieved from plugin once, guaranteed constant
+    const QString m_info; // retrieved from plugin once, guaranteed constant
     AudioScriptFactory* m_factory;
 };
 
