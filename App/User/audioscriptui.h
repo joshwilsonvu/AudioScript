@@ -6,11 +6,11 @@
 
 class QWidget;
 
-class AudioScriptGUI
+class AudioScriptUI
 {
 
 public:
-    explicit AudioScriptGUI();
+    explicit AudioScriptUI();
 
     typedef std::function<double(const AudioScript*)> DoubleGetter;
     typedef std::function<void(AudioScript*, double)> DoubleSetter;

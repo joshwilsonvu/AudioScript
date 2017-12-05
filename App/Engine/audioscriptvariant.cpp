@@ -1,5 +1,8 @@
 #include "audioscriptvariant.h"
 
+using detail::Getter;
+using detail::Setter;
+
 const char* bad_variant_access::what() const noexcept {
     return "Mismatched type for AudioScriptVariant access.";
 }
@@ -13,35 +16,35 @@ AudioScriptVariant::AudioScriptVariant()
 {
 }
 
-AudioScriptVariant::AudioScriptVariant(std::function<double (AudioScript*)> getter,
-                                       std::function<void (AudioScript*, double)> setter)
+AudioScriptVariant::AudioScriptVariant(Getter<double> getter,
+                                       Setter<double> setter)
     : m_type(AudioScriptVariant::Double),
-      m_getter((GenericGetter)getter),
-      m_setter((GenericSetter)setter)
+      m_getter((GenericGetter)getter.f),
+      m_setter((GenericSetter)setter.f)
 {
 }
 
-AudioScriptVariant::AudioScriptVariant(std::function<float (AudioScript*)> getter,
-                                       std::function<void (AudioScript*, float)> setter)
+AudioScriptVariant::AudioScriptVariant(Getter<float> getter,
+                                       Setter<float> setter)
     : m_type(AudioScriptVariant::Float),
-      m_getter((GenericGetter)getter),
-      m_setter((GenericSetter)setter)
+      m_getter((GenericGetter)getter.f),
+      m_setter((GenericSetter)setter.f)
 {
 }
 
-AudioScriptVariant::AudioScriptVariant(std::function<bool (AudioScript*)> getter,
-                                       std::function<void (AudioScript*, bool)> setter)
+AudioScriptVariant::AudioScriptVariant(Getter<bool> getter,
+                                       Setter<bool> setter)
     : m_type(AudioScriptVariant::Bool),
-      m_getter((GenericGetter)getter),
-      m_setter((GenericSetter)setter)
+      m_getter((GenericGetter)getter.f),
+      m_setter((GenericSetter)setter.f)
 {
 }
 
-AudioScriptVariant::AudioScriptVariant(std::function<int (AudioScript*)> getter,
-                                       std::function<void (AudioScript*, int)> setter)
+AudioScriptVariant::AudioScriptVariant(Getter<int> getter,
+                                       Setter<int> setter)
     : m_type(AudioScriptVariant::Int),
-      m_getter((GenericGetter)getter),
-      m_setter((GenericSetter)setter)
+      m_getter((GenericGetter)getter.f),
+      m_setter((GenericSetter)setter.f)
 {
 }
 

@@ -17,6 +17,8 @@ struct TextCharFormatPack
     QTextCharFormat quotation;
     QTextCharFormat function;
     QTextCharFormat preprocessor;
+    QColor foreground;
+    QColor background;
 };
 
 // CodeEditor

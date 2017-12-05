@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "audioscriptvariant.h"
 #include <QApplication>
 #include <QFile>
 #include <QIcon>
@@ -23,6 +24,8 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setOrganizationName("VUSE Solutions");
     QCoreApplication::setApplicationName("AudioScript");
+
+    AudioScriptVariant asv;
 
     MainWindow m;
     m.show();

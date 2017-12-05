@@ -137,6 +137,12 @@ CodeEditor::Highlighter::Highlighter(CodeEditor* editor)
     formats.comment.setForeground(QColor(0, 128, 0));
     formats.comment.setFontItalic(true);
     formats.preprocessor.setForeground(QColor(128, 128, 0));
+    formats.background = QColor(Qt::white);
+    formats.foreground = QColor(64, 64, 64);
+    QPalette palette = editor->palette();
+    palette.setColor(QPalette::Text, formats.foreground);
+    palette.setColor(QPalette::Base, formats.background);
+    editor->setPalette(palette);
 }
 
 void CodeEditor::Highlighter::highlightBlock(const QString& text)

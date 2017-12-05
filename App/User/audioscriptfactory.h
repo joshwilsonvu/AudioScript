@@ -2,7 +2,7 @@
 #define AUDIOSCRIPTFACTORY_H
 
 #include "audioscript.h"
-#include "audioscriptgui.h"
+#include "audioscriptui.h"
 //#include "audioscript_global.h"
 #include <QObject>
 #include <QtPlugin>
@@ -25,7 +25,19 @@ public:
 
     //virtual const char* scriptInfo() = 0;
 
-    virtual void setupGUI(AudioScriptGUI& gui) = 0;
+    virtual void setupGUI(AudioScriptUI& gui) = 0;
+
+    /*
+protected:
+    template<class T>
+    static AudioScriptVariant UI(const std::function<double(T*)>& getter);
+    template<class T>
+    static AudioScriptVariant UI(const std::function<float(T*)>& getter);
+    template<class T>
+    static AudioScriptVariant UI(const std::function<bool(T*)>& getter);
+    template<class T>
+    static AudioScriptVariant UI(const std::function<int(T*)>& getter);
+    */
 };
 
 // tells meta-object system about interface

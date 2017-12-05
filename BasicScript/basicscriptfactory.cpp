@@ -26,7 +26,7 @@ const char* BasicScriptFactory::scriptInfo()
 }
 */
 
-void BasicScriptFactory::setupGUI(AudioScriptGUI& gui)
+void BasicScriptFactory::setupGUI(AudioScriptUI& gui)
 {
     Q_UNUSED(gui);
     std::cout << "GUI set up." << std::endl;

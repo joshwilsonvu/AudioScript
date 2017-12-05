@@ -13,7 +13,7 @@
 class AudioScript;
 
 // AudioScriptPlugin
-// one-to-one library and AudioScript subclass
+// one-to-one plugin and AudioScript subclass
 class AudioScriptPlugin {
 public:
     AudioScriptPlugin(QString filename);
@@ -22,7 +22,7 @@ public:
 
     QString name() const; // the name of the class subclassing AudioScript
     QString info() const; // information about the class subclassing AudioScript
-    /*debug*/QString errorString() const; // the string reported if the library has an error
+    QString errorString() const; // the string reported if the library has an error
 
     bool spawnable() const;
     AudioScript* spawn();
