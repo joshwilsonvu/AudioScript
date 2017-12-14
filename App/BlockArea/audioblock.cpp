@@ -56,7 +56,7 @@ void AudioBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     painter->drawText(rect, name(), QTextOption(Qt::AlignCenter));
 }
 
-typename AudioBlock::sample_t AudioBlock::process(typename AudioBlock::sample_t sample)
+sample_t AudioBlock::process(sample_t sample)
 {
     return m_script ? m_script->process(sample) : 0.f;
 }

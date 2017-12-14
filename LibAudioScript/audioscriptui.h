@@ -1,12 +1,13 @@
 #ifndef AUDIOSCRIPTGUI_H
 #define AUDIOSCRIPTGUI_H
 
+#include "libaudioscript_global.h"
 #include "audioscript.h"
 #include <functional>
 
 class QWidget;
 
-class AudioScriptUI
+class LIBAUDIOSCRIPT_EXPORT AudioScriptUI
 {
 
 public:
@@ -29,12 +30,8 @@ public:
     //void addProperty();
 
 
-private:
-    friend class AudioScriptEngine;
     void show(AudioScript* script);
 
-
-    QWidget* m_widget;
 };
 
 #endif // AUDIOSCRIPTGUI_H

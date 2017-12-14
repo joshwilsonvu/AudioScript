@@ -13,8 +13,6 @@ class AudioScriptWrapper;
 class AudioBlock : public QGraphicsItem
 {
 public:
-    typedef typename AudioScript::sample_t sample_t;
-
     AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent = 0);
     AudioBlock(AudioScriptPlugin& library, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
     virtual ~AudioBlock() override;

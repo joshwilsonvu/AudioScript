@@ -3,7 +3,7 @@
 
 #include "audioscript.h"
 #include "audioscriptui.h"
-//#include "audioscript_global.h"
+#include "libaudioscript_global.h"
 #include <QObject>
 #include <QtPlugin>
 
@@ -14,10 +14,10 @@
     Q_PLUGIN_METADATA(IID AUDIOSCRIPTFACTORY_IID) \
     Q_INTERFACES(AudioScriptFactory)
 
-class AudioScriptFactory
+class LIBAUDIOSCRIPT_EXPORT AudioScriptFactory
 {
 public:
-    virtual ~AudioScriptFactory() noexcept {}
+    virtual ~AudioScriptFactory() noexcept;
 
     virtual AudioScript* spawn() = 0;
 

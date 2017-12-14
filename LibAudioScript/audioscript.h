@@ -1,6 +1,8 @@
 #ifndef AUDIOSCRIPT_H
 #define AUDIOSCRIPT_H
 
+#include "libaudioscript_global.h"
+
 //**********************
 // AudioScript is the interface that effect classes will override and implement.
 // It includes methods to return the effect's name, to process a sample, and
@@ -8,13 +10,10 @@
 // A default dialog is generated for the getter-setter pairs registered.
 //**********************
 
-class AudioScript
+class LIBAUDIOSCRIPT_EXPORT AudioScript
 {
 public:
-    // floating point sample type, valid range [-1, 1]
-    typedef float sample_t;
-
-    virtual ~AudioScript() = default;
+    virtual ~AudioScript();
 
     virtual sample_t process(sample_t sample) = 0;
 
@@ -22,7 +21,5 @@ public:
 
 };
 
-// tells meta-object system about interface
-//Q_DECLARE_INTERFACE(AudioScript, "AudioScript")
 
 #endif // AUDIOSCRIPT_H

@@ -4,13 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QMAKE_MAC_SDK = macosx10.12
 
 TARGET = AudioScript
+DESTDIR = /Users/Josh/QProjects/Builds
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -37,12 +38,10 @@ SOURCES += \
     Editor/dialogs.cpp \
     Editor/scriptwindow.cpp \
     Engine/audioscriptengine.cpp \
-    Engine/audioscriptvariant.cpp \
     Main/main.cpp \
     Main/mainwindow.cpp \
-    User/utils.cpp \
     Engine/audioscriptplugin.cpp \
-    User/audioscriptui.cpp
+    #Engine/audioscriptvariant.cpp \
 
 
 HEADERS += \
@@ -56,20 +55,21 @@ HEADERS += \
     Editor/dialogs.h \
     Editor/scriptwindow.h \
     Engine/audioscriptengine.h \
-    Engine/audioscriptvariant.h \
-    Main/mainwindow.h \
-    User/audioscript.h \
-    User/utils.h \
-    User/audioscriptfactory.h \
     Engine/audioscriptplugin.h \
-    User/audioscript_global.h \
-    User/audioscriptui.h
+    Main/mainwindow.h \
+    #../LibAudioScript/libaudioscript_global.h \
+    #../LibAudioScript/audioscript.h \
+    #../LibAudioScript/audioscriptfactory.h \
+    #../LibAudioScript/audioscriptui.h \
+    #../LibAudioScript/utils.h \
+    #Engine/audioscriptvariant.h
 
 
 FORMS += \
     Editor/scriptwindow.ui \
     Main/mainwindow.ui
 
+LIBS += -L/Users/Josh/QProjects/Builds/AudioScript.framework
 
 RESOURCES += \
     Resources/resources.qrc \
@@ -81,13 +81,12 @@ INCLUDEPATH += \
     Editor \
     Engine \
     Main \
-    User \
+    ../LibAudioScript \
     Plugins
 
 
 
 DEFINES += \
-    AUDIOSCRIPT_LIBRARY \ # for audioscript_global.h
     QT_NO_PLUGIN_CHECK # until we figure out why plugins aren't loading
 
 DISTFILES += \

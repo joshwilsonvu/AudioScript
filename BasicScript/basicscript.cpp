@@ -1,7 +1,5 @@
 #include "basicscript.h"
 
-typedef typename BasicScript::sample_t sample_t;
-
 BasicScript::~BasicScript()
 {
 

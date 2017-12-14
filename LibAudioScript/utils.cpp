@@ -4,22 +4,22 @@
 
 // check if OpenCL would let you use DSP unit
 
-AS::sample_t AS::dB2amp(sample_t db)
+sample_t AS::dB2amp(sample_t db)
 {
     return std::pow(10., db / 20.);
 }
 
-AS::sample_t AS::amp2dB(sample_t amp)
+sample_t AS::amp2dB(sample_t amp)
 {
     return 20. * std::log10(std::abs(amp));
 }
 
-AS::sample_t AS::clamp(sample_t x, sample_t low, sample_t high)
+sample_t AS::clamp(sample_t x, sample_t low, sample_t high)
 {
     return x < high ? (x < low ? low : x) : high;
 }
 
-AS::sample_t AS::clamp(sample_t arg)
+sample_t AS::clamp(sample_t arg)
 {
     return clamp(arg, -1., 1.);
 }
@@ -50,25 +50,25 @@ int64_t AS::toInt64(sample_t x)
 }
 
 // scales the full integer range of x down to [-1,1)
-AS::sample_t AS::fromInt8(int8_t x)
+sample_t AS::fromInt8(int8_t x)
 {
     sample_t d = sample_t(x);
     return d / -double(INT8_MIN);
 }
 
-AS::sample_t AS::fromInt16(int16_t x)
+sample_t AS::fromInt16(int16_t x)
 {
     sample_t d = sample_t(x);
     return d / -double(INT16_MIN);
 }
 
-AS::sample_t AS::fromInt32(int32_t x)
+sample_t AS::fromInt32(int32_t x)
 {
     sample_t d = sample_t(x);
     return d / -double(INT32_MIN);
 }
 
-AS::sample_t AS::fromInt64(int64_t x)
+sample_t AS::fromInt64(int64_t x)
 {
     sample_t d = sample_t(x);
     return d / -double(INT64_MIN);

@@ -25,8 +25,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("VUSE Solutions");
     QCoreApplication::setApplicationName("AudioScript");
 
-    AudioScriptVariant asv;
-
     MainWindow m;
     m.show();
 

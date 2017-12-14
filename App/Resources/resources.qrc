@@ -13,8 +13,4 @@
     <qresource prefix="/icons">
         <file alias="application">audioscript512.png</file>
     </qresource>
-    <qresource prefix="/cpp">
-        <file alias="audioscript.h">../User/audioscript.h</file>
-        <file alias="audioscriptfactory.h">../User/audioscriptfactory.h</file>
-    </qresource>
 </RCC>
