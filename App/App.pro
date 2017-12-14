@@ -87,7 +87,8 @@ INCLUDEPATH += \
 
 
 DEFINES += \
-    AUDIOSCRIPT_LIBRARY # for audioscript_global.h
+    AUDIOSCRIPT_LIBRARY \ # for audioscript_global.h
+    QT_NO_PLUGIN_CHECK # until we figure out why plugins aren't loading
 
 DISTFILES += \
     README.md

@@ -17,7 +17,7 @@ public:
 
     //const char* scriptInfo() override;
 
-    void setupGUI(AudioScriptUI& gui) override;
+    //void setupGUI(AudioScriptUI& gui) override;
 };
 
 #endif // BASICSCRIPTFACTORY_H
