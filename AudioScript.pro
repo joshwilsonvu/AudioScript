@@ -7,3 +7,6 @@ SUBDIRS = \
     App \
     BasicScript
 
+App.depends += LibAudioScript
+BasicScript.depends += LibAudioScript
+
