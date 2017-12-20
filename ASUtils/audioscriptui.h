@@ -1,13 +1,13 @@
 #ifndef AUDIOSCRIPTGUI_H
 #define AUDIOSCRIPTGUI_H
 
-#include "libaudioscript_global.h"
+#include "globals.h"
 #include "audioscript.h"
 #include <functional>
 
 class QWidget;
 
-class LIBAUDIOSCRIPT_EXPORT AudioScriptUI
+class ASUTILS_EXPORT AudioScriptUI
 {
 
 public:

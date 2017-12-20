@@ -1,7 +1,7 @@
 #ifndef AUDIOSCRIPT_H
 #define AUDIOSCRIPT_H
 
-#include "libaudioscript_global.h"
+#include "globals.h"
 
 //**********************
 // AudioScript is the interface that effect classes will override and implement.
@@ -10,7 +10,7 @@
 // A default dialog is generated for the getter-setter pairs registered.
 //**********************
 
-class LIBAUDIOSCRIPT_EXPORT AudioScript
+class ASUTILS_EXPORT AudioScript
 {
 public:
     virtual ~AudioScript();

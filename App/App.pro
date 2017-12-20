@@ -57,11 +57,11 @@ HEADERS += \
     Engine/audioscriptengine.h \
     Engine/audioscriptplugin.h \
     Main/mainwindow.h \
-    #../LibAudioScript/libaudioscript_global.h \
-    #../LibAudioScript/audioscript.h \
-    #../LibAudioScript/audioscriptfactory.h \
-    #../LibAudioScript/audioscriptui.h \
-    #../LibAudioScript/utils.h \
+    #../ASUTILS/globals.h \
+    #../ASUTILS/audioscript.h \
+    #../ASUTILS/audioscriptfactory.h \
+    #../ASUTILS/audioscriptui.h \
+    #../ASUTILS/utils.h \
     #Engine/audioscriptvariant.h
 
 
@@ -69,7 +69,8 @@ FORMS += \
     Editor/scriptwindow.ui \
     Main/mainwindow.ui
 
-LIBS += -L/Users/Josh/QProjects/Builds/AudioScript.framework
+LIBS += -L/Users/Josh/QProjects/Builds/ -lASUtils
+#PRE_TARGETDEPS += /Users/Josh/QProjects/Builds/libASUtils.dylib
 
 RESOURCES += \
     Resources/resources.qrc \
@@ -81,7 +82,7 @@ INCLUDEPATH += \
     Editor \
     Engine \
     Main \
-    ../LibAudioScript \
+    ../ASUtils \
     Plugins
 
 

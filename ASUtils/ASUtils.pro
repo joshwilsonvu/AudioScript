@@ -1,19 +1,17 @@
 #-------------------------------------------------
 #
 # Project created by QtCreator 2017-12-13T23:57:52
-#o
+#
 #-------------------------------------------------
 
 QT       += widgets
-
 QT       -= gui
 
-TARGET = AudioScript
+TARGET = ASUtils
 DESTDIR = /Users/Josh/QProjects/Builds
 TEMPLATE = lib
-CONFIG += lib_bundle
 
-DEFINES += LIBAUDIOSCRIPT_LIBRARY # for windows import/export dll stuff
+DEFINES += ASUTILS_LIBRARY # for windows import/export dll stuff
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -33,11 +31,11 @@ SOURCES += \
     audioscript.cpp
 
 HEADERS += \
-    libaudioscript_global.h \
     audioscript.h \
     audioscriptfactory.h \
     audioscriptui.h \
-    utils.h
+    utils.h \
+    globals.h
 
 unix {
     target.path = /usr/lib

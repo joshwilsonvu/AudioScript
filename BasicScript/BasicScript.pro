@@ -30,12 +30,9 @@ HEADERS += \
         basicscript.h \
         basicscriptfactory.h
 
-LIBS += -L/Users/Josh/QProjects/Builds/AudioScript.framework
+LIBS += -L/Users/Josh/QProjects/Builds/ -lASUtils
 
-INCLUDEPATH += \
-        ../App/User \
-        ../App/Engine \
-        ../LibAudioScript
+INCLUDEPATH += ../ASUtils
 
 unix {
     target.path = /usr/lib
