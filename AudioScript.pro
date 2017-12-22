@@ -1,11 +1,9 @@
 TEMPLATE = subdirs
 
-CONFIG += debug c++11 warn_on
+CONFIG += c++11 warn_on
 
 SUBDIRS = \
     ASUtils \
-    App \
-    BasicScript
+    App
 
 App.depends = ASUtils
-BasicScript.depends = ASUtils
