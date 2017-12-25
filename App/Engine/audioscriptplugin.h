@@ -29,9 +29,9 @@ public:
 
 private:
     QPluginLoader m_plugin;
+    AudioScriptFactory* m_factory;
     const QString m_name; // retrieved from plugin once, guaranteed constant
     const QString m_info; // retrieved from plugin once, guaranteed constant
-    AudioScriptFactory* m_factory;
 };
 
 

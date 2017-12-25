@@ -29,7 +29,7 @@ public:
 
     QString name() const;
 
-    //QString info() const;
+    QString info() const;
 
     // utility methods
     const AudioScriptPlugin& library() const;

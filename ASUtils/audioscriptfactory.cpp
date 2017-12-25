@@ -1,3 +1,3 @@
 #include "audioscriptfactory.h"
 
-AudioScriptFactory::~AudioScriptFactory() noexcept {}
+AudioScriptFactory::~AudioScriptFactory() {}

@@ -30,10 +30,7 @@ void AudioScriptEngine::findPlugins()
             QString pluginName = plugin.name();
             auto retVal = m_audioScriptPlugins.emplace(std::make_pair(plugin.name(), std::move(plugin)));
             if (retVal.second) { // successful insertion
-                qDebug() << "Plugin found:" << libPath << "->" << pluginName;
                 emit pluginFound((retVal.first->second)); // inserted AudioScriptPlugin
-            } else {
-                qDebug() << "Plugin" << libPath << "->" << pluginName << "is duplicate.";
             }
         }
     }

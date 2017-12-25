@@ -66,12 +66,12 @@ QString AudioBlock::name() const
     return m_plugin.name();
 }
 
-/*
+
 QString AudioBlock::info() const
 {
     return m_plugin.info();
 }
-*/
+
 
 const AudioScriptPlugin& AudioBlock::library() const
 {

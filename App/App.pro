@@ -63,26 +63,10 @@ FORMS += \
     Main/mainwindow.ui
 
 DEFINES += QT_DEPRECATED_WARNINGS
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x050902    # disables all the APIs deprecated before Qt 5.9.2
-
-
-
-
-
-
-
-
 
 RESOURCES += \
     Resources/resources.qrc \
     Resources/style.qrc
-
-
-
-
-
-DEFINES += \
-    QT_NO_PLUGIN_CHECK # until we figure out why plugins aren't loading
 
 DISTFILES += \
     README.md

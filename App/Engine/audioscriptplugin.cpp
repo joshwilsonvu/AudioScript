@@ -4,22 +4,24 @@
 
 // class AudioScriptLibrary
 AudioScriptPlugin::AudioScriptPlugin(QString filename)
-    : m_plugin(filename), m_factory(Q_NULLPTR)
+    : m_plugin(filename),
+      m_factory(qobject_cast<AudioScriptFactory*>(m_plugin.instance())),
+      m_name(m_factory ? m_factory->name() : "ERROR"),
+      m_info(m_factory ? m_factory->scriptInfo() : "")
 {
-    if (m_plugin.load()) {
-        // only use const_cast in constructor
-        // m_factory only non-null if everything has gone well
-        m_factory = qobject_cast<AudioScriptFactory*>(m_plugin.instance());
-        // initialize m_name and m_info
-        const_cast<QString&>(m_name) = m_factory->name();
-        //const_cast<QString&>(m_info) = m_factory->scriptInfo();
-    } else {
+    // m_factory, m_name, and m_info are only set if everything has gone well
+    if (!m_factory) {
         qDebug() << "Failed to load plugin: " << errorString();
+    } else {
+        qDebug() << "Plugin " << name() << " loaded.";
     }
 }
 
 AudioScriptPlugin::AudioScriptPlugin(AudioScriptPlugin&& rhs)
-    : m_plugin(rhs.m_plugin.fileName()), m_name(rhs.m_name), m_factory(rhs.m_factory)
+    : m_plugin(rhs.m_plugin.fileName()),
+      m_factory(rhs.m_factory),
+      m_name(rhs.m_name),
+      m_info(rhs.m_info)
 {
     m_plugin.load();
     rhs.m_plugin.unload();
@@ -29,6 +31,7 @@ AudioScriptPlugin::AudioScriptPlugin(AudioScriptPlugin&& rhs)
 AudioScriptPlugin::~AudioScriptPlugin()
 {
     m_plugin.unload(); // release memory, deletes m_factory
+    m_factory = Q_NULLPTR;
 }
 
 QString AudioScriptPlugin::name() const

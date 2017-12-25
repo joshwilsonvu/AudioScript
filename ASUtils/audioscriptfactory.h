@@ -17,13 +17,13 @@
 class ASUTILS_EXPORT AudioScriptFactory
 {
 public:
-    virtual ~AudioScriptFactory() noexcept;
+    virtual ~AudioScriptFactory();
 
     virtual AudioScript* spawn() = 0;
 
     virtual const char* name() = 0;
 
-    //virtual const char* scriptInfo() = 0;
+    virtual const char* scriptInfo() = 0;
 
     virtual void setupGUI(AudioScriptUI& gui) = 0;
 
