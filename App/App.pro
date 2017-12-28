@@ -12,9 +12,7 @@ CONFIG += qt
 
 DESTDIR = /Users/Josh/QProjects/Builds
 
-QT       += core widgets
-
-#QMAKE_MAC_SDK = macosx10.12
+QT       += core widgets multimedia
 
 INCLUDEPATH += \
     BlockArea \
@@ -25,10 +23,16 @@ INCLUDEPATH += \
     ../ASUtils \
     Plugins
 
-LIBS += -L/Users/Josh/QProjects/Builds/ -lASUtils
+ASUTILS_LIB_PATH = /Users/Josh/QProjects/Builds/
+ASUTILS_LIB_NAME = ASUtils
+LIBS += -L$${ASUTILS_LIB_PATH} -l$${ASUTILS_LIB_NAME}
+#PRE_TARGETDEPS += -L$${ASUTILS_LIB_PATH} -l$${ASUTILS_LIB_NAME}
 
 HEADERS += \
+    Audio/audioinput.h \
+    Audio/audiooutput.h \
     BlockArea/audioblock.h \
+    BlockArea/blockarea.h \
     Compilation/audioscriptcompiler.h \
     Editor/applicationoutput.h \
     Editor/classdialog.h \
@@ -39,11 +43,13 @@ HEADERS += \
     Editor/scriptwindow.h \
     Engine/audioscriptengine.h \
     Engine/audioscriptplugin.h \
-    Main/mainwindow.h \
-    #Engine/audioscriptvariant.h
+    Main/mainwindow.h
 
 SOURCES += \
+    Audio/audioinput.cpp \
+    Audio/audiooutput.cpp \
     BlockArea/audioblock.cpp \
+    BlockArea/blockarea.cpp \
     Compilation/audioscriptcompiler.cpp \
     Editor/applicationoutput.cpp \
     Editor/classdialog.cpp \
@@ -53,10 +59,9 @@ SOURCES += \
     Editor/dialogs.cpp \
     Editor/scriptwindow.cpp \
     Engine/audioscriptengine.cpp \
-    Main/main.cpp \
-    Main/mainwindow.cpp \
     Engine/audioscriptplugin.cpp \
-    #Engine/audioscriptvariant.cpp \
+    Main/main.cpp \
+    Main/mainwindow.cpp
 
 FORMS += \
     Editor/scriptwindow.ui \

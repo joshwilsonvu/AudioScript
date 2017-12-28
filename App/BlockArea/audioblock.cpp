@@ -97,8 +97,7 @@ void AudioBlock::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
     // TODO make real implementation
     Q_UNUSED(event);
-    //qDebug() << name() << ":" << info();
-    qDebug() << name();
+    qDebug() << name() << ":" << info();
 }
 
 void link(AudioBlock* first, AudioBlock* second)

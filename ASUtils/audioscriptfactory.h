@@ -4,7 +4,6 @@
 #include "audioscript.h"
 #include "audioscriptui.h"
 #include "globals.h"
-#include <QObject>
 #include <QtPlugin>
 
 #define AUDIOSCRIPTFACTORY_IID "AudioScriptApp.AudioScriptFactory"
@@ -13,6 +12,8 @@
 #define AUDIOSCRIPTFACTORY Q_OBJECT \
     Q_PLUGIN_METADATA(IID AUDIOSCRIPTFACTORY_IID) \
     Q_INTERFACES(AudioScriptFactory)
+
+namespace AS {
 
 class ASUTILS_EXPORT AudioScriptFactory
 {
@@ -40,7 +41,9 @@ protected:
     */
 };
 
+}
+
 // tells meta-object system about interface
-Q_DECLARE_INTERFACE(AudioScriptFactory, AUDIOSCRIPTFACTORY_IID)
+Q_DECLARE_INTERFACE(AS::AudioScriptFactory, AUDIOSCRIPTFACTORY_IID)
 
 #endif // AUDIOSCRIPTFACTORY_H

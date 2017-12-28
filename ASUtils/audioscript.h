@@ -1,5 +1,5 @@
-#ifndef AUDIOSCRIPT_H
-#define AUDIOSCRIPT_H
+#ifndef AS_AUDIOSCRIPT_H
+#define AS_AUDIOSCRIPT_H
 
 #include "globals.h"
 
@@ -9,6 +9,8 @@
 // optionally to show a custom dialog that allows the user to modify parameters.
 // A default dialog is generated for the getter-setter pairs registered.
 //**********************
+
+namespace AS {
 
 class ASUTILS_EXPORT AudioScript
 {
@@ -21,5 +23,6 @@ public:
 
 };
 
+}
 
 #endif // AUDIOSCRIPT_H

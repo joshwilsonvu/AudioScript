@@ -180,11 +180,11 @@ bool ClassLoader::setDirectory(QString dirName)
 
     // only do the following if there are hpp or cpp files
     if (sources.size() > 0 && headers.size() > 0) {
-        foreach(QString source, sources) {
-            const_cast<QString&>(source).resize(source.lastIndexOf('.')); // remove extension
+        for(QString& source : sources) {
+            source.resize(source.lastIndexOf('.')); // remove extension
         }
-        foreach(QString header, headers) {
-            const_cast<QString&>(header).resize(header.lastIndexOf('.')); // remove extension
+        for(QString& header : headers) {
+            header.resize(header.lastIndexOf('.')); // remove extension
         }
 
         QStringList::iterator s = sources.begin();

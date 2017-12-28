@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
     m_scriptWindow(Q_NULLPTR),
-    m_graphicsScene(new QGraphicsScene(0,0,1,1,this)),
+    m_blockArea(new BlockArea(this)),
     m_engine(new AudioScriptEngine(this))
 {
     m_ui->setupUi(this); // sets up menu bar, status bar, actions
@@ -53,7 +53,7 @@ void MainWindow::scriptWindowClosed()
 
 void MainWindow::onPluginFound(AudioScriptPlugin& plugin)
 {
-    m_graphicsScene->addItem(new AudioBlock(plugin));
+    m_blockArea->addItem(new AudioBlock(plugin));
 }
 
 void MainWindow::play()
@@ -83,10 +83,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::setupUi()
 {
-
-    m_graphicsScene->setBackgroundBrush(Qt::white);
-
-    m_graphicsView = new QGraphicsView(m_graphicsScene, this);
+    m_graphicsView = new QGraphicsView(m_blockArea, this);
     m_graphicsView->setRenderHint(QPainter::Antialiasing);
     m_graphicsView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     m_graphicsView->setFocusPolicy(Qt::NoFocus);
@@ -102,10 +99,6 @@ void MainWindow::setupUi()
 
     layout->addWidget(m_graphicsView, 0, 0);
     layout->setColumnStretch(0, 1);
-
-    // debug code
-    //AudioScriptPlugin* lib = new AudioScriptPlugin(QString("../../../../BasicScript/libBasicScript.dylib"));
-    //m_graphicsScene->addItem(new AudioBlock(*lib, Q_NULLPTR)); // TODO fix memory leak
 }
 
 void MainWindow::initActions()

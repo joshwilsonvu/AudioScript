@@ -1,0 +1,5 @@
+#include "audioscript.h"
+#include "audioscriptfactory.h"
+#include "audioscriptui.h"
+#include "buffer.h"
+#include "utils.h"

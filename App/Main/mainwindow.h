@@ -7,6 +7,7 @@
 
 #include "scriptwindow.h"
 #include "audioscriptengine.h"
+#include "blockarea.h"
 
 namespace Ui {
 class MainWindow;
@@ -47,7 +48,7 @@ private:
 
     Ui::MainWindow *m_ui;
     ScriptWindow* m_scriptWindow;
-    QGraphicsScene* m_graphicsScene;
+    BlockArea* m_blockArea;
     QGraphicsView* m_graphicsView;
     AudioScriptEngine* m_engine;
 };
