@@ -1,6 +1,9 @@
-#include <audioscript.h>
 #include <QtDebug>
+#include "audioscript.h"
+#include "audioscriptfactory.h"
 #include "audioscriptplugin.h"
+
+using namespace AS;
 
 // class AudioScriptLibrary
 AudioScriptPlugin::AudioScriptPlugin(QString filename)

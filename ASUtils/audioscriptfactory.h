@@ -11,7 +11,7 @@
 // macro to be included in private section of subclasses
 #define AUDIOSCRIPTFACTORY Q_OBJECT \
     Q_PLUGIN_METADATA(IID AUDIOSCRIPTFACTORY_IID) \
-    Q_INTERFACES(AudioScriptFactory)
+    Q_INTERFACES(AS::AudioScriptFactory)
 
 namespace AS {
 
@@ -26,19 +26,7 @@ public:
 
     virtual const char* scriptInfo() = 0;
 
-    virtual void setupGUI(AudioScriptUI& gui) = 0;
-
-    /*
-protected:
-    template<class T>
-    static AudioScriptVariant UI(const std::function<double(T*)>& getter);
-    template<class T>
-    static AudioScriptVariant UI(const std::function<float(T*)>& getter);
-    template<class T>
-    static AudioScriptVariant UI(const std::function<bool(T*)>& getter);
-    template<class T>
-    static AudioScriptVariant UI(const std::function<int(T*)>& getter);
-    */
+    virtual void setupGUI(AS::AudioScriptUI& gui) = 0;
 };
 
 }

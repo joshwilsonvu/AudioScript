@@ -1,14 +1,17 @@
 #ifndef AUDIOBLOCK_H
 #define AUDIOBLOCK_H
 
-#include "audioscript.h"
-#include "audioscriptplugin.h"
-
 #include <QGraphicsItem>
 #include <QPointF>
 #include <QRectF>
 
-class AudioScriptWrapper;
+#include "audioscript.h"
+#include "audioscriptplugin.h"
+#include "audiosettings.h"
+
+namespace AS {
+class Buffer;
+}
 
 class AudioBlock : public QGraphicsItem
 {
@@ -23,7 +26,7 @@ public:
                    QWidget *widget) override;
 
     // wrappers around member instance methods
-    sample_t process(sample_t sample);
+    AS::Buffer process(AS::Buffer sample);
 
     void reset();
 
@@ -31,10 +34,15 @@ public:
 
     QString info() const;
 
+    // special block methods - things reserved for AudioScript App like
+    // upsample, downsample, change Buffer data type, stereo->mono
+    //bool isSpecial() const;
+    //bool special(AudioSettings* settings, AS::Buffer* buffer);
+
     // utility methods
     const AudioScriptPlugin& library() const;
 
-    AudioScript* script() const;
+    AS::AudioScript* script() const;
 
     AudioBlock* next() const;
 
@@ -49,7 +57,7 @@ protected:
 
 private:
     // owns AudioScript instance
-    AudioScript* m_script;
+    AS::AudioScript* m_script;
 
     AudioScriptPlugin& m_plugin;
     AudioBlock* m_next;

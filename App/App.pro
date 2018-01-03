@@ -8,13 +8,14 @@ TARGET = AudioScript
 
 TEMPLATE = app
 
-CONFIG += qt
+CONFIG += qt thread
 
 DESTDIR = /Users/Josh/QProjects/Builds
 
 QT       += core widgets multimedia
 
 INCLUDEPATH += \
+    Audio \
     BlockArea \
     Compilation \
     Editor \
@@ -26,7 +27,7 @@ INCLUDEPATH += \
 ASUTILS_LIB_PATH = /Users/Josh/QProjects/Builds/
 ASUTILS_LIB_NAME = ASUtils
 LIBS += -L$${ASUTILS_LIB_PATH} -l$${ASUTILS_LIB_NAME}
-#PRE_TARGETDEPS += -L$${ASUTILS_LIB_PATH} -l$${ASUTILS_LIB_NAME}
+PRE_TARGETDEPS += $${ASUTILS_LIB_PATH}$${ASUTILS_LIB_NAME}
 
 HEADERS += \
     Audio/audioinput.h \
@@ -43,7 +44,8 @@ HEADERS += \
     Editor/scriptwindow.h \
     Engine/audioscriptengine.h \
     Engine/audioscriptplugin.h \
-    Main/mainwindow.h
+    Main/mainwindow.h \
+    Audio/audiosettings.h
 
 SOURCES += \
     Audio/audioinput.cpp \
@@ -61,7 +63,8 @@ SOURCES += \
     Engine/audioscriptengine.cpp \
     Engine/audioscriptplugin.cpp \
     Main/main.cpp \
-    Main/mainwindow.cpp
+    Main/mainwindow.cpp \
+    Audio/audiosettings.cpp
 
 FORMS += \
     Editor/scriptwindow.ui \

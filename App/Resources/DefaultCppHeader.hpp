@@ -5,7 +5,7 @@
  * Subclass the given class and implement the functions as described.
  */
 
-#include <audioscript.h>
+#include <AudioScript>
 
 // Required function.
 extern "C" void* spawn();

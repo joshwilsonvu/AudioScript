@@ -1,5 +1,5 @@
-#ifndef AS_AUDIOSCRIPT_H
-#define AS_AUDIOSCRIPT_H
+#ifndef AUDIOSCRIPT_H
+#define AUDIOSCRIPT_H
 
 #include "globals.h"
 
@@ -12,12 +12,14 @@
 
 namespace AS {
 
+class ASUTILS_EXPORT Buffer;
+
 class ASUTILS_EXPORT AudioScript
 {
 public:
     virtual ~AudioScript();
 
-    virtual sample_t process(sample_t sample) = 0;
+    virtual Buffer process(Buffer buffer) = 0;
 
     virtual void reset() = 0;
 

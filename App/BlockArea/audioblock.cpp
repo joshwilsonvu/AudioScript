@@ -1,5 +1,4 @@
-#include "audioblock.h"
-#include "audioscript.h"
+#include "buffer.h"
 
 #include <QApplication>
 #include <QFontMetrics>
@@ -7,6 +6,11 @@
 #include <QPointF>
 #include <QStyleOptionGraphicsItem>
 #include <QtDebug>
+
+#include "audioblock.h"
+#include "audioscript.h"
+
+using namespace AS;
 
 AudioBlock::AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent)
     : AudioBlock(library, Q_NULLPTR, Q_NULLPTR, parent)
@@ -56,9 +60,9 @@ void AudioBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     painter->drawText(rect, name(), QTextOption(Qt::AlignCenter));
 }
 
-sample_t AudioBlock::process(sample_t sample)
+Buffer AudioBlock::process(Buffer buffer)
 {
-    return m_script ? m_script->process(sample) : 0.f;
+    return m_script ? m_script->process(buffer) : buffer;
 }
 
 QString AudioBlock::name() const
