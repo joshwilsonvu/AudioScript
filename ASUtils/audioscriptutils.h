@@ -1,7 +1,6 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef AUDIOSCRIPTUTILS_H
+#define AUDIOSCRIPTUTILS_H
 
-#include "audioscript.h"
 #include "globals.h"
 #include <cstdint>
 
@@ -23,14 +22,16 @@ ASUTILS_EXPORT sample_t clamp(sample_t x);
 // clamps x to [-1,1) and scales it up to the full integer range
 ASUTILS_EXPORT int8_t toInt8(sample_t x);
 ASUTILS_EXPORT int16_t toInt16(sample_t x);
+ASUTILS_EXPORT int32_t toInt24(sample_t x);
 ASUTILS_EXPORT int32_t toInt32(sample_t x);
 ASUTILS_EXPORT int64_t toInt64(sample_t x);
 // scales the full integer range of x down to [-1,1)
 ASUTILS_EXPORT sample_t fromInt8(int8_t x);
 ASUTILS_EXPORT sample_t fromInt16(int16_t x);
+ASUTILS_EXPORT sample_t fromInt24(int32_t x);
 ASUTILS_EXPORT sample_t fromInt32(int32_t x);
 ASUTILS_EXPORT sample_t fromInt64(int64_t x);
 
 }
 
-#endif // UTILS_H
+#endif // AUDIOSCRIPTUTILS_H

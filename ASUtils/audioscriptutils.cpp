@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "audioscriptutils.h"
 
 #include <cmath>
 
@@ -37,6 +37,12 @@ int16_t AS::toInt16(sample_t x)
     return x * -double(INT16_MIN);
 }
 
+int32_t AS::toInt24(sample_t x)
+{
+    x = clamp(x, -1., 1. + 8./INT32_MIN);
+    return x * -double(INT32_MIN / 8);
+}
+
 int32_t AS::toInt32(sample_t x)
 {
     x = clamp(x, -1., 1. + 1./INT32_MIN);
@@ -60,6 +66,12 @@ sample_t AS::fromInt16(int16_t x)
 {
     sample_t d = sample_t(x);
     return d / -double(INT16_MIN);
+}
+
+sample_t AS::fromInt24(int32_t x)
+{
+    sample_t d = sample_t(x);
+    return d / -double(INT32_MIN / 8);
 }
 
 sample_t AS::fromInt32(int32_t x)

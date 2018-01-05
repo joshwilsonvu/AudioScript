@@ -10,7 +10,7 @@
 #include "audiosettings.h"
 
 namespace AS {
-class Buffer;
+class AudioScriptBuffer;
 }
 
 class AudioBlock : public QGraphicsItem
@@ -26,7 +26,7 @@ public:
                    QWidget *widget) override;
 
     // wrappers around member instance methods
-    AS::Buffer process(AS::Buffer sample);
+    AS::AudioScriptBuffer process(AS::AudioScriptBuffer sample);
 
     void reset();
 

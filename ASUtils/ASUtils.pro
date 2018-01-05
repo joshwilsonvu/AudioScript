@@ -19,20 +19,20 @@ HEADERS += \
     audioscript.h \
     audioscriptfactory.h \
     audioscriptui.h \
-    utils.h \
     globals.h \
-    buffer.h \
     audioscriptui_p.h \
-    bufferdata_p.h
+    bufferdata_p.h \
+    audioscriptbuffer.h \
+    audioscriptutils.h
 
 SOURCES += \
     audioscriptui.cpp \
-    utils.cpp \
     audioscriptfactory.cpp \
     audioscript.cpp \
-    buffer.cpp \
     audioscriptui_p.cpp \
-    bufferdata_p.cpp
+    bufferdata_p.cpp \
+    audioscriptbuffer.cpp \
+    audioscriptutils.cpp
 
 DEFINES += ASUTILS_LIBRARY # for windows import/export dll stuff
 DEFINES += QT_DEPRECATED_WARNINGS

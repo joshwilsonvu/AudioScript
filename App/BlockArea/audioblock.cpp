@@ -1,4 +1,4 @@
-#include "buffer.h"
+#include "audioscriptbuffer.h"
 
 #include <QApplication>
 #include <QFontMetrics>
@@ -60,9 +60,16 @@ void AudioBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     painter->drawText(rect, name(), QTextOption(Qt::AlignCenter));
 }
 
-Buffer AudioBlock::process(Buffer buffer)
+AudioScriptBuffer AudioBlock::process(AudioScriptBuffer buffer)
 {
-    return m_script ? m_script->process(buffer) : buffer;
+    if (m_script) {
+        try {
+            return m_script->process(buffer);
+        } catch (...) {
+            qDebug() << "AudioScript" << name() << "threw an exception.";
+        }
+    }
+    return AudioScriptBuffer(0);
 }
 
 QString AudioBlock::name() const

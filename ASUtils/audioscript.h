@@ -10,16 +10,14 @@
 // A default dialog is generated for the getter-setter pairs registered.
 //**********************
 
-namespace AS {
-
-class ASUTILS_EXPORT Buffer;
+class ASUTILS_EXPORT AudioScriptBuffer;
 
 class ASUTILS_EXPORT AudioScript
 {
 public:
     virtual ~AudioScript();
 
-    virtual Buffer process(Buffer buffer) = 0;
+    virtual void process(AudioScriptBuffer input, AudioScriptBuffer& output) = 0;
 
     virtual void reset() = 0;
 
