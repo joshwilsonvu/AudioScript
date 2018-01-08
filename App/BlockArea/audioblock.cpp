@@ -10,8 +10,6 @@
 #include "audioblock.h"
 #include "audioscript.h"
 
-using namespace AS;
-
 AudioBlock::AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent)
     : AudioBlock(library, Q_NULLPTR, Q_NULLPTR, parent)
 {}
@@ -84,7 +82,7 @@ QString AudioBlock::info() const
 }
 
 
-const AudioScriptPlugin& AudioBlock::library() const
+const AudioScriptPlugin& AudioBlock::plugin() const
 {
     return m_plugin;
 }

@@ -9,15 +9,13 @@
 #include "audioscriptplugin.h"
 #include "audiosettings.h"
 
-namespace AS {
 class AudioScriptBuffer;
-}
 
 class AudioBlock : public QGraphicsItem
 {
 public:
-    AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent = 0);
-    AudioBlock(AudioScriptPlugin& library, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
+    AudioBlock(AudioScriptPlugin& plugin, QGraphicsItem* parent = 0);
+    AudioBlock(AudioScriptPlugin& plugin, AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent = 0);
     virtual ~AudioBlock() override;
 
     virtual QRectF boundingRect() const override;
@@ -26,7 +24,7 @@ public:
                    QWidget *widget) override;
 
     // wrappers around member instance methods
-    AS::AudioScriptBuffer process(AS::AudioScriptBuffer sample);
+    AudioScriptBuffer process(AudioScriptBuffer buffer);
 
     void reset();
 
@@ -40,9 +38,9 @@ public:
     //bool special(AudioSettings* settings, AS::Buffer* buffer);
 
     // utility methods
-    const AudioScriptPlugin& library() const;
+    const AudioScriptPlugin& plugin() const;
 
-    AS::AudioScript* script() const;
+    AudioScript* script() const;
 
     AudioBlock* next() const;
 
@@ -57,7 +55,7 @@ protected:
 
 private:
     // owns AudioScript instance
-    AS::AudioScript* m_script;
+    AudioScript* m_script;
 
     AudioScriptPlugin& m_plugin;
     AudioBlock* m_next;

@@ -5,12 +5,9 @@
 
 #include <QPluginLoader>
 #include <QString>
-//#include <QMap>
 
-namespace AS {
 class AudioScript;
 class AudioScriptFactory;
-}
 
 // AudioScriptPlugin
 // one-to-one plugin and AudioScript subclass
@@ -25,11 +22,11 @@ public:
     QString errorString() const; // the string reported if the library has an error
 
     bool spawnable() const;
-    AS::AudioScript* spawn();
+    AudioScript* spawn();
 
 private:
     QPluginLoader m_plugin;
-    AS::AudioScriptFactory* m_factory;
+    AudioScriptFactory* m_factory;
     const QString m_name; // retrieved from plugin once, guaranteed constant
     const QString m_info; // retrieved from plugin once, guaranteed constant
 };

@@ -20,17 +20,14 @@ HEADERS += \
     audioscriptfactory.h \
     audioscriptui.h \
     globals.h \
-    audioscriptui_p.h \
-    bufferdata_p.h \
     audioscriptbuffer.h \
-    audioscriptutils.h
+    audioscriptutils.h \
+    audioscriptbuffer_p.h
 
 SOURCES += \
     audioscriptui.cpp \
     audioscriptfactory.cpp \
     audioscript.cpp \
-    audioscriptui_p.cpp \
-    bufferdata_p.cpp \
     audioscriptbuffer.cpp \
     audioscriptutils.cpp
 

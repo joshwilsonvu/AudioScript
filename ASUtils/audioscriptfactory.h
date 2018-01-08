@@ -11,9 +11,7 @@
 // macro to be included in private section of subclasses
 #define AUDIOSCRIPTFACTORY Q_OBJECT \
     Q_PLUGIN_METADATA(IID AUDIOSCRIPTFACTORY_IID) \
-    Q_INTERFACES(AS::AudioScriptFactory)
-
-namespace AS {
+    Q_INTERFACES(AudioScriptFactory)
 
 class ASUTILS_EXPORT AudioScriptFactory
 {
@@ -26,12 +24,10 @@ public:
 
     virtual const char* scriptInfo() = 0;
 
-    virtual void setupGUI(AS::AudioScriptUI& gui) = 0;
+    virtual void setupGUI(AudioScriptUI& gui) = 0;
 };
 
-}
-
 // tells meta-object system about interface
-Q_DECLARE_INTERFACE(AS::AudioScriptFactory, AUDIOSCRIPTFACTORY_IID)
+Q_DECLARE_INTERFACE(AudioScriptFactory, AUDIOSCRIPTFACTORY_IID)
 
 #endif // AUDIOSCRIPTFACTORY_H

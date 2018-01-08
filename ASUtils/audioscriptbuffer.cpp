@@ -1,39 +1,57 @@
 #include "audioscriptbuffer.h"
-#include "bufferdata_p.h"
 #include <algorithm>
 
-namespace AS {
-
-AudioScriptBuffer::AudioScriptBuffer(BufferSize size)
-    : d(new BufferData(static_cast<int>(size)))
+AudioScriptBuffer::AudioScriptBuffer(size_t size)
+    : m_size(size), m_data(new sample_t[m_size])
 {
 }
 
-AudioScriptBuffer::AudioScriptBuffer(const AudioScriptBuffer &other)
-    : d(other.d)
+AudioScriptBuffer::AudioScriptBuffer(const AudioScriptBuffer& other)
+    : AudioScriptBuffer(other.m_size)
 {
+    // copy contents of other
+    std::copy(other.begin(), other.end(), begin());
 }
 
 AudioScriptBuffer::AudioScriptBuffer(AudioScriptBuffer&& other)
-    : d(std::move(other.d))
+    : m_size(other.m_size), m_data(other.m_data)
 {
+    // take and reset contents of other
+    other.m_size = 0ul;
+    other.m_data = nullptr;
 }
 
-const AudioScriptBuffer& AudioScriptBuffer::operator=(const AudioScriptBuffer& other)
+AudioScriptBuffer::~AudioScriptBuffer() noexcept
 {
-    d = other.d; // modifying one will not modify other
-    return *this;
+    delete[] m_data;
+    m_data = nullptr;
+    m_size = 0ul;
 }
 
-const AudioScriptBuffer& AudioScriptBuffer::operator=(AudioScriptBuffer&& other)
+AudioScriptBuffer& AudioScriptBuffer::operator=(const AudioScriptBuffer& other)
 {
-    d = std::move(other.d);
-    return *this;
+    // copy-and-swap idiom
+    AudioScriptBuffer temp(other);
+    swap(temp);
+}
+
+AudioScriptBuffer& AudioScriptBuffer::operator=(AudioScriptBuffer&& other)
+{
+    // move-and-swap idiom
+    AudioScriptBuffer temp(std::move(other));
+    swap(temp);
 }
 
 void AudioScriptBuffer::swap(AudioScriptBuffer &other)
 {
-    d.swap(other.d);
+    std::swap(m_size, other.m_size);
+    std::swap(m_data, other.m_data);
+}
+
+AudioScriptBuffer AudioScriptBuffer::clone() const
+{
+    // stack allocated clone
+    return *this;
 }
 
 void AudioScriptBuffer::reset()
@@ -46,30 +64,53 @@ void AudioScriptBuffer::fill(sample_t value)
     std::fill(begin(), end(), value);
 }
 
-sample_t* AudioScriptBuffer::begin()
+sample_t* AudioScriptBuffer::begin() noexcept
 {
-    return d->vec.data();
+    return m_data;
 }
 
-const sample_t* AudioScriptBuffer::begin() const
+const sample_t* AudioScriptBuffer::begin() const noexcept
 {
-    return d->vec.data();
+    return m_data;
 }
 
-sample_t* AudioScriptBuffer::end()
+sample_t* AudioScriptBuffer::end() noexcept
 {
-    return begin() + (size_t)size();
+    return m_data + m_size;
 }
 
-const sample_t* AudioScriptBuffer::end() const
+const sample_t* AudioScriptBuffer::end() const noexcept
 {
-    return begin() + (size_t)size();
+    return m_data + m_size;
 }
 
-BufferSize AudioScriptBuffer::size() const
+size_t AudioScriptBuffer::size() const noexcept
 {
-    return BufferSize(d->vec.size());
+    return m_size;
 }
 
+sample_t& AudioScriptBuffer::operator[](size_t index)
+{
+    return m_data[index];
+}
 
+sample_t AudioScriptBuffer::operator[](size_t index) const
+{
+    return m_data[index];
+}
+
+sample_t& AudioScriptBuffer::at(size_t index)
+{
+    if (index >= m_size) {
+        throw std::out_of_range("Invalid index.");
+    }
+    return m_data[index];
+}
+
+sample_t AudioScriptBuffer::at(size_t index) const
+{
+    if (index >= m_size) {
+        throw std::out_of_range("Invalid index.");
+    }
+    return m_data[index];
 }

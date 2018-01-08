@@ -3,8 +3,6 @@
 #include "audioscriptfactory.h"
 #include "audioscriptplugin.h"
 
-using namespace AS;
-
 // class AudioScriptLibrary
 AudioScriptPlugin::AudioScriptPlugin(QString filename)
     : m_plugin(filename),

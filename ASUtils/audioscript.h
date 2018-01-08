@@ -17,12 +17,10 @@ class ASUTILS_EXPORT AudioScript
 public:
     virtual ~AudioScript();
 
-    virtual void process(AudioScriptBuffer input, AudioScriptBuffer& output) = 0;
+    virtual AudioScriptBuffer process(AudioScriptBuffer input) = 0;
 
     virtual void reset() = 0;
 
 };
-
-}
 
 #endif // AUDIOSCRIPT_H
