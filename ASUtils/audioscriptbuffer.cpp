@@ -2,7 +2,8 @@
 #include <algorithm>
 
 AudioScriptBuffer::AudioScriptBuffer(size_t size)
-    : m_size(size), m_data(new sample_t[m_size])
+    : m_size(size),
+      m_data(m_size ? new sample_t[m_size] : nullptr)
 {
 }
 
@@ -28,21 +29,14 @@ AudioScriptBuffer::~AudioScriptBuffer() noexcept
     m_size = 0ul;
 }
 
-AudioScriptBuffer& AudioScriptBuffer::operator=(const AudioScriptBuffer& other)
+AudioScriptBuffer& AudioScriptBuffer::operator=(AudioScriptBuffer other) noexcept
 {
-    // copy-and-swap idiom
-    AudioScriptBuffer temp(other);
-    swap(temp);
+    // copy/move-and-swap idiom
+    swap(other);
+    return *this;
 }
 
-AudioScriptBuffer& AudioScriptBuffer::operator=(AudioScriptBuffer&& other)
-{
-    // move-and-swap idiom
-    AudioScriptBuffer temp(std::move(other));
-    swap(temp);
-}
-
-void AudioScriptBuffer::swap(AudioScriptBuffer &other)
+void AudioScriptBuffer::swap(AudioScriptBuffer &other) noexcept
 {
     std::swap(m_size, other.m_size);
     std::swap(m_data, other.m_data);
@@ -54,7 +48,7 @@ AudioScriptBuffer AudioScriptBuffer::clone() const
     return *this;
 }
 
-void AudioScriptBuffer::reset()
+void AudioScriptBuffer::clear()
 {
     fill(sample_t());
 }

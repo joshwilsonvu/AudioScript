@@ -11,7 +11,7 @@ class ApplicationOutput : public QWidget
 {
     Q_OBJECT
 public:
-    ApplicationOutput(QWidget* parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
+    ApplicationOutput(QWidget* parent = nullptr, Qt::WindowFlags flags = 0);
     virtual ~ApplicationOutput();
 
 public slots:

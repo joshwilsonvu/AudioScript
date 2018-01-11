@@ -1,13 +1,13 @@
 #ifndef AUDIOBLOCK_H
 #define AUDIOBLOCK_H
 
-#include <QGraphicsItem>
-#include <QPointF>
-#include <QRectF>
-
 #include "audioscript.h"
 #include "audioscriptplugin.h"
 #include "audiosettings.h"
+
+#include <QGraphicsItem>
+#include <QPointF>
+#include <QRectF>
 
 class AudioScriptBuffer;
 

@@ -15,7 +15,7 @@ class NameDialog : public QDialog
     Q_OBJECT
 
 public:
-    NameDialog(ClassLoader* classLoader, QWidget* parent = Q_NULLPTR);
+    NameDialog(ClassLoader* classLoader, QWidget* parent = nullptr);
     QString getName() const;
 
 private slots:
@@ -34,7 +34,7 @@ class DirDialog : public QFileDialog
     Q_OBJECT
 
 public:
-    DirDialog(QString directory = QString(), QWidget* parent = Q_NULLPTR);
+    DirDialog(QString directory = QString(), QWidget* parent = nullptr);
     ~DirDialog();
 };
 

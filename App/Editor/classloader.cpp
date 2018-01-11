@@ -35,7 +35,7 @@ ClassLoader::ClassLoader(CodeTabs* editor, QObject* parent)
 ClassLoader::~ClassLoader()
 {
     // class has already been closed (and maybe saved)
-    m_editor = Q_NULLPTR; // non-owning
+    m_editor = nullptr; // non-owning
 }
 
 QString ClassLoader::currentDirectory() const

@@ -1,17 +1,16 @@
 #ifndef AUDIOSCRIPTENGINE_H
 #define AUDIOSCRIPTENGINE_H
 
+#include "audioscriptplugin.h"
+
 #include <QObject>
 #include <map>
-#include <QList>
-
-#include "audioscriptplugin.h"
 
 class AudioScriptEngine : public QObject
 {
     Q_OBJECT
 public:
-    explicit AudioScriptEngine(QObject *parent = Q_NULLPTR);
+    explicit AudioScriptEngine(QObject *parent = nullptr);
     ~AudioScriptEngine();
 
 

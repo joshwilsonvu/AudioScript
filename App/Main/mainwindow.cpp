@@ -11,7 +11,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
-    m_scriptWindow(Q_NULLPTR),
+    m_scriptWindow(nullptr),
     m_blockArea(new BlockArea(this)),
     m_engine(new AudioScriptEngine(this))
 {
@@ -47,7 +47,7 @@ void MainWindow::openScriptWindow()
 
 void MainWindow::scriptWindowClosed()
 {
-    m_scriptWindow = Q_NULLPTR;
+    m_scriptWindow = nullptr;
     m_ui->actionOpen_Editor->setEnabled(true);
 }
 

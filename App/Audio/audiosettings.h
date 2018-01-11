@@ -1,8 +1,8 @@
 #ifndef AUDIOSETTINGS_H
 #define AUDIOSETTINGS_H
 
+#include "audioformat.h"
 #include <QObject>
-#include <QAudioFormat>
 
 class AudioSettings : public QObject
 {
@@ -15,7 +15,7 @@ signals:
 public slots:
 
 private:
-    QAudioFormat m_format;
+    AudioFormat m_format;
 };
 
 #endif // AUDIOSETTINGS_H

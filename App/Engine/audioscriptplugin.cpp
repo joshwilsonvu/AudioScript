@@ -26,13 +26,13 @@ AudioScriptPlugin::AudioScriptPlugin(AudioScriptPlugin&& rhs)
 {
     m_plugin.load();
     rhs.m_plugin.unload();
-    rhs.m_factory = Q_NULLPTR;
+    rhs.m_factory = nullptr;
 }
 
 AudioScriptPlugin::~AudioScriptPlugin()
 {
     m_plugin.unload(); // release memory, deletes m_factory
-    m_factory = Q_NULLPTR;
+    m_factory = nullptr;
 }
 
 QString AudioScriptPlugin::name() const
@@ -58,7 +58,7 @@ bool AudioScriptPlugin::spawnable() const
 AudioScript* AudioScriptPlugin::spawn()
 {
     if (!spawnable()) {
-        return Q_NULLPTR;
+        return nullptr;
     }
     return m_factory->spawn();
 }

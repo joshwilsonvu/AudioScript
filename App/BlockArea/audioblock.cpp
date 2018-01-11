@@ -1,3 +1,5 @@
+#include "audioblock.h"
+#include "audioscript.h"
 #include "audioscriptbuffer.h"
 
 #include <QApplication>
@@ -7,17 +9,14 @@
 #include <QStyleOptionGraphicsItem>
 #include <QtDebug>
 
-#include "audioblock.h"
-#include "audioscript.h"
-
 AudioBlock::AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent)
-    : AudioBlock(library, Q_NULLPTR, Q_NULLPTR, parent)
+    : AudioBlock(library, nullptr, nullptr, parent)
 {}
 
 AudioBlock::AudioBlock(AudioScriptPlugin& library,
            AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
-    : QGraphicsItem(parent), m_script(Q_NULLPTR), m_plugin(library),
-      m_next(Q_NULLPTR), m_prev(Q_NULLPTR)
+    : QGraphicsItem(parent), m_script(nullptr), m_plugin(library),
+      m_next(nullptr), m_prev(nullptr)
 {
     link(this, next);
     link(prev, this);
@@ -113,13 +112,13 @@ void link(AudioBlock* first, AudioBlock* second)
 {
     if (first) {
         if (first->m_next) {
-            first->m_next->m_prev = Q_NULLPTR;
+            first->m_next->m_prev = nullptr;
         }
         first->m_next = second;
     }
     if (second) {
         if (second->m_prev) {
-            second->m_prev->m_next = Q_NULLPTR;
+            second->m_prev->m_next = nullptr;
         }
         second->m_prev = first;
     }
@@ -135,7 +134,7 @@ void unlink(AudioBlock* block)
 void cut(AudioBlock *block)
 {
     if (block) {
-        link(block->prev(), Q_NULLPTR);
-        link(block->next(), Q_NULLPTR);
+        link(block->prev(), nullptr);
+        link(block->next(), nullptr);
     }
 }

@@ -1,10 +1,9 @@
 #ifndef AUDIOSCRIPTLIBRARY_H
 #define AUDIOSCRIPTLIBRARY_H
 
-#include <memory>
-
 #include <QPluginLoader>
 #include <QString>
+#include <memory>
 
 class AudioScript;
 class AudioScriptFactory;

@@ -19,7 +19,7 @@ class ClassLoader : public QObject
     Q_OBJECT
 
 public:
-    ClassLoader(CodeTabs* editor, QObject* parent = Q_NULLPTR);
+    ClassLoader(CodeTabs* editor, QObject* parent = nullptr);
     virtual ~ClassLoader();
 
     // The monitored directory containing all files used

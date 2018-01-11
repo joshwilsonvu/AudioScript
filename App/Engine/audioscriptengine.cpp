@@ -20,7 +20,7 @@ AudioScriptEngine::~AudioScriptEngine()
 void AudioScriptEngine::findPlugins()
 {
     QStringList libs =
-            QFileDialog::getOpenFileNames(Q_NULLPTR, tr("Select AudioScript Plugins"),
+            QFileDialog::getOpenFileNames(nullptr, tr("Select AudioScript Plugins"),
             ".", tr("Plugins (*.a, *.so, *.dll, *.dylib)"));
     for (QString libPath : libs) {
         AudioScriptPlugin plugin(libPath);

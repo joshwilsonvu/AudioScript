@@ -47,7 +47,7 @@ void AudioScriptUI::addProperty(AudioScriptUI::Property&& property) {
 }
 
 AudioScriptUI::Property::Property()
-    : m_widget(Q_NULLPTR), m_type(Property::Int)
+    : m_widget(nullptr), m_type(Property::Int)
 {
 }
 

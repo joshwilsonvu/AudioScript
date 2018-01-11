@@ -15,8 +15,8 @@
 
 ScriptWindow::ScriptWindow(QWidget *parent) :
     QWidget(parent),
-    m_ui(new Ui::ScriptWindow()), m_editor(Q_NULLPTR), m_classLoader(Q_NULLPTR),
-    m_libraries(Q_NULLPTR), m_engine(Q_NULLPTR), m_compiler(Q_NULLPTR)
+    m_ui(new Ui::ScriptWindow()), m_editor(nullptr), m_classLoader(nullptr),
+    m_libraries(nullptr), m_engine(nullptr), m_compiler(nullptr)
 {
     m_ui->setupUi(this); // sets up actions
 
@@ -39,7 +39,7 @@ ScriptWindow::ScriptWindow(QWidget *parent) :
 ScriptWindow::~ScriptWindow()
 {
     delete m_ui;
-    m_ui = Q_NULLPTR;
+    m_ui = nullptr;
 }
 
 // Override

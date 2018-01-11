@@ -2,12 +2,13 @@
 #include <QScopedPointer>
 
 AudioInput::AudioInput(AudioInput::InputMode mode, QObject* parent)
-    : QObject(parent), m_mode(mode), m_file(Q_NULLPTR), m_decoder(Q_NULLPTR)
+    : QObject(parent), m_mode(mode), m_file(nullptr), m_decoder(nullptr)
 {
     switch(m_mode) {
     case AudioInput::File:
         m_file = new QFile(this);
         m_decoder = new QAudioDecoder(this);
+        connect(m_decoder, SIGNAL(finished()), this, SLOT(stop()));
         break;
     default:
         return;
@@ -60,9 +61,27 @@ QString AudioInput::target() const
 void AudioInput::start()
 {
     //TODO
+    switch(m_mode) {
+    case File:
+        m_decoder->start();
+
+        break;
+    case Device:
+
+        break;
+    }
 }
 
 void AudioInput::stop()
 {
     //TODO
+    switch(m_mode) {
+    case File:
+        m_decoder->stop();
+
+        break;
+    case Device:
+
+        break;
+    }
 }

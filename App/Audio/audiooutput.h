@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+// refactor to AudioDest
 class AudioOutput : public QObject
 {
     Q_OBJECT

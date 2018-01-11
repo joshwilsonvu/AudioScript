@@ -8,7 +8,7 @@ class BlockArea : public QGraphicsScene
     Q_OBJECT
 
 public:
-    BlockArea(QObject* parent = Q_NULLPTR);
+    BlockArea(QObject* parent = nullptr);
 };
 
 #endif // BLOCKAREA_H

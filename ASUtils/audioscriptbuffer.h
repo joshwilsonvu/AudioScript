@@ -2,24 +2,23 @@
 #define AUDIOSCRIPTBUFFER_H
 
 #include "globals.h"
-#include <QSharedDataPointer>
 
 class ASUTILS_EXPORT AudioScriptBuffer
 {
 public:
+    typedef sample_t value_type;
 
     AudioScriptBuffer(size_t size);
     AudioScriptBuffer(const AudioScriptBuffer& other);
     AudioScriptBuffer(AudioScriptBuffer&& other);
     ~AudioScriptBuffer() noexcept;
-    AudioScriptBuffer& operator=(const AudioScriptBuffer& other);
-    AudioScriptBuffer& operator=(AudioScriptBuffer&& other);
+    AudioScriptBuffer& operator=(AudioScriptBuffer other) noexcept;
 
-    void swap(AudioScriptBuffer& other);
+    void swap(AudioScriptBuffer& other) noexcept;
 
     AudioScriptBuffer clone() const;
 
-    void reset();
+    void clear();
     void fill(sample_t value);
 
     // TODO maybe inline
@@ -52,6 +51,7 @@ public:
 
 
 private:
+
     size_t m_size;
     sample_t* m_data;
 };

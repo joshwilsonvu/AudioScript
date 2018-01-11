@@ -1,9 +1,9 @@
 #include "audiosettings.h"
+#include <QAudioFormat>
 #include <QAudioDeviceInfo>
-#include <QIODevice>
 
 AudioSettings::AudioSettings(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      m_format(QAudioDeviceInfo::defaultOutputDevice().preferredFormat())
 {
-    m_format = QAudioDeviceInfo::defaultOutputDevice().preferredFormat();
 }
