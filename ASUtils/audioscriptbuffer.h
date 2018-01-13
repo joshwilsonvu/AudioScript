@@ -8,7 +8,10 @@ class ASUTILS_EXPORT AudioScriptBuffer
 public:
     typedef sample_t value_type;
 
-    AudioScriptBuffer(size_t size);
+    // consider letting this constructor take a AudioFormat cref
+    // and using its bufferSize() method, restricted to valid
+    // buffer sizes
+    AudioScriptBuffer(const AudioFormat& size);
     AudioScriptBuffer(const AudioScriptBuffer& other);
     AudioScriptBuffer(AudioScriptBuffer&& other);
     ~AudioScriptBuffer() noexcept;

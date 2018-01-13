@@ -1,5 +1,5 @@
-#ifndef AUDIOINPUT2_H
-#define AUDIOINPUT2_H
+#ifndef AUDIOSOURCE_H
+#define AUDIOSOURCE_H
 
 // The way to do this is not to subclass QIODevice but to
 // make a class with a QAudioInput and a QBuffer member
@@ -16,6 +16,11 @@
 //           qabuffer.constData<sample_t>() + qabuffer.sampleCount(),
 //           m_buffer.begin());
 //   }
+
+// TODO - separate the members and functionality for each mode into
+//     seperate classes. Then, either use a tagged union of pointers to
+//     each of these classes or enforce a common interface and use an
+//     interface pointer and virtual calls.
 
 #include "audioformat.h"
 #include "audioscriptbuffer.h"
@@ -60,8 +65,6 @@ signals:
     void bufferReady();
 
 private:
-    // releases resources, preparing AudioInput to be reopened
-    void reset();
 
     enum InputMode {
         None  = 0,
@@ -87,4 +90,4 @@ private:
 
 };
 
-#endif // AUDIOINPUT2_H
+#endif // AUDIOSOURCE_H

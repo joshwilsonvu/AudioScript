@@ -11,7 +11,6 @@ AudioFormat::AudioFormat(AS::BufferSize bufferSize)
 
 AudioFormat::AudioFormat(const QAudioFormat& format, AS::BufferSize bufferSize)
     : m_bufferSize(bufferSize),
-      m_channelCount(format.channelCount()),
       m_sampleRate(format.sampleRate())
 {
 }
@@ -19,7 +18,7 @@ AudioFormat::AudioFormat(const QAudioFormat& format, AS::BufferSize bufferSize)
 QAudioFormat AudioFormat::toQAudioFormat() const
 {
     QAudioFormat format;
-    format.setChannelCount(channelCount());
+    format.setChannelCount(1);
     format.setSampleRate(sampleRate());
     format.setSampleSize(sizeof(sample_t) * 8);
     format.setSampleType(QAudioFormat::Float);
@@ -34,16 +33,6 @@ int AudioFormat::sampleRate() const
 void AudioFormat::setSampleRate(int sampleRate)
 {
     m_sampleRate = sampleRate;
-}
-
-int AudioFormat::channelCount() const
-{
-    return m_channelCount;
-}
-
-void AudioFormat::setChannelCount(int channelCount)
-{
-    m_channelCount = channelCount;
 }
 
 AS::BufferSize AudioFormat::bufferSize() const

@@ -17,15 +17,15 @@ public:
     AS::BufferSize bufferSize() const;
     void setBufferSize(AS::BufferSize bufferSize);
 
-    int channelCount() const;
-    void setChannelCount(int channelCount);
-
     int sampleRate() const;
     void setSampleRate(int sampleRate);
 
 private:
     AS::BufferSize m_bufferSize;
-    int m_channelCount;
+
+    // TODO for minimum viable product, we are enforcing mono
+    //int m_channelCount;
+
     int m_sampleRate;
 };
 

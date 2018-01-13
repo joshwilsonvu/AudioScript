@@ -47,7 +47,8 @@ HEADERS += \
     Main/mainwindow.h \
     Audio/audiosettings.h \
     Audio/audioformat.h \
-    Audio/audiosource.h
+    Audio/audiosource.h \
+    Audio/audiofilesource.h
 
 SOURCES += \
     Audio/audioinput.cpp \
@@ -68,7 +69,8 @@ SOURCES += \
     Main/mainwindow.cpp \
     Audio/audiosettings.cpp \
     Audio/audioformat.cpp \
-    Audio/audiosource.cpp
+    Audio/audiosource.cpp \
+    Audio/audiofilesource.cpp
 
 FORMS += \
     Editor/scriptwindow.ui \
