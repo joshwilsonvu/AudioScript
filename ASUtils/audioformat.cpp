@@ -1,14 +1,11 @@
 #include "audioformat.h"
 
-#include <QFile>
-#include <QAudioDeviceInfo>
-#include <QAudioFormat>
-
 AudioFormat::AudioFormat(AS::BufferSize bufferSize)
     : m_bufferSize(bufferSize)
 {
 }
 
+/*
 AudioFormat::AudioFormat(const QAudioFormat& format, AS::BufferSize bufferSize)
     : m_bufferSize(bufferSize),
       m_sampleRate(format.sampleRate())
@@ -24,7 +21,7 @@ QAudioFormat AudioFormat::toQAudioFormat() const
     format.setSampleType(QAudioFormat::Float);
     return format;
 }
-
+*/
 int AudioFormat::sampleRate() const
 {
     return m_sampleRate;

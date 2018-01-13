@@ -28,6 +28,8 @@ public:
     void close();
 
 private:
+    void copyBuffer();
+
     // lets the class decode audio files, converts output
     QAudioDecoder* m_decoder;
 

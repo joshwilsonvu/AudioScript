@@ -2,16 +2,17 @@
 #define AUDIOSCRIPTBUFFER_H
 
 #include "globals.h"
+#include "audioformat.h"
+#include <vector>
 
 class ASUTILS_EXPORT AudioScriptBuffer
 {
 public:
     typedef sample_t value_type;
 
-    // consider letting this constructor take a AudioFormat cref
-    // and using its bufferSize() method, restricted to valid
-    // buffer sizes
-    AudioScriptBuffer(const AudioFormat& size);
+    AudioScriptBuffer(AS::BufferSize bufferSize);
+    AudioScriptBuffer(const AudioFormat& format);
+
     AudioScriptBuffer(const AudioScriptBuffer& other);
     AudioScriptBuffer(AudioScriptBuffer&& other);
     ~AudioScriptBuffer() noexcept;
@@ -52,8 +53,23 @@ public:
     template <typename BinaryOperation>
     AudioScriptBuffer& applied(const AudioScriptBuffer& other, BinaryOperation op) const;
 
-
+    // AudioScriptBuffer stores the memory of objects in a sort of "dead" state
+    // after they are destroyed so that new buffers can reuse it. However, this
+    // results in memory unreleased memory, so this function may be called to
+    // free it.
+    static void releaseMemory();
 private:
+    // places buffer in deadBuffer if appropriate
+    static void bury(AudioScriptBuffer&& buffer);
+    // attempts to retrieve a buffer from deadBuffer, size zero if failed
+    static AudioScriptBuffer resurrect(AS::BufferSize bufferSize);
+    // generates a buffer with no resources
+    AudioScriptBuffer();
+    // actually deallocates the buffer
+    void destroy();
+
+    const static size_t DEADBUFFER_CAPACITY = 10;
+    static std::vector<AudioScriptBuffer> deadBuffer;
 
     size_t m_size;
     sample_t* m_data;

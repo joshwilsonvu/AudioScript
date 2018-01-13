@@ -5,7 +5,7 @@
 
 class QAudioFormat;
 
-class AudioFormat
+class ASUTILS_EXPORT AudioFormat
 {
 public:
     AudioFormat(AS::BufferSize bufferSize = AS::BufferSize::_256);
