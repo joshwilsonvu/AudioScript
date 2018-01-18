@@ -3,7 +3,7 @@
 
 #include "audioscript.h"
 
-#include <initializer_list>
+#include <vector>
 
 class AudioScriptChain : public AudioScript
 {

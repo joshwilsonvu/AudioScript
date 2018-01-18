@@ -22,10 +22,10 @@
 //     each of these classes or enforce a common interface and use an
 //     interface pointer and virtual calls.
 
-#include "audioformat.h"
 #include "audioscriptbuffer.h"
 
 #include <QObject>
+#include <QAudioFormat>
 
 class QAudioDecoder;
 class QAudioInput;
@@ -35,21 +35,21 @@ class AudioSource : public QObject
 {
     Q_OBJECT
 public:
-    AudioSource(const AudioFormat& format, QObject* parent = 0);
-    AudioSource(const AudioFormat& format, QString targetFile,
+    AudioSource(const QAudioFormat& format, QObject* parent = 0);
+    AudioSource(const QAudioFormat& format, QString targetFile,
                 QObject* parent = 0);
     //AudioSource(const AudioFormat& format,
     //            const QAudioDeviceInfo& targetDevice, QObject* parent = 0);
 
     ~AudioSource();
 
-    bool open(QString targetFile);
+    //bool open(QString targetFile);
     //bool open(QAudioDeviceInfo targetDevice);
 
     bool bufferAvailable() const;
     AudioScriptBuffer buffer();
 
-    AudioFormat format() const;
+    QAudioFormat format() const;
 
     // Device members
     //static QList<QAudioDeviceInfo> availableDevices();
@@ -59,7 +59,7 @@ public slots:
     void stop();
     void rewind();
     void close();
-    void setAudioFormat(const AudioFormat& format);
+    void setAudioFormat(const QAudioFormat& format);
 
 signals:
     void bufferReady();
@@ -72,7 +72,8 @@ private:
         Device = 2
     };
 
-    AudioFormat m_format;
+    // TODO do we need this?
+    QAudioFormat m_format;
 
     // Invariant: if m_mode == File, the File InputMode members
     // will be valid and all other member pointers will be nullptr,

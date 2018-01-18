@@ -3,7 +3,6 @@
 
 #include "audioscript.h"
 #include "audioscriptplugin.h"
-#include "audiosettings.h"
 
 #include <QGraphicsItem>
 #include <QPointF>

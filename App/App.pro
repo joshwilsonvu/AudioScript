@@ -45,10 +45,9 @@ HEADERS += \
     Engine/audioscriptengine.h \
     Engine/audioscriptplugin.h \
     Main/mainwindow.h \
-    Audio/audiosettings.h \
     Audio/audiosource.h \
-    Audio/audiofilesource.h \
-    Audio/audioscriptchain.h
+    Audio/audioscriptchain.h \
+    Audio/audiodevicesource.h
 
 SOURCES += \
     Audio/audioinput.cpp \
@@ -67,10 +66,9 @@ SOURCES += \
     Engine/audioscriptplugin.cpp \
     Main/main.cpp \
     Main/mainwindow.cpp \
-    Audio/audiosettings.cpp \
     Audio/audiosource.cpp \
-    Audio/audiofilesource.cpp \
-    Audio/audioscriptchain.cpp
+    Audio/audioscriptchain.cpp \
+    Audio/audiodevicesource.cpp
 
 FORMS += \
     Editor/scriptwindow.ui \

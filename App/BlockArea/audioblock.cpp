@@ -66,7 +66,7 @@ AudioScriptBuffer AudioBlock::process(AudioScriptBuffer buffer)
             qDebug() << "AudioScript" << name() << "threw an exception.";
         }
     }
-    return AudioScriptBuffer(0);
+    return buffer;
 }
 
 QString AudioBlock::name() const

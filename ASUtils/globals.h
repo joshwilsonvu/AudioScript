@@ -14,13 +14,15 @@ typedef float sample_t;
 namespace AS {
 
 enum class BufferSize : size_t {
-    _32 = 32,
-    _64 = 64,
-    _128 = 128,
-    _256 = 256,
-    _512 = 512,
-    _1024 = 1024
+    _32,
+    _64,
+    _128,
+    _256,
+    _512,
+    _1024
 };
+
+size_t to_size_t(BufferSize size);
 
 }
 

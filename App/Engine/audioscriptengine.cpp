@@ -7,9 +7,12 @@
 #include "audioscript.h"
 #include "audioscriptplugin.h"
 
+#include "audioscriptbuffer.h"
+
 // class AudioScriptEngine
 AudioScriptEngine::AudioScriptEngine(QObject *parent) : QObject(parent)
 {
+    AudioScriptBuffer::releaseMemory();
 }
 
 AudioScriptEngine::~AudioScriptEngine()
