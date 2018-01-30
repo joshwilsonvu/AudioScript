@@ -22,7 +22,8 @@ HEADERS += \
     globals.h \
     audioscriptbuffer.h \
     audioscriptutils.h \
-    audioscriptbuffer_p.h
+    audioscriptbuffer_p.h \
+    audioscriptexception.h
 
 SOURCES += \
     audioscriptui.cpp \
@@ -30,7 +31,8 @@ SOURCES += \
     audioscript.cpp \
     audioscriptbuffer.cpp \
     audioscriptutils.cpp \
-    globals.cpp
+    globals.cpp \
+    audioscriptexception.cpp
 
 DEFINES += ASUTILS_LIBRARY # for windows import/export dll stuff
 DEFINES += QT_DEPRECATED_WARNINGS

@@ -1,72 +1,59 @@
 #include "audioscriptbuffer.h"
+#include "audioscriptexception.h"
+#include "audioscriptutils.h"
 #include <algorithm>
-#include <vector>
 
-// define the following symbol to disable the bury/resurrect
-// optimization that reduces the overhead of new/delete operations
-//#define NO_RESURRECT
-
-size_t AudioScriptBuffer::m_size = 256ul;
-int AudioScriptBuffer::m_count = 0;
-
-#ifndef NO_RESURRECT
-// local to this file
-namespace {
-constexpr const size_t DEADBUFFER_CAPACITY = 10ul;
-std::vector<AudioScriptBuffer::value_type*> deadBuffer;
-}
-#endif
-
-AudioScriptBuffer::AudioScriptBuffer(bool zeroInitialize)
-{
-#ifndef NO_RESURRECT
-    if (resurrect()) {
-        // we got a dead buffer of the size we needed, members are set
-        if (zeroInitialize) {
-            clear(); // zero-filled
-        }
-    } else {
-#endif
-        if (zeroInitialize) {
-            m_data = new sample_t[m_size](); // zero-filled
-        } else {
-            m_data = new sample_t[m_size];
-        }
-#ifndef NO_RESURRECT
-    }
-#endif
-}
+AudioScriptBuffer::AudioScriptBuffer(size_t size, bool zeroInitialize)
+    : m_size(size),
+      m_data(m_size ? (zeroInitialize ? new sample_t[m_size]()
+                                      : new sample_t[m_size])
+                    : nullptr)
+{}
 
 AudioScriptBuffer::AudioScriptBuffer(const AudioScriptBuffer& other)
-    : AudioScriptBuffer(false)
+    : AudioScriptBuffer(other.size(), false)
 {
     // copy contents of other, no initial zero-fill
     std::copy(other.begin(), other.end(), begin());
 }
 
 AudioScriptBuffer::AudioScriptBuffer(AudioScriptBuffer&& other)
-    : m_data(other.m_data)
+    : m_size(other.size()),
+      m_data(other.m_data)
 {
     // take and reset contents of other
+    other.m_size = 0ul;
     other.m_data = nullptr;
 }
 
 AudioScriptBuffer::~AudioScriptBuffer() noexcept
 {
-#ifndef NO_RESURRECT
-    // doesn't necessarily release resources, may be reused
-    if (m_data) {
-        bury();
-    }
-#else
-    destroy();
-#endif
+    m_size = 0ul;
+    delete[] m_data;
+    m_data = nullptr;
 }
 
-AudioScriptBuffer& AudioScriptBuffer::operator=(AudioScriptBuffer other) noexcept
+AudioScriptBuffer& AudioScriptBuffer::operator=(const AudioScriptBuffer& other)
 {
-    // copy/move-and-swap idiom
-    swap(other);
+    // copy-and-swap idiom
+    if (this != &other) {
+        AS::assert(m_size == 0ul || m_size == other.m_size,
+                   "AudioScriptBuffer: sizes mismatch.");
+        AudioScriptBuffer temp(other);
+        swap(temp);
+    }
+    return *this;
+}
+
+AudioScriptBuffer& AudioScriptBuffer::operator=(AudioScriptBuffer&& other)
+{
+    // move-and-swap idiom
+    if (this != &other) {
+        AS::assert(m_size == 0ul || m_size == other.m_size,
+                   "AudioScriptBuffer: sizes mismatch.");
+        AudioScriptBuffer temp(std::move(other));
+        swap(temp);
+    }
     return *this;
 }
 
@@ -84,6 +71,7 @@ AudioScriptBuffer& AudioScriptBuffer::move(AudioScriptBuffer& other)
 
 void AudioScriptBuffer::swap(AudioScriptBuffer &other) noexcept
 {
+    std::swap(m_size, other.m_size);
     std::swap(m_data, other.m_data);
 }
 
@@ -155,61 +143,11 @@ sample_t AudioScriptBuffer::operator[](size_t index) const
 
 sample_t& AudioScriptBuffer::at(size_t index)
 {
-    if (index >= m_size) {
-        throw std::out_of_range("Invalid index.");
-    }
+    AS::assert(index < m_size, "AudioScriptBuffer: Invalid index");
     return m_data[index];
 }
 
 sample_t AudioScriptBuffer::at(size_t index) const
 {
     return const_cast<AudioScriptBuffer*>(this)->at(index);
-}
-
-void AudioScriptBuffer::releaseMemory()
-{
-#ifndef NO_RESURRECT
-    while (!deadBuffer.empty()) {
-        delete[] deadBuffer.back();
-        deadBuffer.pop_back();
-    }
-    deadBuffer.shrink_to_fit();
-#endif
-}
-
-void AudioScriptBuffer::bury()
-{
-#ifndef NO_RESURRECT
-    // precondition: m_data
-    if (deadBuffer.size() < DEADBUFFER_CAPACITY) {
-        // allocate once, subsequently no-op
-        deadBuffer.reserve(DEADBUFFER_CAPACITY);
-        deadBuffer.push_back(m_data);
-        m_data = nullptr;
-    } else {
-#endif
-        destroy();
-#ifndef NO_RESURRECT
-    }
-#endif
-    // postcondition: *this guaranteed to hold no resources
-}
-
-bool AudioScriptBuffer::resurrect()
-{
-#ifndef NO_RESURRECT
-    // precondition: !m_data, should only be called in constructor
-    if (!m_data && !deadBuffer.empty()) {
-        m_data = deadBuffer.back();
-        deadBuffer.pop_back();
-        return true;
-    }
-#endif
-    return false;
-}
-
-void AudioScriptBuffer::destroy()
-{
-    delete[] m_data;
-    m_data = nullptr;
 }

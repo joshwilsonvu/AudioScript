@@ -9,15 +9,16 @@ public:
     typedef sample_t value_type;
 
     // Constructors and destructor
-    AudioScriptBuffer(bool zeroInitialize = true);
+    AudioScriptBuffer(size_t size = 0ul, bool zeroInitialize = true);
     AudioScriptBuffer(const AudioScriptBuffer& other);
     AudioScriptBuffer(AudioScriptBuffer&& other);
     ~AudioScriptBuffer() noexcept;
 
-    // unified assignment operator
-    AudioScriptBuffer& operator=(AudioScriptBuffer other) noexcept;
+    // copy/move assignment operator
+    AudioScriptBuffer& operator=(const AudioScriptBuffer& other);
+    AudioScriptBuffer& operator=(AudioScriptBuffer&& other);
 
-    // explicit copy/move methods
+    // explicit copy/move assignment methods, returns reference to *this
     AudioScriptBuffer& copy(const AudioScriptBuffer& other);
     AudioScriptBuffer& move(AudioScriptBuffer& other);
     void swap(AudioScriptBuffer& other) noexcept;
@@ -61,22 +62,7 @@ public:
     AudioScriptBuffer& applied(const AudioScriptBuffer& other, BinaryOperation op) const;
 
 private:
-    friend class AudioScriptEngine;
-    // AudioScriptBuffer stores the memory of objects in a sort of "dead" state
-    // after they are destroyed so that new buffers can reuse it. However, this
-    // results in unreleased memory, so this function may be called to free it.
-    // IMPORTANT: call this function when the buffer sizes used changes
-    static void releaseMemory();
-    // places buffer in deadBuffer if appropriate
-    void bury();
-    // attempts to retrieve a buffer from deadBuffer. Called only during construction
-    bool resurrect();
-    // actually deallocates the buffer
-    void destroy();
-
-    static size_t m_size;
-    static int m_count;
-
+    size_t m_size;
     sample_t* m_data;
 };
 

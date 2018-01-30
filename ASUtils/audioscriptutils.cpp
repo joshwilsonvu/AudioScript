@@ -1,8 +1,16 @@
 #include "audioscriptutils.h"
+#include "audioscriptexception.h"
 
 #include <cmath>
 
 // check if OpenCL would let you use DSP unit
+
+void AS::assert(bool cond, const char* message)
+{
+    if (!cond) {
+        throw AudioScriptException(message);
+    }
+}
 
 sample_t AS::dB2amp(sample_t db)
 {

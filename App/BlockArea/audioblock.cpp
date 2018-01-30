@@ -1,6 +1,7 @@
 #include "audioblock.h"
 #include "audioscript.h"
 #include "audioscriptbuffer.h"
+#include "audioscriptexception.h"
 
 #include <QApplication>
 #include <QFontMetrics>
@@ -64,6 +65,9 @@ AudioScriptBuffer AudioBlock::process(AudioScriptBuffer buffer)
     if (m_script) {
         try {
             return m_script->process(buffer);
+        } catch(const AudioScriptException& e) {
+            qDebug() << "AudioScript" << name() << "threw an exception:"
+                     << e.what();
         } catch (...) {
             qDebug() << "AudioScript" << name() << "threw an exception.";
         }

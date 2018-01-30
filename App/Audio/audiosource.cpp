@@ -12,7 +12,7 @@ AudioSource::AudioSource(const QAudioFormat& format, QObject* parent)
       m_decoder(nullptr),
       m_audioInput(nullptr),
       m_qbuffer(nullptr),
-      m_buffer()
+      m_buffer(0)
 {
 }
 
