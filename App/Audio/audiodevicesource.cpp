@@ -1,7 +1,10 @@
 #include "audiodevicesource.h"
 #include "audioscriptutils.h"
 
+#include <algorithm>
+
 InputBufferWrapper::InputBufferWrapper(const QAudioFormat& format, QObject* parent)
+    : QIODevice(parent)
 {
     // TODO support formats other than 32-bit float
     Q_ASSERT(format.sampleSize() == 8*sizeof(sample_t) && format.sampleType() == QAudioFormat::Float);
@@ -9,7 +12,6 @@ InputBufferWrapper::InputBufferWrapper(const QAudioFormat& format, QObject* pare
 
 InputBufferWrapper::~InputBufferWrapper()
 {
-
 }
 
 void InputBufferWrapper::start()
@@ -34,7 +36,8 @@ qint64 InputBufferWrapper::writeData(const char* data, qint64 len)
 {
     const sample_t* begin = reinterpret_cast<const sample_t*>(data);
     while (len > 0) {
-        // std::copy()
+        len = std::min(size_t(len/sizeof(sample_t)), m_activeBuffer.size());
+        std::copy(begin, begin + len, m_activeBuffer.begin());
     }
     return len;
 }

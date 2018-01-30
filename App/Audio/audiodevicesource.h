@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "audioscriptbuffer.h"
 
+#include <QObject>
 #include <QIODevice>
 #include <QAudioFormat>
 #include <QAudioDeviceInfo>
@@ -11,6 +12,7 @@
 
 class InputBufferWrapper : public QIODevice
 {
+    Q_OBJECT
 public:
     InputBufferWrapper(const QAudioFormat& format, QObject* parent);
     ~InputBufferWrapper();
