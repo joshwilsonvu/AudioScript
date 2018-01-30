@@ -22,10 +22,11 @@ AudioBlock::AudioBlock(AudioScriptPlugin& library,
     link(prev, this);
 
     m_sz.setY(QApplication::fontMetrics().height() + 2 * k_spacing);
-    m_sz.setX(qMin(QApplication::fontMetrics().width(name()) + 2 * k_spacing, (int)m_sz.y()));
+    m_sz.setX(qMax(QApplication::fontMetrics().width(name()) + 2 * k_spacing, (int)m_sz.y()));
 
     if (m_plugin.spawnable()) {
-        m_script = m_plugin.spawn(); // generate script, owned
+        // spawn script, must give back by m_plugin.unspawn()
+        m_script = m_plugin.spawn();
     }
 
 
@@ -34,7 +35,8 @@ AudioBlock::AudioBlock(AudioScriptPlugin& library,
 AudioBlock::~AudioBlock()
 {
     unlink(this);
-    delete m_script;
+    m_plugin.unspawn(m_script);
+    m_script = nullptr;
 }
 
 QRectF AudioBlock::boundingRect() const

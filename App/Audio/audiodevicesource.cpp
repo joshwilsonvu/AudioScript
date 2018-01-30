@@ -32,11 +32,11 @@ qint64 InputBufferWrapper::readData(char* data, qint64 maxlen)
 
 qint64 InputBufferWrapper::writeData(const char* data, qint64 len)
 {
-    sample_t* begin = reinterpret_cast<const sample_t*>(data);
+    const sample_t* begin = reinterpret_cast<const sample_t*>(data);
     while (len > 0) {
         // std::copy()
     }
-
+    return len;
 }
 
 AudioDeviceSource::AudioDeviceSource(AS::BufferSize bufferSize)

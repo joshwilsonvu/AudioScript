@@ -22,10 +22,12 @@ public:
 
     bool spawnable() const;
     AudioScript* spawn();
+    void unspawn(AudioScript* spawned);
 
 private:
     QPluginLoader m_plugin;
     AudioScriptFactory* m_factory;
+    int m_spawnedCount;
     const QString m_name; // retrieved from plugin once, guaranteed constant
     const QString m_info; // retrieved from plugin once, guaranteed constant
 };

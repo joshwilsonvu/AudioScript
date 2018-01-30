@@ -60,5 +60,14 @@ AudioScript* AudioScriptPlugin::spawn()
     if (!spawnable()) {
         return nullptr;
     }
+    ++m_spawnedCount;
     return m_factory->spawn();
+}
+
+void AudioScriptPlugin::unspawn(AudioScript* spawned)
+{
+    if (spawned) {
+        delete spawned;
+        --m_spawnedCount;
+    }
 }
