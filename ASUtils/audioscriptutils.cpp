@@ -55,6 +55,31 @@ int64_t AS::toInt64(sample_t x)
     return x * -double(INT64_MIN);
 }
 
+uint8_t AS::toUint8(sample_t x)
+{
+    return toInt8(x)-INT8_MIN;
+}
+
+uint16_t AS::toUint16(sample_t x)
+{
+    return toInt16(x)-INT16_MIN;
+}
+
+uint32_t AS::toUint24(sample_t x)
+{
+    return toInt24(x)-INT32_MIN/8;
+}
+
+uint32_t AS::toUint32(sample_t x)
+{
+    return toInt24(x)-INT32_MIN;
+}
+
+uint64_t AS::toUint64(sample_t x)
+{
+    return toInt64(x)-INT64_MIN;
+}
+
 // scales the full integer range of x down to [-1,1)
 sample_t AS::fromInt8(int8_t x)
 {
@@ -84,4 +109,29 @@ sample_t AS::fromInt64(int64_t x)
 {
     sample_t d = sample_t(x);
     return d / -double(INT64_MIN);
+}
+
+sample_t AS::fromUint8(uint8_t x)
+{
+    return fromInt8(x+INT8_MIN);
+}
+
+sample_t AS::fromUint16(uint16_t x)
+{
+    return fromInt16(x+INT16_MIN);
+}
+
+sample_t AS::fromUint24(uint32_t x)
+{
+    return fromInt24(x+INT32_MIN/8);
+}
+
+sample_t AS::fromUint32(uint32_t x)
+{
+    return fromInt32(x+INT32_MIN);
+}
+
+sample_t AS::fromUint64(uint64_t x)
+{
+    return fromInt64(x+INT64_MIN);
 }

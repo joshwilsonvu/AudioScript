@@ -15,18 +15,30 @@ public:
     InputBufferWrapper(const QAudioFormat& format, QObject* parent);
     ~InputBufferWrapper();
 
-    void open();
-    void close() override;
+    void start();
+    void stop();
 
     qint64 readData(char* data, qint64 maxlen) override;
     qint64 writeData(const char *data, qint64 len) override;
 
 private:
-    // hide inherited method
-    bool open(OpenMode mode) override {}
 
     AudioScriptBuffer m_activeBuffer;
 
+    /*
+    template <typename T>
+    class Converter {
+    public:
+        Converter(sample_t (*conv_fun) (T))
+            : m_conv_fun(conv_fun) {}
+        sample_t operator() (const char* data) const
+        {
+            return m_conv_fun(*reinterpret_cast<T*>(data));
+        }
+    private:
+        sample_t (*m_conv_fun) (T);
+    } m_converter;
+    */
 signals:
     void update();
 };

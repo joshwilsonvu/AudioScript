@@ -4,7 +4,7 @@
 
 // define the following symbol to disable the bury/resurrect
 // optimization that reduces the overhead of new/delete operations
-#define NO_RESURRECT
+//#define NO_RESURRECT
 
 size_t AudioScriptBuffer::m_size = 256ul;
 int AudioScriptBuffer::m_count = 0;
@@ -13,7 +13,7 @@ int AudioScriptBuffer::m_count = 0;
 // local to this file
 namespace {
 constexpr const size_t DEADBUFFER_CAPACITY = 10ul;
-std::vector<AudioScriptBuffer::value_type> deadBuffer;
+std::vector<AudioScriptBuffer::value_type*> deadBuffer;
 }
 #endif
 
@@ -38,14 +38,8 @@ AudioScriptBuffer::AudioScriptBuffer(bool zeroInitialize)
 }
 
 AudioScriptBuffer::AudioScriptBuffer(const AudioScriptBuffer& other)
+    : AudioScriptBuffer(false)
 {
-#ifndef NO_RESURRECT
-    if (!resurrect()) {
-#endif
-        m_data = new sample_t[m_size]();
-#ifndef NO_RESURRECT
-    }
-#endif
     // copy contents of other, no initial zero-fill
     std::copy(other.begin(), other.end(), begin());
 }
@@ -176,7 +170,7 @@ void AudioScriptBuffer::releaseMemory()
 {
 #ifndef NO_RESURRECT
     while (!deadBuffer.empty()) {
-        deadBuffer.back().destroy();
+        delete[] deadBuffer.back();
         deadBuffer.pop_back();
     }
     deadBuffer.shrink_to_fit();
@@ -190,7 +184,8 @@ void AudioScriptBuffer::bury()
     if (deadBuffer.size() < DEADBUFFER_CAPACITY) {
         // allocate once, subsequently no-op
         deadBuffer.reserve(DEADBUFFER_CAPACITY);
-        deadBuffer.emplace_back(std::move(*this));
+        deadBuffer.push_back(m_data);
+        m_data = nullptr;
     } else {
 #endif
         destroy();
@@ -205,7 +200,7 @@ bool AudioScriptBuffer::resurrect()
 #ifndef NO_RESURRECT
     // precondition: !m_data, should only be called in constructor
     if (!m_data && !deadBuffer.empty()) {
-        swap(deadBuffer.back());
+        m_data = deadBuffer.back();
         deadBuffer.pop_back();
         return true;
     }

@@ -25,12 +25,22 @@ ASUTILS_EXPORT int16_t toInt16(sample_t x);
 ASUTILS_EXPORT int32_t toInt24(sample_t x);
 ASUTILS_EXPORT int32_t toInt32(sample_t x);
 ASUTILS_EXPORT int64_t toInt64(sample_t x);
+ASUTILS_EXPORT uint8_t toUint8(sample_t x);
+ASUTILS_EXPORT uint16_t toUint16(sample_t x);
+ASUTILS_EXPORT uint32_t toUint24(sample_t x);
+ASUTILS_EXPORT uint32_t toUint32(sample_t x);
+ASUTILS_EXPORT uint64_t toUint64(sample_t x);
 // scales the full integer range of x down to [-1,1)
 ASUTILS_EXPORT sample_t fromInt8(int8_t x);
 ASUTILS_EXPORT sample_t fromInt16(int16_t x);
 ASUTILS_EXPORT sample_t fromInt24(int32_t x);
 ASUTILS_EXPORT sample_t fromInt32(int32_t x);
 ASUTILS_EXPORT sample_t fromInt64(int64_t x);
+ASUTILS_EXPORT sample_t fromUint8(uint8_t x);
+ASUTILS_EXPORT sample_t fromUint16(uint16_t x);
+ASUTILS_EXPORT sample_t fromUint24(uint32_t x);
+ASUTILS_EXPORT sample_t fromUint32(uint32_t x);
+ASUTILS_EXPORT sample_t fromUint64(uint64_t x);
 
 }
 
