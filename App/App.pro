@@ -4,13 +4,15 @@
 #
 #-------------------------------------------------
 
+include(../Common.pri)
+
 TARGET = AudioScript
 
 TEMPLATE = app
 
 CONFIG += qt thread
 
-DESTDIR = /Users/Josh/QProjects/Builds
+DESTDIR = $$AS_TARGET_PATH
 
 QT       += core widgets multimedia
 
@@ -24,10 +26,8 @@ INCLUDEPATH += \
     ../ASUtils \
     Plugins
 
-ASUTILS_LIB_PATH = /Users/Josh/QProjects/Builds/
-ASUTILS_LIB_NAME = ASUtils
-LIBS += -L$${ASUTILS_LIB_PATH} -l$${ASUTILS_LIB_NAME}
-PRE_TARGETDEPS += $${ASUTILS_LIB_PATH}$${ASUTILS_LIB_NAME}
+LIBS += -L$${AS_LIB_PATH} -l$${AS_LIB_NAME}
+#PRE_TARGETDEPS += $${AS_LIB_PATH}$${AS_LIB_NAME}
 
 HEADERS += \
     Audio/audioinput.h \

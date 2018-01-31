@@ -5,34 +5,36 @@
 #
 #-------------------------------------------------
 
-TARGET = ASUtils
+include(../Common.pri)
+
+TARGET = $$AS_LIB_NAME
 
 TEMPLATE = lib
 
 CONFIG   += qt
 
-DESTDIR = /Users/Josh/QProjects/Builds
+DESTDIR = $$AS_LIB_PATH
 
 QT       += core widgets
 
 HEADERS += \
     audioscript.h \
     audioscriptfactory.h \
-    audioscriptui.h \
     globals.h \
     audioscriptbuffer.h \
     audioscriptutils.h \
     audioscriptbuffer_p.h \
-    audioscriptexception.h
+    audioscriptexception.h \
+    #audioscriptui.h
 
 SOURCES += \
-    audioscriptui.cpp \
     audioscriptfactory.cpp \
     audioscript.cpp \
     audioscriptbuffer.cpp \
     audioscriptutils.cpp \
     globals.cpp \
-    audioscriptexception.cpp
+    audioscriptexception.cpp \
+    #audioscriptui.cpp \
 
 DEFINES += ASUTILS_LIBRARY # for windows import/export dll stuff
 DEFINES += QT_DEPRECATED_WARNINGS

@@ -2,7 +2,7 @@
 #define AUDIOSCRIPTFACTORY_H
 
 #include "audioscript.h"
-#include "audioscriptui.h"
+//#include "audioscriptui.h"
 #include "globals.h"
 #include <QtPlugin>
 
@@ -24,7 +24,7 @@ public:
 
     virtual const char* scriptInfo() = 0;
 
-    virtual void setupGUI(AudioScriptUI& gui) = 0;
+    //virtual void setupGUI(AudioScriptUI& gui) = 0;
 };
 
 // tells meta-object system about interface

@@ -1,3 +1,4 @@
+// implementations of AudioScriptBuffer template member functions
 template <typename UnaryOperation>
 AudioScriptBuffer& AudioScriptBuffer::apply(UnaryOperation op)
 {

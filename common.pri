@@ -1,0 +1,4 @@
+AS_LIB_NAME = ASUtils
+AS_LIB_PATH = /Users/Josh/QProjects/AudioScriptBuild/
+AS_TARGET_PATH = $$AS_LIB_PATH
+AS_PLUGIN_PATH = $$AS_LIB_PATH
