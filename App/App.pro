@@ -24,10 +24,11 @@ INCLUDEPATH += \
     Engine \
     Main \
     ../ASUtils \
-    Plugins
+    Plugins \
+    3rdParty
 
-LIBS += -L$${AS_LIB_PATH} -l$${AS_LIB_NAME}
-#PRE_TARGETDEPS += $${AS_LIB_PATH}$${AS_LIB_NAME}
+LIBS += -L$${AS_LIB_PATH} -l$${AS_LIB_NAME} \ # dynamic library containing shared defs
+    -L$$PWD -lrtaudio_static # static library containing realtime audio code, must be remade on other systems
 
 HEADERS += \
     Audio/audioinput.h \
@@ -47,7 +48,8 @@ HEADERS += \
     Main/mainwindow.h \
     Audio/audiosource.h \
     Audio/audioscriptchain.h \
-    Audio/audiodevicesource.h
+    Audio/audiodevicesource.h \
+    3rdParty/RtAudio.h
 
 SOURCES += \
     Audio/audioinput.cpp \
