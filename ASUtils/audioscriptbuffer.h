@@ -19,8 +19,8 @@ public:
     AudioScriptBuffer& operator=(AudioScriptBuffer&& other);
 
     // explicit copy/move assignment methods, returns reference to *this
-    AudioScriptBuffer& copy(const AudioScriptBuffer& other);
-    AudioScriptBuffer& move(AudioScriptBuffer& other);
+    AudioScriptBuffer& copyAssign(const AudioScriptBuffer& other);
+    AudioScriptBuffer& moveAssign(AudioScriptBuffer& other);
     void swap(AudioScriptBuffer& other) noexcept;
 
     // convienience function to create a copy

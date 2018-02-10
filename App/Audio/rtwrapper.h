@@ -6,34 +6,34 @@
 class AudioScriptException;
 class RtAudio;
 
-// enums in contructor; for input, output, duplex
+// enums in start() for input, output, duplex
 // combine these with file input and output for a versatile solution
 
 class RtWrapper : public QObject
 {
     Q_OBJECT
 public:
+
+    RtWrapper(QObject *parent = nullptr);
+
+    ~RtWrapper();
+
     enum Mode {
         Input,
         Output,
         Duplex
-    }
-    RtWrapper(Mode mode, QObject *parent = nullptr)
-    throw AudioScriptException;
-
-    ~RtWrapper();
-
-    void start();
+    };
 
 
 
 signals:
 
 public slots:
+    bool start(Mode mode);
+
+    void stop();
 
 private:
-    static int callback(void *outputBuffer, void *inputBuffer, unsigned int nBufferFrames,
-                        double streamTime, RtAudioStreamStatus status, void *data );
 
     RtAudio* m_rtAudio;
 

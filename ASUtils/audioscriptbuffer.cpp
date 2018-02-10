@@ -51,19 +51,18 @@ AudioScriptBuffer& AudioScriptBuffer::operator=(AudioScriptBuffer&& other)
     if (this != &other) {
         AS::assert(m_size == 0ul || m_size == other.m_size,
                    "AudioScriptBuffer: sizes mismatch.");
-        AudioScriptBuffer temp(std::move(other));
-        swap(temp);
+        swap(other);
     }
     return *this;
 }
 
-AudioScriptBuffer& AudioScriptBuffer::copy(const AudioScriptBuffer& other)
+AudioScriptBuffer& AudioScriptBuffer::copyAssign(const AudioScriptBuffer& other)
 {
     operator=(other);
     return *this;
 }
 
-AudioScriptBuffer& AudioScriptBuffer::move(AudioScriptBuffer& other)
+AudioScriptBuffer& AudioScriptBuffer::moveAssign(AudioScriptBuffer& other)
 {
     operator=(std::move(other));
     return *this;

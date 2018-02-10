@@ -31,8 +31,8 @@ LIBS += -L$${AS_LIB_PATH} -l$${AS_LIB_NAME} \ # dynamic library containing share
     -L$${PWD}/3rdParty -lrtaudio # dynamic library containing realtime audio code, must be remade on other systems
 
 HEADERS += \
-    Audio/audioinput.h \
-    Audio/audiooutput.h \
+    3rdParty/RtAudio.h \
+    Audio/rtwrapper.h \
     BlockArea/audioblock.h \
     BlockArea/blockarea.h \
     Compilation/audioscriptcompiler.h \
@@ -45,16 +45,10 @@ HEADERS += \
     Editor/scriptwindow.h \
     Engine/audioscriptengine.h \
     Engine/audioscriptplugin.h \
-    Main/mainwindow.h \
-    Audio/audiosource.h \
-    Audio/audioscriptchain.h \
-    Audio/audiodevicesource.h \
-    3rdParty/RtAudio.h \
-    Audio/rtwrapper.h
+    Main/mainwindow.h
 
 SOURCES += \
-    Audio/audioinput.cpp \
-    Audio/audiooutput.cpp \
+    Audio/rtwrapper.cpp \
     BlockArea/audioblock.cpp \
     BlockArea/blockarea.cpp \
     Compilation/audioscriptcompiler.cpp \
@@ -68,11 +62,7 @@ SOURCES += \
     Engine/audioscriptengine.cpp \
     Engine/audioscriptplugin.cpp \
     Main/main.cpp \
-    Main/mainwindow.cpp \
-    Audio/audiosource.cpp \
-    Audio/audioscriptchain.cpp \
-    Audio/audiodevicesource.cpp \
-    Audio/rtwrapper.cpp
+    Main/mainwindow.cpp
 
 FORMS += \
     Editor/scriptwindow.ui \
