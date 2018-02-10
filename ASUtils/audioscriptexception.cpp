@@ -3,7 +3,6 @@
 AudioScriptException::AudioScriptException(const char* what)
     : m_what(what)
 {
-
 }
 
 const char* AudioScriptException::what() const

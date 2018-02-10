@@ -14,7 +14,7 @@ CONFIG += qt thread
 
 DESTDIR = $$AS_TARGET_PATH
 
-QT       += core widgets multimedia
+QT       += core widgets
 
 INCLUDEPATH += \
     Audio \
@@ -28,7 +28,7 @@ INCLUDEPATH += \
     3rdParty
 
 LIBS += -L$${AS_LIB_PATH} -l$${AS_LIB_NAME} \ # dynamic library containing shared defs
-    -L$$PWD -lrtaudio_static # static library containing realtime audio code, must be remade on other systems
+    -L$${PWD}/3rdParty -lrtaudio # dynamic library containing realtime audio code, must be remade on other systems
 
 HEADERS += \
     Audio/audioinput.h \
@@ -49,7 +49,8 @@ HEADERS += \
     Audio/audiosource.h \
     Audio/audioscriptchain.h \
     Audio/audiodevicesource.h \
-    3rdParty/RtAudio.h
+    3rdParty/RtAudio.h \
+    Audio/rtwrapper.h
 
 SOURCES += \
     Audio/audioinput.cpp \
@@ -70,7 +71,8 @@ SOURCES += \
     Main/mainwindow.cpp \
     Audio/audiosource.cpp \
     Audio/audioscriptchain.cpp \
-    Audio/audiodevicesource.cpp
+    Audio/audiodevicesource.cpp \
+    Audio/rtwrapper.cpp
 
 FORMS += \
     Editor/scriptwindow.ui \
