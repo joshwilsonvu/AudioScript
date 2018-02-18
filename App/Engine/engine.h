@@ -6,6 +6,10 @@
 #include <QObject>
 #include <map>
 
+class RtAudio;
+class AudioScript;
+class AudioScriptBuffer;
+
 class Engine : public QObject
 {
     Q_OBJECT
@@ -13,6 +17,8 @@ public:
     explicit Engine(QObject *parent = nullptr);
     ~Engine();
 
+    // same interface as AudioScript but no actual inheritance
+    AudioScriptBuffer process(AudioScriptBuffer input);
 
 signals:
     void pluginFound(Plugin&);
@@ -22,19 +28,20 @@ public slots:
     // creates Plugin, adds to m_plugins, makes available
     void findPlugins();
 
-    // TODO for starting out, I am going to make this start in duplex
+    // TODO for starting out, I am going to make this start in mono duplex
     // mode, without any other options. Once the minimum viable product
     // is working, more options can be added and the interface can be smoothed.
-    void start();
+    bool start();
 
     void stop();
 
 private:
 
 
-
+    RtAudio* m_rtAudio;
 
     std::map<QString, Plugin> m_plugins;
+    std::vector<AudioScript*> m_scripts;
 };
 
 #endif // ENGINE_H
