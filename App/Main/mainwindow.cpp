@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui(new Ui::MainWindow),
     m_scriptWindow(nullptr),
     m_blockArea(new BlockArea(this)),
-    m_engine(new AudioScriptEngine(this))
+    m_engine(new Engine(this))
 {
     m_ui->setupUi(this); // sets up menu bar, status bar, actions
 
@@ -51,7 +51,7 @@ void MainWindow::scriptWindowClosed()
     m_ui->actionOpen_Editor->setEnabled(true);
 }
 
-void MainWindow::onPluginFound(AudioScriptPlugin& plugin)
+void MainWindow::onPluginFound(Plugin& plugin)
 {
     m_blockArea->addItem(new AudioBlock(plugin));
 }
@@ -116,7 +116,7 @@ void MainWindow::initActions()
 
 void MainWindow::setupConnections()
 {
-    connect(m_engine, SIGNAL(pluginFound(AudioScriptPlugin&)), this, SLOT(onPluginFound(AudioScriptPlugin&)));
+    connect(m_engine, SIGNAL(pluginFound(Plugin&)), this, SLOT(onPluginFound(Plugin&)));
 }
 
 void MainWindow::readSettings()

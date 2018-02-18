@@ -1,10 +1,10 @@
 #include <QtDebug>
 #include "audioscript.h"
 #include "audioscriptfactory.h"
-#include "audioscriptplugin.h"
+#include "plugin.h"
 
 // class AudioScriptLibrary
-AudioScriptPlugin::AudioScriptPlugin(QString filename)
+Plugin::Plugin(QString filename)
     : m_plugin(filename),
       m_factory(qobject_cast<AudioScriptFactory*>(m_plugin.instance())),
       m_name(m_factory ? m_factory->name() : "ERROR"),
@@ -18,7 +18,7 @@ AudioScriptPlugin::AudioScriptPlugin(QString filename)
     }
 }
 
-AudioScriptPlugin::AudioScriptPlugin(AudioScriptPlugin&& rhs)
+Plugin::Plugin(Plugin&& rhs)
     : m_plugin(rhs.m_plugin.fileName()),
       m_factory(rhs.m_factory),
       m_name(rhs.m_name),
@@ -29,33 +29,33 @@ AudioScriptPlugin::AudioScriptPlugin(AudioScriptPlugin&& rhs)
     rhs.m_factory = nullptr;
 }
 
-AudioScriptPlugin::~AudioScriptPlugin()
+Plugin::~Plugin()
 {
     m_plugin.unload(); // release memory, deletes m_factory
     m_factory = nullptr;
 }
 
-QString AudioScriptPlugin::name() const
+QString Plugin::name() const
 {
     return m_name;
 }
 
-QString AudioScriptPlugin::info() const
+QString Plugin::info() const
 {
     return m_info;
 }
 
-QString AudioScriptPlugin::errorString() const
+QString Plugin::errorString() const
 {
     return m_plugin.isLoaded() ? "" : m_plugin.errorString();
 }
 
-bool AudioScriptPlugin::spawnable() const
+bool Plugin::spawnable() const
 {
     return m_factory;
 }
 
-AudioScript* AudioScriptPlugin::spawn()
+AudioScript* Plugin::spawn()
 {
     if (!spawnable()) {
         return nullptr;
@@ -64,7 +64,7 @@ AudioScript* AudioScriptPlugin::spawn()
     return m_factory->spawn();
 }
 
-void AudioScriptPlugin::unspawn(AudioScript* spawned)
+void Plugin::unspawn(AudioScript* spawned)
 {
     if (spawned) {
         delete spawned;

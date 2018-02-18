@@ -10,11 +10,11 @@
 #include <QStyleOptionGraphicsItem>
 #include <QtDebug>
 
-AudioBlock::AudioBlock(AudioScriptPlugin& library, QGraphicsItem* parent)
+AudioBlock::AudioBlock(Plugin& library, QGraphicsItem* parent)
     : AudioBlock(library, nullptr, nullptr, parent)
 {}
 
-AudioBlock::AudioBlock(AudioScriptPlugin& library,
+AudioBlock::AudioBlock(Plugin& library,
            AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
     : QGraphicsItem(parent), m_script(nullptr), m_plugin(library),
       m_next(nullptr), m_prev(nullptr)
@@ -87,7 +87,7 @@ QString AudioBlock::info() const
 }
 
 
-const AudioScriptPlugin& AudioBlock::plugin() const
+const Plugin& AudioBlock::plugin() const
 {
     return m_plugin;
 }

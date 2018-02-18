@@ -1,5 +1,5 @@
-#ifndef AUDIOSCRIPTLIBRARY_H
-#define AUDIOSCRIPTLIBRARY_H
+#ifndef PLUGIN_H
+#define PLUGIN_H
 
 #include <QPluginLoader>
 #include <QString>
@@ -8,13 +8,13 @@
 class AudioScript;
 class AudioScriptFactory;
 
-// AudioScriptPlugin
+// Plugin
 // one-to-one plugin and AudioScript subclass
-class AudioScriptPlugin {
+class Plugin {
 public:
-    AudioScriptPlugin(QString filename);
-    AudioScriptPlugin(AudioScriptPlugin&& rhs);
-    ~AudioScriptPlugin();
+    Plugin(QString filename);
+    Plugin(Plugin&& rhs);
+    ~Plugin();
 
     QString name() const; // the name of the class subclassing AudioScript
     QString info() const; // information about the class subclassing AudioScript
@@ -33,4 +33,4 @@ private:
 };
 
 
-#endif // AUDIOSCRIPTLIBRARY_H
+#endif // PLUGIN_H

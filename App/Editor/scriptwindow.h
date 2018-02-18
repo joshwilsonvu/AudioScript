@@ -5,8 +5,8 @@
 #include <QWidget>
 
 #include "audioscriptcompiler.h"
-#include "audioscriptengine.h"
-#include "audioscriptplugin.h"
+#include "engine.h"
+#include "plugin.h"
 #include "classloader.h"
 
 class ClassDialog;
@@ -68,8 +68,8 @@ private:
     // Backend
     ClassLoader* m_classLoader;
 
-    QSet<AudioScriptPlugin>* m_libraries;
-    AudioScriptEngine* m_engine;
+    QSet<Plugin>* m_libraries;
+    Engine* m_engine;
     AudioScriptCompiler* m_compiler;
 };
 

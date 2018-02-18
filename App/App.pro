@@ -32,7 +32,6 @@ LIBS += -L$${AS_LIB_PATH} -l$${AS_LIB_NAME} \ # dynamic library containing share
 
 HEADERS += \
     3rdParty/RtAudio.h \
-    Audio/rtwrapper.h \
     BlockArea/audioblock.h \
     BlockArea/blockarea.h \
     Compilation/audioscriptcompiler.h \
@@ -43,12 +42,11 @@ HEADERS += \
     Editor/codetabs.h \
     Editor/dialogs.h \
     Editor/scriptwindow.h \
-    Engine/audioscriptengine.h \
-    Engine/audioscriptplugin.h \
-    Main/mainwindow.h
+    Main/mainwindow.h \
+    Engine/engine.h \
+    Engine/plugin.h
 
 SOURCES += \
-    Audio/rtwrapper.cpp \
     BlockArea/audioblock.cpp \
     BlockArea/blockarea.cpp \
     Compilation/audioscriptcompiler.cpp \
@@ -59,10 +57,10 @@ SOURCES += \
     Editor/codetabs.cpp \
     Editor/dialogs.cpp \
     Editor/scriptwindow.cpp \
-    Engine/audioscriptengine.cpp \
-    Engine/audioscriptplugin.cpp \
     Main/main.cpp \
-    Main/mainwindow.cpp
+    Main/mainwindow.cpp \
+    Engine/engine.cpp \
+    Engine/plugin.cpp
 
 FORMS += \
     Editor/scriptwindow.ui \

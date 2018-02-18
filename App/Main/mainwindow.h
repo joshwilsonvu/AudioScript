@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "scriptwindow.h"
-#include "audioscriptengine.h"
+#include "engine.h"
 #include "blockarea.h"
 
 #include <QMainWindow>
@@ -23,7 +23,7 @@ public:
 public slots:
     void openScriptWindow();
     void scriptWindowClosed();
-    void onPluginFound(AudioScriptPlugin&);
+    void onPluginFound(Plugin&);
 
     void play();
     void stop();
@@ -49,7 +49,7 @@ private:
     ScriptWindow* m_scriptWindow;
     BlockArea* m_blockArea;
     QGraphicsView* m_graphicsView;
-    AudioScriptEngine* m_engine;
+    Engine* m_engine;
 };
 
 #endif // MAINWINDOW_H
