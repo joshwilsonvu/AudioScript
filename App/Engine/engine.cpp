@@ -23,12 +23,15 @@ int output(void* outputBuffer, void*, unsigned int nBufferFrames,
 // class AudioScriptEngine
 Engine::Engine(QObject *parent)
     : QObject(parent),
-      m_rtAudio(nullptr)
+      m_rtAudio(nullptr),
+      m_numChannels(2)
 {
+    start();
 }
 
 Engine::~Engine()
 {
+    stop();
     delete m_rtAudio;
     m_rtAudio = nullptr;
     for (AudioScript* i : m_scripts) {
@@ -42,6 +45,11 @@ AudioScriptBuffer Engine::process(AudioScriptBuffer input)
         input = i->process(std::move(input));
     }
     return input;
+}
+
+int Engine::channelCount() const
+{
+    return m_numChannels;
 }
 
 void Engine::findPlugins()
@@ -69,36 +77,51 @@ void Engine::findPlugins()
 
 bool Engine::start()
 {
-    const int numChannels = 1;
     unsigned int bufferSize = 512;
     const int sampleRate = 44100;
+
+    stop();
 
     if (!m_rtAudio) {
         try {
             m_rtAudio = new RtAudio();
+            m_rtAudio->showWarnings(true);
         } catch (const RtAudioError& error) {
             qDebug() << error.getMessage().c_str();
             delete m_rtAudio;
             m_rtAudio = nullptr;
             return false;
         }
-    } else if (m_rtAudio->isStreamOpen()) {
-        if (m_rtAudio->isStreamRunning()) {
-            m_rtAudio->stopStream();
-        }
-        m_rtAudio->closeStream();
     }
-
-    m_rtAudio->showWarnings(true);
-    if (m_rtAudio->getDeviceCount() < 1) {
+    // Determine the number of devices available
+    unsigned int devices = m_rtAudio->getDeviceCount();
+    if (devices < 1) {
         qDebug() << "No audio devices found!";
         return false;
     }
+    // Scan through devices for various capabilities
+    RtAudio::DeviceInfo info;
+    for ( unsigned int i=0; i<devices; i++ ) {
+        info = m_rtAudio->getDeviceInfo( i );
+        if (info.probed) {
+            // Print, for example, the maximum number of output channels for each device
+            qDebug() << "device =" << i << "name =" << info.name.c_str();
+            qDebug() << "preferred sample rate =" << info.preferredSampleRate;
+            qDebug() << "maximum output channels =" << info.outputChannels;
+            qDebug() << "maximum input channels =" << info.inputChannels;
+            qDebug() << "maximum duplex channels =" << info.duplexChannels;
+            qDebug() << "default input device?" << info.isDefaultInput;
+            qDebug() << "default output device?" << info.isDefaultOutput;
+        } else {
+            qDebug() << "device =" << i << "not probed";
+        }
+    }
+
     RtAudio::StreamParameters iParams, oParams;
-    iParams.deviceId = 0; // default device
-    iParams.nChannels = 2;
-    oParams.deviceId = 0; // default device
-    oParams.nChannels = 2;
+    iParams.deviceId = m_rtAudio->getDefaultInputDevice();
+    iParams.nChannels = m_numChannels;
+    oParams.deviceId = m_rtAudio->getDefaultOutputDevice();
+    oParams.nChannels = m_numChannels;
 
     try {
         m_rtAudio->openStream( &oParams, &iParams, RTAUDIO_FLOAT32, sampleRate,
@@ -106,8 +129,7 @@ bool Engine::start()
         m_rtAudio->startStream();
     } catch (const RtAudioError& e) {
         qDebug() << e.getMessage().c_str();
-        if (m_rtAudio->isStreamOpen())
-            m_rtAudio->closeStream();
+        stop();
         return false;
     }
     return true;
@@ -115,7 +137,12 @@ bool Engine::start()
 
 void Engine::stop()
 {
-
+    if (m_rtAudio && m_rtAudio->isStreamOpen()) {
+        if (m_rtAudio->isStreamRunning()) {
+            m_rtAudio->stopStream();
+        }
+        m_rtAudio->closeStream();
+    }
 }
 
 
@@ -154,5 +181,10 @@ int input(void*, void* inputBuffer, unsigned int nBufferFrames,
 int output(void* outputBuffer, void*, unsigned int nBufferFrames,
              double streamTime, RtAudioStreamStatus status, void* data)
 {
-
+    Q_UNUSED(outputBuffer);
+    Q_UNUSED(nBufferFrames);
+    Q_UNUSED(streamTime);
+    if (status) {
+        qDebug() << "Under/overflow detected.";
+    }
 }

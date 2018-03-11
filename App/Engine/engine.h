@@ -20,6 +20,8 @@ public:
     // same interface as AudioScript but no actual inheritance
     AudioScriptBuffer process(AudioScriptBuffer input);
 
+    int channelCount() const;
+
 signals:
     void pluginFound(Plugin&);
 
@@ -39,7 +41,7 @@ private:
 
 
     RtAudio* m_rtAudio;
-
+    int m_numChannels;
     std::map<QString, Plugin> m_plugins;
     std::vector<AudioScript*> m_scripts;
 };
