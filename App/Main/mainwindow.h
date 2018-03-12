@@ -4,6 +4,7 @@
 #include "scriptwindow.h"
 #include "engine.h"
 #include "blockarea.h"
+#include "pluginmanager.h"
 
 #include <QMainWindow>
 #include <QGraphicsView>
@@ -25,7 +26,7 @@ public slots:
     void scriptWindowClosed();
     void onPluginFound(Plugin&);
 
-    void play();
+    void start();
     void stop();
 
     void reset();
@@ -49,7 +50,9 @@ private:
     ScriptWindow* m_scriptWindow;
     BlockArea* m_blockArea;
     QGraphicsView* m_graphicsView;
-    Engine* m_engine;
+
+    Engine m_engine;
+    PluginManager m_pluginManager;
 };
 
 #endif // MAINWINDOW_H

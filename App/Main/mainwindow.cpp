@@ -12,8 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
     m_scriptWindow(nullptr),
-    m_blockArea(new BlockArea(this)),
-    m_engine(new Engine(this))
+    m_blockArea(new BlockArea(this))
 {
     m_ui->setupUi(this); // sets up menu bar, status bar, actions
 
@@ -26,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     initActions();
 
     setupConnections();
+
+    stop();
 }
 
 MainWindow::~MainWindow()
@@ -41,14 +42,14 @@ void MainWindow::openScriptWindow()
                 this, SLOT(scriptWindowClosed()));
         m_scriptWindow->show();
         m_scriptWindow->raise();
-        m_ui->actionOpen_Editor->setEnabled(false);
+        m_ui->actionOpenEditor->setEnabled(false);
     }
 }
 
 void MainWindow::scriptWindowClosed()
 {
     m_scriptWindow = nullptr;
-    m_ui->actionOpen_Editor->setEnabled(true);
+    m_ui->actionOpenEditor->setEnabled(true);
 }
 
 void MainWindow::onPluginFound(Plugin& plugin)
@@ -56,14 +57,18 @@ void MainWindow::onPluginFound(Plugin& plugin)
     m_blockArea->addItem(new AudioBlock(plugin));
 }
 
-void MainWindow::play()
+void MainWindow::start()
 {
-
+    m_ui->actionStart->setEnabled(false);
+    m_ui->actionStop->setEnabled(true);
+    m_engine.start();
 }
 
 void MainWindow::stop()
 {
-
+    m_ui->actionStart->setEnabled(true);
+    m_ui->actionStop->setEnabled(false);
+    m_engine.stop();
 }
 
 void MainWindow::reset()
@@ -107,16 +112,22 @@ void MainWindow::initActions()
     connect(m_ui->actionQuit, SIGNAL(triggered(bool)),
             QApplication::instance(), SLOT(quit()));
 
-    connect(m_ui->actionOpen_Editor, SIGNAL(triggered(bool)),
+    connect(m_ui->actionOpenEditor, SIGNAL(triggered(bool)),
             this, SLOT(openScriptWindow()));
 
     connect(m_ui->actionOpenPlugin, SIGNAL(triggered(bool)),
-            m_engine, SLOT(findPlugins()));
+            &m_pluginManager, SLOT(findPlugins()));
+
+    connect(m_ui->actionStart, SIGNAL(triggered(bool)),
+            this, SLOT(start()));
+    connect(m_ui->actionStop, SIGNAL(triggered(bool)),
+            this, SLOT(stop()));
 }
 
 void MainWindow::setupConnections()
 {
-    connect(m_engine, SIGNAL(pluginFound(Plugin&)), this, SLOT(onPluginFound(Plugin&)));
+    connect(&m_pluginManager, SIGNAL(pluginFound(Plugin&)),
+            this, SLOT(onPluginFound(Plugin&)));
 }
 
 void MainWindow::readSettings()

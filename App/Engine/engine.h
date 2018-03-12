@@ -2,33 +2,25 @@
 #define ENGINE_H
 
 #include "plugin.h"
+#include "audioscript.h"
 
-#include <QObject>
-#include <map>
+#include <vector>
+#include <memory>
 
 class RtAudio;
-class AudioScript;
-class AudioScriptBuffer;
 
-class Engine : public QObject
+class Engine
 {
-    Q_OBJECT
 public:
-    explicit Engine(QObject *parent = nullptr);
+    Engine();
     ~Engine();
 
     // same interface as AudioScript but no actual inheritance
     AudioScriptBuffer process(AudioScriptBuffer input);
 
-    int channelCount() const;
+    void probeAudio();
 
-signals:
-    void pluginFound(Plugin&);
-
-public slots:
-    // make the engine aware of a new plugin
-    // creates Plugin, adds to m_plugins, makes available
-    void findPlugins();
+    int numChannels() const;
 
     // TODO for starting out, I am going to make this start in mono duplex
     // mode, without any other options. Once the minimum viable product
@@ -37,12 +29,15 @@ public slots:
 
     void stop();
 
+    int duplex(sample_t* outputBuffer, sample_t* inputBuffer,
+                       unsigned int nBufferFrames, double streamTime,
+                       unsigned long status);
+
 private:
+    void initializeAudio();
 
-
-    RtAudio* m_rtAudio;
+    std::unique_ptr<RtAudio> m_rtAudio;
     int m_numChannels;
-    std::map<QString, Plugin> m_plugins;
     std::vector<AudioScript*> m_scripts;
 };
 

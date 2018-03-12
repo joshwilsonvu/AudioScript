@@ -10,6 +10,7 @@ public:
 
     // Constructors and destructor
     AudioScriptBuffer(size_t size = 0ul, bool zeroInitialize = true);
+    AudioScriptBuffer(size_t size, sample_t* data); // takes ownership, no copy
     AudioScriptBuffer(const AudioScriptBuffer& other);
     AudioScriptBuffer(AudioScriptBuffer&& other);
     ~AudioScriptBuffer() noexcept;

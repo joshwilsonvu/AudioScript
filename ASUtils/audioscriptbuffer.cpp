@@ -10,6 +10,12 @@ AudioScriptBuffer::AudioScriptBuffer(size_t size, bool zeroInitialize)
                     : nullptr)
 {}
 
+AudioScriptBuffer::AudioScriptBuffer(size_t size, sample_t* data)
+    : m_size(size),
+      m_data(data)
+{
+}
+
 AudioScriptBuffer::AudioScriptBuffer(const AudioScriptBuffer& other)
     : AudioScriptBuffer(other.size(), false)
 {
