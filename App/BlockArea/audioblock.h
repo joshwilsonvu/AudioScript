@@ -7,6 +7,7 @@
 #include <QGraphicsItem>
 #include <QPointF>
 #include <QRectF>
+#include <memory>
 
 class AudioScriptBuffer;
 
@@ -54,7 +55,7 @@ protected:
 
 private:
     // owns AudioScript instance
-    AudioScript* m_script;
+    std::unique_ptr<AudioScript> m_script;
 
     Plugin& m_plugin;
     AudioBlock* m_next;

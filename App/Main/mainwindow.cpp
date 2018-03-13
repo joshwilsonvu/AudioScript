@@ -25,8 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     initActions();
 
     setupConnections();
-
-    stop();
 }
 
 MainWindow::~MainWindow()
@@ -128,6 +126,8 @@ void MainWindow::setupConnections()
 {
     connect(&m_pluginManager, SIGNAL(pluginFound(Plugin&)),
             this, SLOT(onPluginFound(Plugin&)));
+    connect(&m_pluginManager, SIGNAL(pluginRemoved(Plugin&)),
+            m_blockArea, SLOT(onPluginRemoved(Plugin&)));
 }
 
 void MainWindow::readSettings()

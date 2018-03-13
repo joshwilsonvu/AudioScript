@@ -11,19 +11,4 @@
 
 typedef float sample_t;
 
-namespace AS {
-
-enum class BufferSize : size_t {
-    _32,
-    _64,
-    _128,
-    _256,
-    _512,
-    _1024
-};
-
-size_t to_size_t(BufferSize size);
-
-}
-
 #endif // GLOBALS_H

@@ -40,9 +40,6 @@ Engine::Engine()
 Engine::~Engine()
 {
     stop();
-    for (AudioScript* i : m_scripts) {
-        delete i;
-    }
 }
 
 AudioScriptBuffer Engine::process(AudioScriptBuffer input)

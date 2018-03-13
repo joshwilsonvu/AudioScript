@@ -7,6 +7,14 @@ PluginManager::PluginManager(QObject *parent)
 {
 }
 
+PluginManager::~PluginManager()
+{
+    for (auto i = m_plugins.begin(); i != m_plugins.end(); ++i) {
+        // make sure that all AudioScripts are deleted before unloading the code
+        emit pluginRemoved(i->second);
+    }
+}
+
 void PluginManager::findPlugins()
 {
     QStringList libs =

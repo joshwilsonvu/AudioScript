@@ -10,9 +10,11 @@ class PluginManager : public QObject
     Q_OBJECT
 public:
     explicit PluginManager(QObject *parent = nullptr);
+    ~PluginManager();
 
 signals:
     void pluginFound(Plugin&);
+    void pluginRemoved(Plugin&);
 
 public slots:
     // make the engine aware of a new plugin

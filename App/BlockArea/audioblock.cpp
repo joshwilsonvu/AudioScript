@@ -5,6 +5,7 @@
 
 #include <QApplication>
 #include <QFontMetrics>
+#include <QGraphicsScene>
 #include <QPainter>
 #include <QPointF>
 #include <QStyleOptionGraphicsItem>
@@ -16,7 +17,7 @@ AudioBlock::AudioBlock(Plugin& library, QGraphicsItem* parent)
 
 AudioBlock::AudioBlock(Plugin& library,
            AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
-    : QGraphicsItem(parent), m_script(nullptr), m_plugin(library),
+    : QGraphicsItem(parent), m_plugin(library),
       m_next(nullptr), m_prev(nullptr)
 {
     link(this, next);
@@ -26,17 +27,17 @@ AudioBlock::AudioBlock(Plugin& library,
     m_sz.setX(qMax(QApplication::fontMetrics().width(name()) + 2 * k_spacing, (int)m_sz.y()));
 
     if (m_plugin.spawnable()) {
-        // spawn script, must give back by m_plugin.unspawn()
-        m_script = m_plugin.spawn();
+        m_script.reset(m_plugin.spawn());
     }
 
-
+    // set graphicsscene flags
+    setFlag(QGraphicsItem::ItemIsMovable);
+    setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 AudioBlock::~AudioBlock()
 {
     unlink(this);
-    m_plugin.unspawn(m_script);
     m_script = nullptr;
 }
 
@@ -94,7 +95,7 @@ const Plugin& AudioBlock::plugin() const
 
 AudioScript* AudioBlock::script() const
 {
-    return m_script;
+    return m_script.get();
 }
 
 AudioBlock* AudioBlock::next() const

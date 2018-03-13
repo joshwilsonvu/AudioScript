@@ -24,6 +24,7 @@ Plugin::Plugin(Plugin&& rhs)
       m_name(rhs.m_name),
       m_info(rhs.m_info)
 {
+    // reference counting lets pluging be transferred from rhs to this
     m_plugin.load();
     rhs.m_plugin.unload();
     rhs.m_factory = nullptr;
@@ -60,14 +61,5 @@ AudioScript* Plugin::spawn()
     if (!spawnable()) {
         return nullptr;
     }
-    ++m_spawnedCount;
     return m_factory->spawn();
-}
-
-void Plugin::unspawn(AudioScript* spawned)
-{
-    if (spawned) {
-        delete spawned;
-        --m_spawnedCount;
-    }
 }
