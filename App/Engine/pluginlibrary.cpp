@@ -1,13 +1,14 @@
-#include "pluginmanager.h"
+#include "pluginlibrary.h"
 
 #include <QFileDialog>
+#include <QStandardPaths>
 
-PluginManager::PluginManager(QObject *parent)
-    : QObject(parent)
+PluginLibrary::PluginLibrary(QWidget *parent)
+    : QDockWidget(parent)
 {
 }
 
-PluginManager::~PluginManager()
+PluginLibrary::~PluginLibrary()
 {
     for (auto i = m_plugins.begin(); i != m_plugins.end(); ++i) {
         // make sure that all AudioScripts are deleted before unloading the code
@@ -15,7 +16,18 @@ PluginManager::~PluginManager()
     }
 }
 
-void PluginManager::findPlugins()
+QSize PluginLibrary::sizeHint() const
+{
+
+    return QDockWidget::sizeHint().expandedTo(QSize(150, 0));
+}
+
+QString PluginLibrary::persistentDataDirectory() const
+{
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+}
+
+void PluginLibrary::findPlugins()
 {
     QStringList libs =
             QFileDialog::getOpenFileNames(nullptr, tr("Select AudioScript Plugins"),
@@ -31,5 +43,4 @@ void PluginManager::findPlugins()
             }
         }
     }
-
 }

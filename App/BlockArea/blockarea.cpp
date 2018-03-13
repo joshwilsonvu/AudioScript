@@ -18,6 +18,7 @@ void BlockArea::onPluginRemoved(Plugin& plugin)
             // remove AudioBlocks that are based on the current plugin
             if (block && &block->plugin() == &plugin) {
                 removeItem(block);
+                delete block;
             }
         }
     }

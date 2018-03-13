@@ -4,10 +4,11 @@
 #include "scriptwindow.h"
 #include "engine.h"
 #include "blockarea.h"
-#include "pluginmanager.h"
 
 #include <QMainWindow>
 #include <QGraphicsView>
+
+class PluginLibrary;
 
 namespace Ui {
 class MainWindow;
@@ -52,7 +53,7 @@ private:
     QGraphicsView* m_graphicsView;
 
     Engine m_engine;
-    PluginManager m_pluginManager;
+    PluginLibrary* m_pluginLibrary;
 };
 
 #endif // MAINWINDOW_H

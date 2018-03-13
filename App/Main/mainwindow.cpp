@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "audioblock.h"
+#include "pluginlibrary.h"
 
 #include <QGraphicsScene>
 #include <QGridLayout>
@@ -12,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
     m_scriptWindow(nullptr),
-    m_blockArea(new BlockArea(this))
+    m_blockArea(new BlockArea(this)),
+    m_pluginLibrary(new PluginLibrary(this))
 {
     m_ui->setupUi(this); // sets up menu bar, status bar, actions
 
@@ -92,16 +94,16 @@ void MainWindow::setupUi()
     m_graphicsView->setFocusPolicy(Qt::NoFocus);
 
     constexpr int spacing = 10;
-    constexpr int margin_dim = 30;
+    constexpr int margin_dim = 10;
     QMargins margins(margin_dim, margin_dim, margin_dim, margin_dim);
 
     QGridLayout* layout = new QGridLayout(m_ui->centralwidget);
-
     layout->setSpacing(spacing);
     layout->setContentsMargins(margins);
-
     layout->addWidget(m_graphicsView, 0, 0);
     layout->setColumnStretch(0, 1);
+
+    addDockWidget(Qt::LeftDockWidgetArea, m_pluginLibrary);
 }
 
 void MainWindow::initActions()
@@ -114,7 +116,7 @@ void MainWindow::initActions()
             this, SLOT(openScriptWindow()));
 
     connect(m_ui->actionOpenPlugin, SIGNAL(triggered(bool)),
-            &m_pluginManager, SLOT(findPlugins()));
+            m_pluginLibrary, SLOT(findPlugins()));
 
     connect(m_ui->actionStart, SIGNAL(triggered(bool)),
             this, SLOT(start()));
@@ -124,9 +126,9 @@ void MainWindow::initActions()
 
 void MainWindow::setupConnections()
 {
-    connect(&m_pluginManager, SIGNAL(pluginFound(Plugin&)),
+    connect(m_pluginLibrary, SIGNAL(pluginFound(Plugin&)),
             this, SLOT(onPluginFound(Plugin&)));
-    connect(&m_pluginManager, SIGNAL(pluginRemoved(Plugin&)),
+    connect(m_pluginLibrary, SIGNAL(pluginRemoved(Plugin&)),
             m_blockArea, SLOT(onPluginRemoved(Plugin&)));
 }
 

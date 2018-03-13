@@ -46,7 +46,7 @@ HEADERS += \
     Engine/engine.h \
     Engine/plugin.h \
     Engine/devicemenu.h \
-    Engine/pluginmanager.h
+    Engine/pluginlibrary.h
 
 SOURCES += \
     BlockArea/audioblock.cpp \
@@ -64,7 +64,7 @@ SOURCES += \
     Engine/engine.cpp \
     Engine/plugin.cpp \
     Engine/devicemenu.cpp \
-    Engine/pluginmanager.cpp
+    Engine/pluginlibrary.cpp
 
 FORMS += \
     Editor/scriptwindow.ui \
