@@ -26,7 +26,8 @@ HEADERS += \
     audioscriptbuffer_p.h \
     audioscriptexception.h \
     #audioscriptui.h
-    audioscriptlog.h
+    audioscriptlog.h \
+    audioscriptproperty.h
 
 SOURCES += \
     audioscriptfactory.cpp \
@@ -35,7 +36,8 @@ SOURCES += \
     audioscriptutils.cpp \
     audioscriptexception.cpp \
     #audioscriptui.cpp \
-    audioscriptlog.cpp
+    audioscriptlog.cpp \
+    audioscriptproperty.cpp
 
 DEFINES += ASUTILS_LIBRARY # for windows import/export dll stuff
 DEFINES += QT_DEPRECATED_WARNINGS

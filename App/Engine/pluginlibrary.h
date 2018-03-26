@@ -18,8 +18,8 @@ public:
     QString persistentDataDirectory() const;
 
 signals:
-    void pluginFound(Plugin&);
-    void pluginRemoved(Plugin&);
+    void pluginLoaded(Plugin&);
+    void pluginUnloaded(Plugin&);
 
 public slots:
     // make the engine aware of a new plugin

@@ -32,6 +32,11 @@ Plugin::Plugin(Plugin&& rhs)
 
 Plugin::~Plugin()
 {
+    m_factory = nullptr; // still accessible by recreating the same Plugin
+}
+
+bool Plugin::unload()
+{
     m_plugin.unload(); // release memory, deletes m_factory
     m_factory = nullptr;
 }

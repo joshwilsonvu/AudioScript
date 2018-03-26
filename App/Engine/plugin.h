@@ -16,12 +16,15 @@ public:
     Plugin(Plugin&& rhs);
     ~Plugin();
 
+    bool unload();
+
     QString name() const; // the name of the class subclassing AudioScript
     QString info() const; // information about the class subclassing AudioScript
     QString errorString() const; // the string reported if the library has an error
 
     bool spawnable() const;
     AudioScript* spawn();
+
 
 private:
     QPluginLoader m_plugin;

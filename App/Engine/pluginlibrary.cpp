@@ -10,10 +10,7 @@ PluginLibrary::PluginLibrary(QWidget *parent)
 
 PluginLibrary::~PluginLibrary()
 {
-    for (auto i = m_plugins.begin(); i != m_plugins.end(); ++i) {
-        // make sure that all AudioScripts are deleted before unloading the code
-        emit pluginRemoved(i->second);
-    }
+    // does not actually unload the plugins, AudioScripts are still usable
 }
 
 QSize PluginLibrary::sizeHint() const
@@ -39,7 +36,7 @@ void PluginLibrary::findPlugins()
             QString pluginName = plugin.name();
             auto retVal = m_plugins.emplace(std::make_pair(plugin.name(), std::move(plugin)));
             if (retVal.second) { // successful insertion
-                emit pluginFound(retVal.first->second); // inserted Plugin
+                emit pluginLoaded(retVal.first->second); // inserted Plugin
             }
         }
     }
