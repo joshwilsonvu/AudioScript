@@ -43,7 +43,7 @@ AudioScriptBuffer& AudioScriptBuffer::operator=(const AudioScriptBuffer& other)
 {
     // copy-and-swap idiom
     if (this != &other) {
-        AS::assert(m_size == 0ul || m_size == other.m_size,
+        AS::Assert(m_size == 0ul || m_size == other.m_size,
                    "AudioScriptBuffer: sizes mismatch.");
         AudioScriptBuffer temp(other);
         swap(temp);
@@ -55,7 +55,7 @@ AudioScriptBuffer& AudioScriptBuffer::operator=(AudioScriptBuffer&& other)
 {
     // move-and-swap idiom
     if (this != &other) {
-        AS::assert(m_size == 0ul || m_size == other.m_size,
+        AS::Assert(m_size == 0ul || m_size == other.m_size,
                    "AudioScriptBuffer: sizes mismatch.");
         swap(other);
     }
@@ -148,7 +148,7 @@ sample_t AudioScriptBuffer::operator[](size_t index) const
 
 sample_t& AudioScriptBuffer::at(size_t index)
 {
-    AS::assert(index < m_size, "AudioScriptBuffer: Invalid index");
+    AS::Assert(index < m_size, "AudioScriptBuffer: Invalid index");
     return m_data[index];
 }
 
@@ -156,3 +156,11 @@ sample_t AudioScriptBuffer::at(size_t index) const
 {
     return const_cast<AudioScriptBuffer*>(this)->at(index);
 }
+
+AudioScriptBuffer::PairProxy AudioScriptBuffer::operator&(const AudioScriptBuffer& other)
+{
+    return PairProxy(*this, other);
+}
+
+AudioScriptBuffer::PairProxy::PairProxy(const AudioScriptBuffer& first, const AudioScriptBuffer& second)
+    : first(first), second(second) {}

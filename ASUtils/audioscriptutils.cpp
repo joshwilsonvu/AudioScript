@@ -5,7 +5,7 @@
 
 // check if OpenCL would let you use DSP unit
 
-void AS::assert(bool cond, const char* message)
+void AS::Assert(bool cond, const char* message)
 {
     if (!cond) {
         throw AudioScriptException(message);

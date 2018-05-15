@@ -5,8 +5,8 @@
 
 class QPlainTextEdit;
 
-// Graphical user interface that displays compile and link output of user code
-// and provides shortcut buttons to build code.
+/// Graphical user interface that displays compile and link output of user code
+/// and provides shortcut buttons to build code.
 class ApplicationOutput : public QWidget
 {
     Q_OBJECT

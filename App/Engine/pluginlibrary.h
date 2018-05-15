@@ -22,7 +22,7 @@ signals:
     void pluginUnloaded(Plugin&);
 
 public slots:
-    // make the engine aware of a new plugin
+    /// Make the engine aware of a new plugin
     // creates Plugin, adds to m_plugins, makes available
     void findPlugins();
 

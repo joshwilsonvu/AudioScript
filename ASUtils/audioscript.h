@@ -5,6 +5,12 @@
 
 class ASUTILS_EXPORT AudioScriptBuffer;
 
+/// \brief The abstract base class of all audio scripts.
+///
+/// Audio scripts are objects that can process floating point audio signals.
+/// Every AudioScript must implement a process() method that accepts an
+/// AudioScriptBuffer instance containing a buffer of data to be processed
+/// and returns an appropriately processed buffer of the same size.
 class ASUTILS_EXPORT AudioScript
 {
 public:
@@ -12,7 +18,7 @@ public:
 
     virtual AudioScriptBuffer process(AudioScriptBuffer input) = 0;
 
-    virtual void reset() = 0;
+    virtual void reset();
 
 };
 

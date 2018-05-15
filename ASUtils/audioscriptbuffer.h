@@ -3,6 +3,14 @@
 
 #include "globals.h"
 
+/*
+ * @brief A container object for audio samples.
+ *
+ * Much like a std::vector, an AudioScriptBuffer object is a container
+ * for a buffer of audio samples, build on a raw pointer and a size field.
+ * It provides methods to perform arithmetic and arbitrary function calls
+ * on its contents and is STL-compliant.
+ */
 class ASUTILS_EXPORT AudioScriptBuffer
 {
 public:
@@ -52,19 +60,61 @@ public:
     // AudioScriptBuffer& operator*=(const AudioScriptBuffer& other);
     // ...
 
-    // Equivalent to std::transform, modifying and non-modifying
+    /// Accepts a Callable that takes one parameter of type sample_t and returns
+    /// a value of type sample_t.
+    /// Modifies the object in-place.
     template <typename UnaryOperation>
     AudioScriptBuffer& apply(UnaryOperation op);
+
+    template <typename UnaryOperation>
+    AudioScriptBuffer& operator|= (UnaryOperation op) {
+        return this->apply(op);
+    }
+
+    /// Accepts a Callable that takes one parameter of type sample_t and returns
+    /// a value of type sample_t.
+    /// Returns a new object without modifying the current instance.
     template <typename UnaryOperation>
     AudioScriptBuffer applied(UnaryOperation op) const;
+
+    template <typename UnaryOperation>
+    AudioScriptBuffer operator| (UnaryOperation op) const {
+        return this->applied(op);
+    }
+
+    /// Accepts a Callable that takes two parameters of type sample_t and returns
+    /// a value of type sample_t.
+    /// Modifies the object in-place.
     template <typename BinaryOperation>
     AudioScriptBuffer& apply(const AudioScriptBuffer& other, BinaryOperation op);
+
+    /// Accepts a Callable that takes two parameters of type sample_t and returns
+    /// a value of type sample_t.
+    /// Returns a new object without modifying the current instance.
     template <typename BinaryOperation>
-    AudioScriptBuffer& applied(const AudioScriptBuffer& other, BinaryOperation op) const;
+    AudioScriptBuffer applied(const AudioScriptBuffer& other, BinaryOperation op) const;
+
+    class PairProxy {
+    public:
+        PairProxy(const AudioScriptBuffer& first, const AudioScriptBuffer& second);
+
+        template <typename BinaryOperation>
+        AudioScriptBuffer operator| (BinaryOperation op) const {
+            return first.applied(second, op);
+        }
+
+    private:
+        const AudioScriptBuffer& first;
+        const AudioScriptBuffer& second;
+    };
+
+    PairProxy operator& (const AudioScriptBuffer& other);
 
 private:
     size_t m_size;
     sample_t* m_data;
+
+
 };
 
 // template member function implementations

@@ -11,9 +11,9 @@ class QListWidgetItem;
 class QGroupBox;
 class ClassLoader;
 
-// The graphical interface that displays the available classes and allows
-// users to open them. Also provides a directory selector. Corresponding
-// frontend component for ClassLoader
+/// The graphical interface that displays the available classes and allows
+/// users to open them. Also provides a directory selector. Corresponding
+/// frontend component for ClassLoader.
 class ClassDialog : public QDialog
 {
     Q_OBJECT

@@ -99,7 +99,7 @@ int Engine::duplex(sample_t* outputBuffer, sample_t* inputBuffer,
     AudioScriptBuffer out = this->process(std::move(in));
 
     // write the processed data
-    AS::assert(out.size() == samples);
+    AS::Assert(out.size() == samples);
     std::copy(out.begin(), out.end(), (sample_t*)outputBuffer);
 
     return 0;
