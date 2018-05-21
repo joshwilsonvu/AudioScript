@@ -7,6 +7,21 @@
 #include <vector>
 #include <memory>
 
+/**
+ * The AudioScript Engine class should expose its own API and be fully
+ * self-contained, much like RtAudio. The API will enable all audio-related
+ * functionality, such as spawning scripts, recording and playing audio,
+ * converting to AudioScriptBuffers, and running the processing chain in a
+ * separate, high-priority or realtime thread.
+ *
+ * During execution, std::cout will be redirected to a std::ostringstream,
+ * whose contents are accessible via an API method. SCRATCH THIS, mutable
+ * global state. Use dependency injection with a stream instead.
+ *
+ * Usage will most likely be building and linking to a library and including
+ * the engine.h header file.
+ */
+
 class RtAudio;
 
 class Engine
