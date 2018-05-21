@@ -4,6 +4,8 @@ CONFIG += c++11 warn_on
 
 SUBDIRS = \
     ASUtils \
-    App
+    App \
+    Engine \
+    Compilation
 
 App.depends = ASUtils
