@@ -17,23 +17,17 @@ DESTDIR = $$AS_TARGET_PATH
 QT       += core widgets
 
 INCLUDEPATH += \
-    Audio \
     BlockArea \
-    Compilation \
     Editor \
-    Engine \
     Main \
     ../ASUtils \
-    Plugins \
-    3rdParty
+    ..
 
-LIBS += -L$${AS_LIB_PATH} -l$${AS_LIB_NAME} \ # dynamic library containing shared defs
-    -L$${PWD}/3rdParty -lrtaudio # dynamic library containing realtime audio code, must be remade on other systems
+LIBS += -L$${AS_LIB_PATH} -l$${AS_LIB_NAME} # dynamic library containing shared defs
 
 HEADERS += \
     BlockArea/audioblock.h \
     BlockArea/blockarea.h \
-    Compilation/audioscriptcompiler.h \
     Editor/applicationoutput.h \
     Editor/classdialog.h \
     Editor/classloader.h \
@@ -46,7 +40,6 @@ HEADERS += \
 SOURCES += \
     BlockArea/audioblock.cpp \
     BlockArea/blockarea.cpp \
-    Compilation/audioscriptcompiler.cpp \
     Editor/applicationoutput.cpp \
     Editor/classdialog.cpp \
     Editor/classloader.cpp \

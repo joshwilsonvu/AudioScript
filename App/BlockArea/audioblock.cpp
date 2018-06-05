@@ -1,7 +1,4 @@
 #include "audioblock.h"
-#include "audioscript.h"
-#include "audioscriptbuffer.h"
-#include "audioscriptexception.h"
 
 #include <QApplication>
 #include <QFontMetrics>
@@ -11,24 +8,14 @@
 #include <QStyleOptionGraphicsItem>
 #include <QtDebug>
 
-AudioBlock::AudioBlock(Plugin& library, QGraphicsItem* parent)
-    : AudioBlock(library, nullptr, nullptr, parent)
-{}
+namespace AS {
 
-AudioBlock::AudioBlock(Plugin& library,
-           AudioBlock* prev, AudioBlock* next, QGraphicsItem* parent)
-    : QGraphicsItem(parent), m_plugin(library),
+AudioBlock::AudioBlock(Engine* engine, QString plugin, QGraphicsItem* parent)
+    : QGraphicsItem(parent), m_engine(engine), m_plugin(plugin),
       m_next(nullptr), m_prev(nullptr)
 {
-    link(this, next);
-    link(prev, this);
-
     m_sz.setY(QApplication::fontMetrics().height() + 2 * k_spacing);
     m_sz.setX(qMax(QApplication::fontMetrics().width(name()) + 2 * k_spacing, (int)m_sz.y()));
-
-    if (m_plugin.spawnable()) {
-        m_script.reset(m_plugin.spawn());
-    }
 
     // set graphicsscene flags
     setFlag(QGraphicsItem::ItemIsMovable);
@@ -37,7 +24,7 @@ AudioBlock::AudioBlock(Plugin& library,
 
 AudioBlock::~AudioBlock()
 {
-    unlink(this);
+    unlink();
     m_script = nullptr;
 }
 
@@ -61,7 +48,7 @@ void AudioBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     painter->drawText(rect, name(), QTextOption(Qt::AlignCenter));
 }
 
-AudioScriptBuffer AudioBlock::process(AudioScriptBuffer buffer)
+Buffer AudioBlock::process(Buffer buffer)
 {
     if (m_script) {
         try {
@@ -115,33 +102,31 @@ void AudioBlock::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
     qDebug() << name() << ":" << info();
 }
 
-void link(AudioBlock* first, AudioBlock* second)
+void AudioBlock::link(AudioBlock* first, AudioBlock* second)
 {
     if (first) {
         if (first->m_next) {
             first->m_next->m_prev = nullptr;
         }
-        first->m_next = second;
+        first->m_next = next;
     }
     if (second) {
         if (second->m_prev) {
             second->m_prev->m_next = nullptr;
         }
-        second->m_prev = first;
+        second->m_prev = this;
     }
 }
 
-void unlink(AudioBlock* block)
+void unlink()
 {
-    if (block) {
-        link(block->prev(), block->next());
-    }
+    link(this->prev(), this->next());
 }
 
-void cut(AudioBlock *block)
+void cut()
 {
-    if (block) {
-        link(block->prev(), nullptr);
-        link(block->next(), nullptr);
-    }
+    link(this->prev(), nullptr);
+    link(this->next(), nullptr);
 }
+
+} // AS

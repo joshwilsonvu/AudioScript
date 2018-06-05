@@ -22,7 +22,7 @@ void test() {
     AudioScriptBuffer z1 = x1 | times2;
 
     AudioScriptBuffer x2;
-    AudioScriptBuffer y2 = x1.applied(x2, add);
+    AudioScriptBuffer y2 = x1.applied(x2, add).applied(x3.applied(times2), add);
     AudioScriptBuffer z2 = (x1 & x2 | add) & (x3 | times2) | add;
 }
 */

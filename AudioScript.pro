@@ -6,6 +6,7 @@ SUBDIRS = \
     ASUtils \
     App \
     Engine \
-    Compilation
+    Compiler
 
-App.depends = ASUtils
+App.depends = ASUtils Engine Compiler
+Engine.depends = ASUtils

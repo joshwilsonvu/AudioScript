@@ -1,12 +1,14 @@
 #include <QtDebug>
-#include "audioscript.h"
-#include "audioscriptfactory.h"
+#include "script.h"
+#include "factory.h"
 #include "plugin.h"
 
-// class AudioScriptLibrary
+namespace AS {
+
+// class ScriptLibrary
 Plugin::Plugin(QString filename)
     : m_plugin(filename),
-      m_factory(qobject_cast<AudioScriptFactory*>(m_plugin.instance())),
+      m_factory(qobject_cast<Factory*>(m_plugin.instance())),
       m_name(m_factory ? m_factory->name() : "ERROR"),
       m_info(m_factory ? m_factory->scriptInfo() : "")
 {
@@ -24,7 +26,7 @@ Plugin::Plugin(Plugin&& rhs)
       m_name(rhs.m_name),
       m_info(rhs.m_info)
 {
-    // reference counting lets pluging be transferred from rhs to this
+    // reference counting lets plugin be transferred from rhs to this
     m_plugin.load();
     rhs.m_plugin.unload();
     rhs.m_factory = nullptr;
@@ -32,13 +34,13 @@ Plugin::Plugin(Plugin&& rhs)
 
 Plugin::~Plugin()
 {
-    m_factory = nullptr; // still accessible by recreating the same Plugin
+    m_factory = nullptr; // instance still accessible by recreating the same Plugin
 }
 
 bool Plugin::unload()
 {
-    m_plugin.unload(); // release memory, deletes m_factory
     m_factory = nullptr;
+    return m_plugin.unload(); // release memory, deletes m_factory
 }
 
 QString Plugin::name() const
@@ -61,10 +63,12 @@ bool Plugin::spawnable() const
     return m_factory;
 }
 
-AudioScript* Plugin::spawn()
+Script* Plugin::spawn()
 {
     if (!spawnable()) {
         return nullptr;
     }
     return m_factory->spawn();
 }
+
+} // AS

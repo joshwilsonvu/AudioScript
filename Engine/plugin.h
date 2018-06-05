@@ -1,15 +1,17 @@
-#ifndef PLUGIN_H
-#define PLUGIN_H
+#ifndef AS_PLUGIN_H
+#define AS_PLUGIN_H
 
 #include <QPluginLoader>
 #include <QString>
 #include <memory>
 
-class AudioScript;
-class AudioScriptFactory;
+namespace AS {
+
+class Script;
+class Factory;
 
 // Plugin
-// one-to-one plugin and AudioScript subclass
+// one-to-one plugin and Script subclass
 class Plugin {
 public:
     Plugin(QString filename);
@@ -18,20 +20,22 @@ public:
 
     bool unload();
 
-    QString name() const; ///<the name of the class subclassing AudioScript
-    QString info() const; ///<information about the class subclassing AudioScript
+    QString name() const; ///<the name of the class subclassing Script
+    QString info() const; ///<information about the class subclassing Script
     QString errorString() const; ///<the string reported if the library has an error
 
     bool spawnable() const;
-    AudioScript* spawn();
+    Script* spawn();
 
 
 private:
     QPluginLoader m_plugin;
-    AudioScriptFactory* m_factory;
-    const QString m_name; // retrieved from plugin once, guaranteed constant
-    const QString m_info; // retrieved from plugin once, guaranteed constant
+    Factory* m_factory;
+    QString m_name; // retrieved from plugin once, guaranteed constant
+    QString m_info; // retrieved from plugin once, guaranteed constant
 };
 
+} // AS
 
-#endif // PLUGIN_H
+
+#endif // AS_PLUGIN_H

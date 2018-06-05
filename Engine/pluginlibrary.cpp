@@ -1,43 +1,35 @@
 #include "pluginlibrary.h"
 
-#include <QFileDialog>
-#include <QStandardPaths>
 
-PluginLibrary::PluginLibrary(QWidget *parent)
-    : QDockWidget(parent)
+namespace AS {
+
+PluginLibrary::PluginLibrary()
 {
+
 }
 
-PluginLibrary::~PluginLibrary()
-{
-    // does not actually unload the plugins, AudioScripts are still usable
+bool PluginLibrary::load(QString file) {
+    auto plugin = Plugin(file);
+    if (plugin.spawnable()) {
+        m_plugins.emplace(std::make_pair(plugin.name(), std::move(plugin)));
+        return true; // inserted or already existed
+    }
+    return false;
 }
 
-QSize PluginLibrary::sizeHint() const
+bool PluginLibrary::isLoaded(QString plugin)
 {
-
-    return QDockWidget::sizeHint().expandedTo(QSize(150, 0));
+    return m_plugins.count(plugin);
 }
 
-QString PluginLibrary::persistentDataDirectory() const
+QString PluginLibrary::getInfo(QString plugin)
 {
-    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-}
-
-void PluginLibrary::findPlugins()
-{
-    QStringList libs =
-            QFileDialog::getOpenFileNames(nullptr, tr("Select AudioScript Plugins"),
-            ".", tr("Plugins (*.so, *.dll, *.dylib)"));
-    for (QString libPath : libs) {
-        Plugin plugin(libPath);
-        if (plugin.spawnable()) {
-            // Currently creating Plugin instance before inserting
-            QString pluginName = plugin.name();
-            auto retVal = m_plugins.emplace(std::make_pair(plugin.name(), std::move(plugin)));
-            if (retVal.second) { // successful insertion
-                emit pluginLoaded(retVal.first->second); // inserted Plugin
-            }
-        }
+    auto iter = m_plugins.find(plugin);
+    if (iter != m_plugins.end()) {
+        return iter->second.info();
+    } else {
+        return "";
     }
 }
+
+} // AS

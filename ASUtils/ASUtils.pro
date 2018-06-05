@@ -18,24 +18,24 @@ DESTDIR = $$AS_LIB_PATH
 QT       += core widgets
 
 HEADERS += \
-    audioscript.h \
-    audioscriptfactory.h \
+    script.h \
+    factory.h \
     globals.h \
-    audioscriptbuffer.h \
-    audioscriptutils.h \
-    audioscriptbuffer_p.h \
-    audioscriptexception.h \
-    #audioscriptui.h
-    audioscriptlog.h
+    buffer.h \
+    utils.h \
+    buffer.tpp \
+    exception.h \
+    #ui.h
+    log.h
 
 SOURCES += \
-    audioscriptfactory.cpp \
-    audioscript.cpp \
-    audioscriptbuffer.cpp \
-    audioscriptutils.cpp \
-    audioscriptexception.cpp \
-    #audioscriptui.cpp \
-    audioscriptlog.cpp
+    factory.cpp \
+    script.cpp \
+    buffer.cpp \
+    utils.cpp \
+    exception.cpp \
+    #ui.cpp \
+    log.cpp
 
 DEFINES += ASUTILS_LIBRARY # for windows import/export dll stuff
 DEFINES += QT_DEPRECATED_WARNINGS

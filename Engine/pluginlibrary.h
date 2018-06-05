@@ -1,34 +1,20 @@
-#ifndef PLUGINLIBRARY_H
-#define PLUGINLIBRARY_H
+#ifndef AS_PLUGINLIBRARY_H
+#define AS_PLUGINLIBRARY_H
 
-#include <QDockWidget>
-#include <QListWidget>
+namespace AS {
 
-#include "plugin.h"
-
-class PluginLibrary : public QDockWidget
+class PluginLibrary
 {
-    Q_OBJECT
 public:
-    explicit PluginLibrary(QWidget *parent = nullptr);
-    ~PluginLibrary();
+    PluginLibrary();
 
-    QSize sizeHint() const override;
-
-    QString persistentDataDirectory() const;
-
-signals:
-    void pluginLoaded(Plugin&);
-    void pluginUnloaded(Plugin&);
-
-public slots:
-    /// Make the engine aware of a new plugin
-    // creates Plugin, adds to m_plugins, makes available
-    void findPlugins();
-
+    bool load(QString file);
+    bool isLoaded(QString plugin);
+    QString getInfo(QString plugin);
 private:
     std::map<QString, Plugin> m_plugins;
-    QListWidget m_list;
 };
 
-#endif // PLUGINLIBRARY_H
+} // AS
+
+#endif // AS_PLUGINLIBRARY_H
