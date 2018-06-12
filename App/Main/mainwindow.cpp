@@ -1,20 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "audioblock.h"
-#include "pluginlibrary.h"
 
 #include <QGraphicsScene>
 #include <QGridLayout>
 #include <QtDebug>
 #include <QDir>
 
+namespace AS {
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
     m_scriptWindow(nullptr),
-    m_blockArea(new BlockArea(this)),
-    m_pluginLibrary(new PluginLibrary(this))
+    m_blockArea(new BlockArea(this))
 {
     m_ui->setupUi(this); // sets up menu bar, status bar, actions
 
@@ -50,11 +49,6 @@ void MainWindow::scriptWindowClosed()
 {
     m_scriptWindow = nullptr;
     m_ui->actionOpenEditor->setEnabled(true);
-}
-
-void MainWindow::onPluginFound(Plugin& plugin)
-{
-    m_blockArea->addItem(new AudioBlock(plugin));
 }
 
 void MainWindow::start()
@@ -102,8 +96,6 @@ void MainWindow::setupUi()
     layout->setContentsMargins(margins);
     layout->addWidget(m_graphicsView, 0, 0);
     layout->setColumnStretch(0, 1);
-
-    addDockWidget(Qt::LeftDockWidgetArea, m_pluginLibrary);
 }
 
 void MainWindow::initActions()
@@ -115,9 +107,6 @@ void MainWindow::initActions()
     connect(m_ui->actionOpenEditor, SIGNAL(triggered(bool)),
             this, SLOT(openScriptWindow()));
 
-    connect(m_ui->actionOpenPlugin, SIGNAL(triggered(bool)),
-            m_pluginLibrary, SLOT(findPlugins()));
-
     connect(m_ui->actionStart, SIGNAL(triggered(bool)),
             this, SLOT(start()));
     connect(m_ui->actionStop, SIGNAL(triggered(bool)),
@@ -126,13 +115,12 @@ void MainWindow::initActions()
 
 void MainWindow::setupConnections()
 {
-    connect(m_pluginLibrary, SIGNAL(pluginFound(Plugin&)),
-            this, SLOT(onPluginFound(Plugin&)));
-    connect(m_pluginLibrary, SIGNAL(pluginRemoved(Plugin&)),
-            m_blockArea, SLOT(onPluginRemoved(Plugin&)));
+
 }
 
 void MainWindow::readSettings()
 {
 
 }
+
+} // AS

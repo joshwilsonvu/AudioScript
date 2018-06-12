@@ -13,10 +13,11 @@
 #include "classdialog.h"
 #include "applicationoutput.h"
 
+namespace AS {
+
 ScriptWindow::ScriptWindow(QWidget *parent) :
     QWidget(parent),
-    m_ui(new Ui::ScriptWindow()), m_editor(nullptr), m_classLoader(nullptr),
-    m_libraries(nullptr), m_engine(nullptr), m_compiler(nullptr)
+    m_ui(new Ui::ScriptWindow()), m_editor(nullptr), m_classLoader(nullptr)
 {
     m_ui->setupUi(this); // sets up actions
 
@@ -110,18 +111,6 @@ void ScriptWindow::about()
                            aboutFile.readAll());
     }
 }
-
-void ScriptWindow::build()
-{
-    m_compiler->build(m_classLoader->currentClass());
-}
-
-void ScriptWindow::clean()
-{
-    m_compiler->clean(m_classLoader->currentClass());
-}
-
-
 
 void ScriptWindow::onDocumentModified()
 {
@@ -239,3 +228,5 @@ void ScriptWindow::onClassNameChanged(QString className)
     m_ui->actionClose->setEnabled(classOpen);
     m_ui->actionSave->setEnabled(classOpen);
 }
+
+} // AS

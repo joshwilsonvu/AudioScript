@@ -25,7 +25,6 @@ AudioBlock::AudioBlock(Engine* engine, QString plugin, QGraphicsItem* parent)
 AudioBlock::~AudioBlock()
 {
     unlink();
-    m_script = nullptr;
 }
 
 QRectF AudioBlock::boundingRect() const
@@ -48,41 +47,9 @@ void AudioBlock::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     painter->drawText(rect, name(), QTextOption(Qt::AlignCenter));
 }
 
-Buffer AudioBlock::process(Buffer buffer)
-{
-    if (m_script) {
-        try {
-            return m_script->process(buffer);
-        } catch(const AudioScriptException& e) {
-            qDebug() << "AudioScript" << name() << "threw an exception:"
-                     << e.what();
-        } catch (...) {
-            qDebug() << "AudioScript" << name() << "threw an exception.";
-        }
-    }
-    return buffer;
-}
-
 QString AudioBlock::name() const
 {
-    return m_plugin.name();
-}
-
-
-QString AudioBlock::info() const
-{
-    return m_plugin.info();
-}
-
-
-const Plugin& AudioBlock::plugin() const
-{
     return m_plugin;
-}
-
-AudioScript* AudioBlock::script() const
-{
-    return m_script.get();
 }
 
 AudioBlock* AudioBlock::next() const
@@ -99,7 +66,7 @@ void AudioBlock::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
     // TODO make real implementation
     Q_UNUSED(event);
-    qDebug() << name() << ":" << info();
+    qDebug() << name();
 }
 
 void AudioBlock::link(AudioBlock* first, AudioBlock* second)
@@ -108,22 +75,22 @@ void AudioBlock::link(AudioBlock* first, AudioBlock* second)
         if (first->m_next) {
             first->m_next->m_prev = nullptr;
         }
-        first->m_next = next;
+        first->m_next = second;
     }
     if (second) {
         if (second->m_prev) {
             second->m_prev->m_next = nullptr;
         }
-        second->m_prev = this;
+        second->m_prev = first;
     }
 }
 
-void unlink()
+void AudioBlock::unlink()
 {
     link(this->prev(), this->next());
 }
 
-void cut()
+void AudioBlock::cut()
 {
     link(this->prev(), nullptr);
     link(this->next(), nullptr);

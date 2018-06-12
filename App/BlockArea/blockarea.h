@@ -3,8 +3,6 @@
 
 #include <QGraphicsScene>
 
-class Plugin;
-
 class BlockArea : public QGraphicsScene
 {
     Q_OBJECT
@@ -12,8 +10,6 @@ class BlockArea : public QGraphicsScene
 public:
     BlockArea(QObject* parent = nullptr);
 
-public slots:
-    void onPluginRemoved(Plugin& plugin);
 };
 
 #endif // BLOCKAREA_H

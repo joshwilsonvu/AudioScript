@@ -22,7 +22,6 @@ namespace AS {
 
 class Script;
 class Buffer;
-class Plugin;
 
 class PluginLibrary;
 class ProcessGraph;

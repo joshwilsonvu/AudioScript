@@ -36,8 +36,6 @@ public:
 
     QString name() const;
 
-    QString info() const;
-
     // special block methods - things reserved for AudioScript App like
     // upsample, downsample, change Buffer data type, stereo->mono
     //bool isSpecial() const;
@@ -50,7 +48,7 @@ public:
 
     // connects first and second so that
     // first->next() == second, second->prev() == first
-    static void link(AudioBlock* next);
+    static void link(AudioBlock* first, AudioBlock* second);
     // removes block from its chain but does not break the chain
     void unlink();
     // removes block from its chain and leaves chain broken

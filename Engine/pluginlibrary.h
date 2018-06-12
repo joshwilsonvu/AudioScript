@@ -1,7 +1,13 @@
 #ifndef AS_PLUGINLIBRARY_H
 #define AS_PLUGINLIBRARY_H
 
+#include <map>
+
+class QString;
+
 namespace AS {
+
+class Plugin;
 
 class PluginLibrary
 {

@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef AS_MAINWINDOW_H
+#define AS_MAINWINDOW_H
 
 #include "scriptwindow.h"
 #include "engine.h"
@@ -8,11 +8,11 @@
 #include <QMainWindow>
 #include <QGraphicsView>
 
-class PluginLibrary;
-
 namespace Ui {
 class MainWindow;
 }
+
+namespace AS {
 
 class MainWindow : public QMainWindow
 {
@@ -25,7 +25,6 @@ public:
 public slots:
     void openScriptWindow();
     void scriptWindowClosed();
-    void onPluginFound(Plugin&);
 
     void start();
     void stop();
@@ -53,7 +52,8 @@ private:
     QGraphicsView* m_graphicsView;
 
     Engine m_engine;
-    PluginLibrary* m_pluginLibrary;
 };
 
-#endif // MAINWINDOW_H
+} // AS
+
+#endif // AS_MAINWINDOW_H

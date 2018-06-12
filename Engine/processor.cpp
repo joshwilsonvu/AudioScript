@@ -1,28 +1,10 @@
 #include "processor.h"
+#include "buffer.h"
+#include "utils.h"
 
-#include "3rdParty/RtAudio.h"
+#include <qDebug>
 
 namespace AS {
-namespace {
-
-int duplex_callback(void* outputBuffer, void* inputBuffer,
-                    unsigned int nBufferFrames, double streamTime,
-                    unsigned int status, void* data);
-
-}
-
-Processor::Processor()
-{
-    try {
-        m_rtAudio = std::unique_ptr<RtAudio>(new RtAudio());
-    } catch (const RtAudioError& error) {
-        qDebug() << error.getMessage().c_str();
-    }
-    m_rtAudio->showWarnings(true);
-
-    probeAudio();
-    initializeAudio(); // opens stream but does not start
-}
 
 // C-style callback function
 int Processor::duplex_callback(void* outputBuffer, void* inputBuffer,
@@ -33,6 +15,20 @@ int Processor::duplex_callback(void* outputBuffer, void* inputBuffer,
     Processor* processor = (Processor*)data;
     return processor->duplex((sample_t*)outputBuffer, (sample_t*)inputBuffer,
                           nBufferFrames, streamTime, status);
+}
+
+Processor::Processor(ProcessGraph* processGraph)
+    : m_processGraph(processGraph)
+{
+    try {
+        m_rtAudio = std::unique_ptr<RtAudio>(new RtAudio());
+    } catch (const RtAudioError& error) {
+        qDebug() << error.getMessage().c_str();
+        return;
+    }
+    m_rtAudio->showWarnings(true);
+
+    initializeAudio(); // opens stream but does not start
 }
 
 int Processor::numChannels() const

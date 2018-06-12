@@ -1,12 +1,9 @@
-#ifndef SCRIPTWINDOW_H
-#define SCRIPTWINDOW_H
+#ifndef AS_SCRIPTWINDOW_H
+#define AS_SCRIPTWINDOW_H
 
 //#include <QMainWindow>
 #include <QWidget>
 
-#include "audioscriptcompiler.h"
-#include "engine.h"
-#include "plugin.h"
 #include "classloader.h"
 
 class ClassDialog;
@@ -18,6 +15,8 @@ class QHBoxLayout;
 namespace Ui {
 class ScriptWindow;
 }
+
+namespace AS {
 
 // See documentation.txt for details
 class ScriptWindow : public QWidget
@@ -45,9 +44,6 @@ private slots:
     void setDirectory();
     void about();
 
-    void build();
-    void clean();
-
     // Other slots
     void onDocumentModified();
     void onClassNameChanged(QString className);
@@ -67,10 +63,8 @@ private:
 
     // Backend
     ClassLoader* m_classLoader;
-
-    QSet<Plugin>* m_libraries;
-    Engine* m_engine;
-    AudioScriptCompiler* m_compiler;
 };
 
-#endif // SCRIPTWINDOW_H
+} // AS
+
+#endif // AS_CRIPTWINDOW_H

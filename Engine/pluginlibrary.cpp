@@ -1,5 +1,7 @@
 #include "pluginlibrary.h"
+#include "plugin.h"
 
+#include <QString>
 
 namespace AS {
 

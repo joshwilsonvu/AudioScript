@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("VUSE Solutions");
     QCoreApplication::setApplicationName("AudioScript");
 
-    MainWindow m;
+    AS::MainWindow m;
     m.show();
 
     return app.exec();
