@@ -5,6 +5,8 @@ CONFIG += staticlib qt thread
 
 QT += core
 
+DESTDIR = .
+
 INCLUDEPATH += \
     ../ASUtils
 
@@ -32,24 +34,21 @@ win32 {
         __WINDOWS_DS__ \
         __WINDOWS_ASIO__ \
         __WINDOWS_WASAPI__
+    HEADERS += \
+        3rdParty/include/*.h
     SOURCES += \
-        3rdParty/include/*  # for windows-specific necessary files
-    LIBS += \
-        -lole32 \
-        -lwinmm \
-        -ldsound
+        3rdParty/include/*.cpp  # for windows-specific necessary files
 } else:macx {
     DEFINES += \
         __MACOSX_CORE__
-    LIBS += -framework CoreAudio  # link to CoreAudio framework
 } else:unix {
     DEFINES += \
         __LINUX_ALSA__ \
         __LINUX_PULSE__ \
         __LINUX_OSS__ \
         __UNIX_JACK
-    LIBS +=  \ # link to appropriate libraries, at least one
-        -lasound \
-        -lpulse-simple \
-        -lpulse
+
 }
+
+DISTFILES += \
+    libs.pri

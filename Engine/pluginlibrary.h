@@ -14,7 +14,8 @@ class PluginLibrary
 public:
     PluginLibrary();
 
-    bool load(QString file);
+    // loads the plugin at the specified file and returns its name, "" if failed
+    QString load(QString file);
     bool isLoaded(QString plugin);
     QString getInfo(QString plugin);
 private:

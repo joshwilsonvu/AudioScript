@@ -2,16 +2,15 @@
 #define AS_FACTORY_H
 
 #include "script.h"
-//#include "ui.h"
 #include "globals.h"
 #include <QtPlugin>
 
 #define AS_FACTORY_IID "AudioScript.AS.Factory"
 
 // macro to be included in private section of subclasses
-#define AUDIOSCRIPTFACTORY Q_OBJECT \
+#define AS_FACTORY Q_OBJECT \
     Q_PLUGIN_METADATA(IID AS_FACTORY_IID) \
-    Q_INTERFACES(Factory)
+    Q_INTERFACES(AS::Factory)
 
 namespace AS {
 
@@ -24,7 +23,7 @@ public:
 
     virtual const char* name() = 0;
 
-    virtual const char* scriptInfo() = 0;
+    virtual const char* info() = 0;
 
     //virtual void setupGUI(UI& gui) = 0;
 };

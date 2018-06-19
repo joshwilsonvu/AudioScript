@@ -31,6 +31,8 @@ public slots:
 
     void reset();
 
+    void openPlugin();
+
 protected:
     virtual void closeEvent(QCloseEvent* event) override;
 

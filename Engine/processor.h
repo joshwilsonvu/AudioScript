@@ -37,7 +37,7 @@ private:
     void initializeAudio();
 
     std::unique_ptr<RtAudio> m_rtAudio;
-    std::unique_ptr<ProcessGraph> m_processGraph;
+    ProcessGraph* m_processGraph;
     int m_numChannels;
 };
 

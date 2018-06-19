@@ -45,7 +45,7 @@ Buffer& Buffer::operator=(const Buffer& other)
 {
     // copy-and-swap idiom
     if (this != &other) {
-        AS::Assert(m_size == 0ul || m_size == other.m_size,
+        AS::check(m_size == 0ul || m_size == other.m_size,
                    "Buffer: sizes mismatch.");
         Buffer temp(other);
         swap(temp);
@@ -57,7 +57,7 @@ Buffer& Buffer::operator=(Buffer&& other)
 {
     // move-and-swap idiom
     if (this != &other) {
-        AS::Assert(m_size == 0ul || m_size == other.m_size,
+        AS::check(m_size == 0ul || m_size == other.m_size,
                    "Buffer: sizes mismatch.");
         swap(other);
     }
@@ -150,7 +150,7 @@ sample_t Buffer::operator[](size_t index) const
 
 sample_t& Buffer::at(size_t index)
 {
-    AS::Assert(index < m_size, "Buffer: Invalid index");
+    AS::check(index < m_size, "Buffer: Invalid index");
     return m_data[index];
 }
 

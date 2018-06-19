@@ -5,15 +5,13 @@
 #
 #-------------------------------------------------
 
-include(../Common.pri)
-
-TARGET = $$AS_LIB_NAME
+TARGET = ASUtils
 
 TEMPLATE = lib
 
 CONFIG   += qt
 
-DESTDIR = $$AS_LIB_PATH
+DESTDIR = .
 
 QT       += core widgets
 

@@ -2,6 +2,7 @@
 #define AS_ENGINE_H
 
 #include "globals.h"
+#include <memory>
 
 /**
  * The AudioScript Engine class should expose its own API and be fully
@@ -33,7 +34,8 @@ public:
     Engine();
     ~Engine();
 
-    bool load(QString file);
+    // loads the plugin at the specified file and returns its name, "" if failed
+    QString load(QString file);
 
     bool isLoaded(QString plugin);
 
@@ -55,9 +57,9 @@ private:
 
     void initializeAudio();
 
-    PluginLibrary* m_pluginLibrary;
-    ProcessGraph* m_processGraph;
-    Processor* m_processor;
+    std::unique_ptr<PluginLibrary> m_pluginLibrary;
+    std::unique_ptr<ProcessGraph> m_processGraph;
+    std::unique_ptr<Processor> m_processor;
 
 };
 

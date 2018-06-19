@@ -7,7 +7,7 @@
 
 namespace AS {
 
-void Assert(bool cond, const char* message)
+void check(bool cond, const char* message)
 {
     if (!cond) {
         throw Exception(message);

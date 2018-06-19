@@ -10,7 +10,7 @@ Plugin::Plugin(QString filename)
     : m_plugin(filename),
       m_factory(qobject_cast<Factory*>(m_plugin.instance())),
       m_name(m_factory ? m_factory->name() : "ERROR"),
-      m_info(m_factory ? m_factory->scriptInfo() : "")
+      m_info(m_factory ? m_factory->info() : "")
 {
     // m_factory, m_name, and m_info are only set if everything has gone well
     if (!m_factory) {

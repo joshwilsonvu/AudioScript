@@ -4,15 +4,13 @@
 #
 #-------------------------------------------------
 
-include(../Common.pri)
-
 TARGET = AudioScript
 
 TEMPLATE = app
 
 CONFIG += qt thread
 
-DESTDIR = $$AS_TARGET_PATH
+DESTDIR = .
 
 QT       += core widgets
 
@@ -23,7 +21,11 @@ INCLUDEPATH += \
     ../ASUtils \
     ..
 
-LIBS += -L$${AS_LIB_PATH} -l$${AS_LIB_NAME} # dynamic library containing shared defs
+LIBS += -L../ASUtils -lASUtils # dynamic library containing shared defs
+LIBS += -L../Engine -lEngine # static library containing engine implementation
+LIBS += -L../Compiler -lCompiler # static library containing compiler implementation
+
+include(../Engine/libs.pri)
 
 HEADERS += \
     BlockArea/audioblock.h \

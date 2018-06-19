@@ -1,6 +1,7 @@
 #include "processor.h"
 #include "buffer.h"
 #include "utils.h"
+#include "exception.h"
 
 #include <qDebug>
 
@@ -18,7 +19,7 @@ int Processor::duplex_callback(void* outputBuffer, void* inputBuffer,
 }
 
 Processor::Processor(ProcessGraph* processGraph)
-    : m_processGraph(processGraph)
+    : m_processGraph(processGraph), m_numChannels(2)
 {
     try {
         m_rtAudio = std::unique_ptr<RtAudio>(new RtAudio());
@@ -45,6 +46,7 @@ bool Processor::start()
         return false;
     }
 
+    m_rtAudio->setStreamTime(0.0);
     try {
         m_rtAudio->startStream();
     } catch (const RtAudioError& e) {
@@ -62,6 +64,12 @@ void Processor::stop()
     }
 }
 
+Buffer Processor::process(Buffer buffer)
+{
+    // TODO
+    return buffer;
+}
+
 int Processor::duplex(sample_t* outputBuffer, sample_t* inputBuffer,
                    unsigned int nBufferFrames, double streamTime,
                    unsigned int status)
@@ -71,19 +79,27 @@ int Processor::duplex(sample_t* outputBuffer, sample_t* inputBuffer,
         qDebug() << "Under/overflow detected.";
     }
 
-    // read the data
+    // read the input data
     unsigned int samples = nBufferFrames * this->numChannels();
     Buffer in(samples);
     std::copy(inputBuffer, inputBuffer + samples, in.begin());
 
-    // process the data with the process() member function
-    Buffer out = this->process(std::move(in));
+
+    Buffer out;
+    try {
+        // process the data with the process() member function, which may throw
+        out = this->process(std::move(in));
+        AS::check(out.size() == samples,
+                   "Output buffer length does not match input buffer length.");
+    } catch (const AS::Exception& e) {
+        qDebug() << e.what();
+        return 2; // abort the stream immediately
+    }
 
     // write the processed data
-    AS::Assert(out.size() == samples);
     std::copy(out.begin(), out.end(), (sample_t*)outputBuffer);
 
-    return 0;
+    return 0; // continue normally
 }
 
 void Processor::probeAudio()

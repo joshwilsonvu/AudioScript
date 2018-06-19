@@ -6,8 +6,15 @@
 #include <QGridLayout>
 #include <QtDebug>
 #include <QDir>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 namespace AS {
+
+// helper free function
+QString persistentDataDirectory() {
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -70,6 +77,20 @@ void MainWindow::reset()
 
 }
 
+void MainWindow::openPlugin()
+{
+    QString dir = persistentDataDirectory();
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Plugin"),
+                                                    dir,
+                                                    tr("Plugins (*.so *.dylib *.dll)"));
+    QString pluginName = m_engine.load(fileName);
+    if (pluginName.isEmpty()) {
+        qDebug() << "Not a plugin";
+    } else {
+        qDebug() << pluginName << ":" << m_engine.getInfo(pluginName);
+    }
+}
+
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     if ((!m_scriptWindow || m_scriptWindow->close())/* && more*/) {
@@ -111,6 +132,9 @@ void MainWindow::initActions()
             this, SLOT(start()));
     connect(m_ui->actionStop, SIGNAL(triggered(bool)),
             this, SLOT(stop()));
+
+    connect(m_ui->actionOpenPlugin, SIGNAL(triggered(bool)),
+            this, SLOT(openPlugin()));
 }
 
 void MainWindow::setupConnections()

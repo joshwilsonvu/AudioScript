@@ -10,13 +10,14 @@ PluginLibrary::PluginLibrary()
 
 }
 
-bool PluginLibrary::load(QString file) {
+QString PluginLibrary::load(QString file) {
     auto plugin = Plugin(file);
     if (plugin.spawnable()) {
-        m_plugins.emplace(std::make_pair(plugin.name(), std::move(plugin)));
-        return true; // inserted or already existed
+        auto name = plugin.name();
+        m_plugins.emplace(std::make_pair(name, std::move(plugin)));
+        return name; // inserted or already existed
     }
-    return false;
+    return "";
 }
 
 bool PluginLibrary::isLoaded(QString plugin)

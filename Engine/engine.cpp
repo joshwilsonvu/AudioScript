@@ -16,28 +16,31 @@
 
 namespace AS {
 
-QString persistentDataDirectory() {
-    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-}
-
 
 
 // class Engine
 Engine::Engine()
     : m_pluginLibrary(new PluginLibrary()),
       m_processGraph(new ProcessGraph()),
-      m_processor(new Processor(m_processGraph))
+      m_processor(new Processor(m_processGraph.get()))
 {
 }
 
 Engine::~Engine()
 {
-    delete m_processor;
-    delete m_processGraph;
-    delete m_pluginLibrary;
 }
 
-bool Engine::load(QString file)
+bool Engine::start()
+{
+    return m_processor->start();
+}
+
+void Engine::stop()
+{
+    m_processor->stop();
+}
+
+QString Engine::load(QString file)
 {
     return m_pluginLibrary->load(file);
 }
@@ -45,6 +48,11 @@ bool Engine::load(QString file)
 bool Engine::isLoaded(QString plugin)
 {
     return m_pluginLibrary->isLoaded(plugin);
+}
+
+QString Engine::getInfo(QString plugin)
+{
+    return m_pluginLibrary->getInfo(plugin);
 }
 
 } // AS

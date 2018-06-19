@@ -5,6 +5,8 @@ CONFIG += staticlib qt
 
 QT += core
 
+DESTDIR = .
+
 HEADERS += \
     ../compiler.h
 
