@@ -3,6 +3,9 @@
 
 #include <map>
 
+//#include <boost/multi_index_container.hpp>
+
+
 class QString;
 
 namespace AS {
@@ -14,10 +17,10 @@ class PluginLibrary
 public:
     PluginLibrary();
 
-    // loads the plugin at the specified file and returns its name, "" if failed
+    // loads the plugin at the specified file and returns its package name, "" if failed
     QString load(QString file);
-    bool isLoaded(QString plugin);
-    QString getInfo(QString plugin);
+
+    Plugin* lookup(QString package);
 private:
     std::map<QString, Plugin> m_plugins;
 };

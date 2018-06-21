@@ -12,27 +12,21 @@ PluginLibrary::PluginLibrary()
 
 QString PluginLibrary::load(QString file) {
     auto plugin = Plugin(file);
-    if (plugin.spawnable()) {
-        auto name = plugin.name();
-        m_plugins.emplace(std::make_pair(name, std::move(plugin)));
-        return name; // inserted or already existed
+    if (plugin.canGet()) {
+        auto package = plugin.getPackage();
+        m_plugins.emplace(std::make_pair(package, std::move(plugin)));
+        return package; // inserted or already existed
     }
     return "";
 }
 
-bool PluginLibrary::isLoaded(QString plugin)
+Plugin* PluginLibrary::lookup(QString package)
 {
-    return m_plugins.count(plugin);
-}
-
-QString PluginLibrary::getInfo(QString plugin)
-{
-    auto iter = m_plugins.find(plugin);
-    if (iter != m_plugins.end()) {
-        return iter->second.info();
-    } else {
-        return "";
+    auto iter = m_plugins.find(package);
+    if (iter == m_plugins.end()) {
+        return nullptr;
     }
+    return &iter->second;
 }
 
 } // AS

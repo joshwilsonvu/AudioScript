@@ -3,36 +3,43 @@
 
 #include <QPluginLoader>
 #include <QString>
-#include <memory>
+#include <QStringList>
 
 namespace AS {
 
 class Script;
-class Factory;
+class Package;
 
 // Plugin
-// one-to-one plugin and Script subclass
+// Represents a collection of Script types under a single package.
+// Loaded from one plugin file.
 class Plugin {
 public:
-    Plugin(QString filename);
+    explicit Plugin(QString filename);
     Plugin(Plugin&& rhs);
     ~Plugin();
 
+    // call with care, any active Scripts from this plugin will cause errors
     bool unload();
 
-    QString name() const; ///<the name of the class subclassing Script
-    QString info() const; ///<information about the class subclassing Script
-    QString errorString() const; ///<the string reported if the library has an error
+    QString errorString() const;
 
-    bool spawnable() const;
-    Script* spawn();
+    QStringList getNames() const;
+
+    QString getPackage() const;
+
+    // if scriptName is empty, returns true if the Package is valid
+    bool canGet(QString scriptName = "") const;
+
+    Script* get(QString scriptName) const;
+
+    QString getDescription(QString scriptName) const;
 
 
 private:
     QPluginLoader m_plugin;
-    Factory* m_factory;
-    QString m_name; // retrieved from plugin once, guaranteed constant
-    QString m_info; // retrieved from plugin once, guaranteed constant
+    Package* m_factory;
+    QStringList m_names;
 };
 
 } // AS

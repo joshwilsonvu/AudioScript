@@ -1,6 +1,6 @@
 #include "buffer.h"
 #include "exception.h"
-#include "factory.h"
+#include "package.h"
 #include "log.h"
 #include "script.h"
 #include "utils.h"

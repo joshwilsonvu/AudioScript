@@ -1,14 +1,19 @@
 #include "log.h"
 
+#include <QMutex>
+
 namespace AS {
 
-Log::Log(QObject* parent)
-    : QObject(parent)
+QAtomicPointer<QIODevice> out = nullptr;
+
+Log log()
 {
+    return Log(out.load());
 }
 
-Log::~Log()
+void setLogDestination(QIODevice* out)
 {
+    AS::out.store(out);
 }
 
 } // AS

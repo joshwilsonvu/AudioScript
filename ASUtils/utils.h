@@ -9,6 +9,8 @@ namespace AS {
 // terminates the audio processing if the condition is not true
 void check(bool cond, const char* message = nullptr);
 
+constexpr size_t hash(const char* str);
+
 // converts dBFS to positive linear amplitude (sample)
 ASUTILS_EXPORT sample_t dB2amp(sample_t dB);
 

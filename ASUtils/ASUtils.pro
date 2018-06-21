@@ -17,23 +17,23 @@ QT       += core widgets
 
 HEADERS += \
     script.h \
-    factory.h \
     globals.h \
     buffer.h \
     utils.h \
     buffer.tpp \
     exception.h \
     #ui.h
-    log.h
+    log.h \
+    package.h
 
 SOURCES += \
-    factory.cpp \
     script.cpp \
     buffer.cpp \
     utils.cpp \
     exception.cpp \
     #ui.cpp \
-    log.cpp
+    log.cpp \
+    package.cpp
 
 DEFINES += ASUTILS_LIBRARY # for windows import/export dll stuff
 DEFINES += QT_DEPRECATED_WARNINGS

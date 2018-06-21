@@ -42,18 +42,12 @@ void Engine::stop()
 
 QString Engine::load(QString file)
 {
-    return m_pluginLibrary->load(file);
+    QString package = m_pluginLibrary->load(file);
+    return package;
 }
 
-bool Engine::isLoaded(QString plugin)
-{
-    return m_pluginLibrary->isLoaded(plugin);
-}
 
-QString Engine::getInfo(QString plugin)
-{
-    return m_pluginLibrary->getInfo(plugin);
-}
+
 
 } // AS
 

@@ -8,23 +8,25 @@ QT += core
 DESTDIR = .
 
 INCLUDEPATH += \
-    ../ASUtils
+    ../ASUtils \
+    3rdParty
 
 HEADERS += \
     ../engine.h \
-    plugin.h \
-    3rdParty/RtAudio.h \
     processgraph.h \
     pluginlibrary.h \
-    processor.h
+    processor.h \
+    plugin.h \
+    3rdParty/RtAudio.h
+
 
 SOURCES += \
     engine.cpp \
-    plugin.cpp \
-    3rdParty/RtAudio.cpp \
     processgraph.cpp \
     pluginlibrary.cpp \
-    processor.cpp
+    processor.cpp \
+    plugin.cpp \
+    3rdParty/RtAudio.cpp
 
 LIBS += -L../ASUtils -lASUtils
 

@@ -25,6 +25,7 @@ class Script;
 class Buffer;
 
 class PluginLibrary;
+class Plugin;
 class ProcessGraph;
 class Processor;
 
@@ -36,10 +37,6 @@ public:
 
     // loads the plugin at the specified file and returns its name, "" if failed
     QString load(QString file);
-
-    bool isLoaded(QString plugin);
-
-    QString getInfo(QString plugin); // empty on fail
 
     void probeAudio();
 

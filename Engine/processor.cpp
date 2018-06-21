@@ -2,8 +2,9 @@
 #include "buffer.h"
 #include "utils.h"
 #include "exception.h"
+#include "log.h"
 
-#include <qDebug>
+#include <QtDebug>
 
 namespace AS {
 
@@ -24,7 +25,7 @@ Processor::Processor(ProcessGraph* processGraph)
     try {
         m_rtAudio = std::unique_ptr<RtAudio>(new RtAudio());
     } catch (const RtAudioError& error) {
-        qDebug() << error.getMessage().c_str();
+        AS::log() << error.getMessage().c_str();
         return;
     }
     m_rtAudio->showWarnings(true);
@@ -50,7 +51,7 @@ bool Processor::start()
     try {
         m_rtAudio->startStream();
     } catch (const RtAudioError& e) {
-        qDebug() << e.getMessage().c_str();
+        AS::log() << e.getMessage().c_str();
         stop();
         return false;
     }
@@ -74,9 +75,9 @@ int Processor::duplex(sample_t* outputBuffer, sample_t* inputBuffer,
                    unsigned int nBufferFrames, double streamTime,
                    unsigned int status)
 {
-    qDebug() << "t =" << streamTime;
+    AS::log() << "t =" << streamTime;
     if (status) {
-        qDebug() << "Under/overflow detected.";
+        AS::log() << "Under/overflow detected.";
     }
 
     // read the input data
@@ -92,7 +93,7 @@ int Processor::duplex(sample_t* outputBuffer, sample_t* inputBuffer,
         AS::check(out.size() == samples,
                    "Output buffer length does not match input buffer length.");
     } catch (const AS::Exception& e) {
-        qDebug() << e.what();
+        AS::log() << e.what();
         return 2; // abort the stream immediately
     }
 
@@ -107,7 +108,7 @@ void Processor::probeAudio()
     // Determine the number of devices available
     unsigned int devices = m_rtAudio->getDeviceCount();
     if (devices < 1) {
-        qDebug() << "No audio devices found!";
+        AS::log() << "No audio devices found!";
         return;
     }
 
@@ -116,15 +117,15 @@ void Processor::probeAudio()
     for (unsigned int i=0; i<devices; i++)  {
         info = m_rtAudio->getDeviceInfo(i);
         if (info.probed) {
-            qDebug() << "device =" << i << "name =" << info.name.c_str();
-            qDebug() << "preferred sample rate =" << info.preferredSampleRate;
-            qDebug() << "maximum output channels =" << info.outputChannels;
-            qDebug() << "maximum input channels =" << info.inputChannels;
-            qDebug() << "maximum duplex channels =" << info.duplexChannels;
-            qDebug() << "default input device?" << info.isDefaultInput;
-            qDebug() << "default output device?" << info.isDefaultOutput;
+            AS::log() << "device =" << i << "name =" << info.name.c_str();
+            AS::log() << "preferred sample rate =" << info.preferredSampleRate;
+            AS::log() << "maximum output channels =" << info.outputChannels;
+            AS::log() << "maximum input channels =" << info.inputChannels;
+            AS::log() << "maximum duplex channels =" << info.duplexChannels;
+            AS::log() << "default input device?" << info.isDefaultInput;
+            AS::log() << "default output device?" << info.isDefaultOutput;
         } else {
-            qDebug() << "device =" << i << "not probed";
+            AS::log() << "device =" << i << "not probed";
         }
     }
 }
@@ -140,13 +141,16 @@ void Processor::initializeAudio()
     iParams.nChannels = m_numChannels;
     oParams.deviceId = m_rtAudio->getDefaultOutputDevice();
     oParams.nChannels = m_numChannels;
+
+    RtAudio::StreamOptions options;
+    options.flags = RTAUDIO_MINIMIZE_LATENCY;
     try {
         m_rtAudio->openStream(&oParams, &iParams, RTAUDIO_FLOAT32, sampleRate,
-                              &bufferSize, &duplex_callback, (void*)this);
+                              &bufferSize, &duplex_callback, (void*)this, &options);
         m_numChannels = std::min(iParams.nChannels, oParams.nChannels);
     } catch (const RtAudioError& error) {
         m_rtAudio.reset();
-        qDebug() << error.getMessage().c_str();
+        AS::log() << error.getMessage().c_str();
     }
 }
 
