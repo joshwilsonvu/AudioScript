@@ -12,8 +12,6 @@ namespace Ui {
 class MainWindow;
 }
 
-class QBuffer;
-
 namespace AS {
 
 class MainWindow : public QMainWindow
@@ -53,8 +51,7 @@ private:
     Ui::MainWindow *m_ui;
     ScriptWindow* m_scriptWindow;
     BlockArea* m_blockArea;
-    QBuffer* m_logDevice;
-    QTextEdit* m_logOutput;
+    QPlainTextEdit* m_logOutput;
     QGraphicsView* m_graphicsView;
 
     Engine m_engine;

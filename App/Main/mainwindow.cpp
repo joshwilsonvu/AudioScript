@@ -3,7 +3,7 @@
 #include "audioblock.h"
 #include "log.h"
 
-#include <QBuffer>
+#include <QPlainTextEdit>
 #include <QGraphicsScene>
 #include <QGridLayout>
 #include <QtDebug>
@@ -23,10 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui(new Ui::MainWindow),
     m_scriptWindow(nullptr),
     m_blockArea(new BlockArea(this)),
-    m_logDevice(new QBuffer(this)),
-    m_logOutput(new QTextEdit(this))
+    m_logOutput(new QPlainTextEdit(this))
 {
-    m_logDevice->open(QIODevice::ReadWrite | QIODevice::Unbuffered);
     m_ui->setupUi(this); // sets up menu bar, status bar, actions
 
     setupUi();
@@ -88,12 +86,12 @@ void MainWindow::openPlugin()
     QString file = QFileDialog::getOpenFileName(this, tr("Open Plugin"),
                                                     dir,
                                                     tr("Plugins (*.so *.dylib *.dll)"));
-    AS::log() << "Loading:" << file;
+    AS::log() << "Loading: " << file << '\n';
     QString pluginName = m_engine.load(file);
     if (pluginName.isEmpty()) {
-        AS::log() << "Not a plugin";
+        AS::log() << "Not a plugin.\n";
     } else {
-        AS::log() << "Package" << pluginName << "loaded.";
+        AS::log() << "Package " << pluginName << " loaded.\n";
     }
 }
 
@@ -115,7 +113,9 @@ void MainWindow::setupUi()
     m_graphicsView->setFocusPolicy(Qt::NoFocus);
 
     m_logOutput->setReadOnly(true);
-    m_logOutput->setAcceptRichText(false);
+    m_logOutput->setMaximumBlockCount(1000);
+    m_logOutput->setCenterOnScroll(true);
+    m_logOutput->setUndoRedoEnabled(false);
 
     constexpr int spacing = 10;
     constexpr int margin_dim = 10;
@@ -150,12 +150,11 @@ void MainWindow::initActions()
 
 void MainWindow::setupConnections()
 {
-    // set the global log destination to m_logDevice, and write to m_logOutput
-    AS::setLogDestination(m_logDevice);
-    connect(m_logDevice, &QIODevice::readyRead, [this] () {
-        auto str = QString(m_logDevice->buffer());
-        m_logDevice->buffer().clear();
-        m_logOutput->append(str);
+    AS::Log::instance().setSink([this](AS::Log& log) {
+        auto size = log.size();
+        auto buffer = QByteArray(size, '\0');
+        log.read(buffer.data());
+        m_logOutput->appendPlainText(buffer);
     });
 }
 
