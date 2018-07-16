@@ -1,7 +1,6 @@
 <map id="Engine/plugin.h" name="Engine/plugin.h">
 <area shape="rect" id="node2" href="$engine_8cpp.html" title="Engine/engine.cpp" alt="" coords="5,152,137,177"/>
-<area shape="rect" id="node3" href="$pluginlibrary_8h.html" title="Engine/pluginlibrary.h" alt="" coords="165,79,314,104"/>
-<area shape="rect" id="node6" href="$plugin_8cpp.html" title="Engine/plugin.cpp" alt="" coords="337,79,464,104"/>
-<area shape="rect" id="node4" href="$moc__pluginlibrary_8cpp.html" title="Engine/moc_pluginlibrary.cpp" alt="" coords="162,152,357,177"/>
-<area shape="rect" id="node5" href="$pluginlibrary_8cpp.html" title="Engine/pluginlibrary.cpp" alt="" coords="381,152,543,177"/>
+<area shape="rect" id="node3" href="$pluginlibrary_8h.html" title="Engine/pluginlibrary.h" alt="" coords="109,79,258,104"/>
+<area shape="rect" id="node5" href="$plugin_8cpp.html" title="Engine/plugin.cpp" alt="" coords="281,79,408,104"/>
+<area shape="rect" id="node4" href="$pluginlibrary_8cpp.html" title="Engine/pluginlibrary.cpp" alt="" coords="161,152,323,177"/>
 </map>

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['qrc_5fresources_2ecpp',['qrc_resources.cpp',['../qrc__resources_8cpp.html',1,'']]],
-  ['qrc_5fstyle_2ecpp',['qrc_style.cpp',['../qrc__style_8cpp.html',1,'']]]
+  ['readme_2emd',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]]
 ];

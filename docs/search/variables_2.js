@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['centralwidget',['centralwidget',['../class_ui___main_window.html#a356f1cf3ebda15f1fac59467ee081b74',1,'Ui_MainWindow']]],
-  ['comment',['comment',['../struct_text_char_format_pack.html#a9888939bef66a3e10d1b92bb466f0348',1,'TextCharFormatPack']]]
+  ['description',['description',['../struct_a_s_1_1_package_1_1_script_properties.html#a7d76b7a3ad64af265871e94118b29e40',1,'AS::Package::ScriptProperties']]]
 ];

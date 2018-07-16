@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['package',['package',['../class_a_s_1_1_package.html#a1f74bd94c3ef4cc1e17c5c89028c75fc',1,'AS::Package::package(const char *packageName) final'],['../class_a_s_1_1_package.html#abe4d663f4bbbc950d7a20428bda84cc5',1,'AS::Package::Package()']]],
+  ['package',['Package',['../class_a_s_1_1_package.html#abe4d663f4bbbc950d7a20428bda84cc5',1,'AS::Package::Package()'],['../class_a_s_1_1_package.html#a1f74bd94c3ef4cc1e17c5c89028c75fc',1,'AS::Package::package(const char *packageName) final']]],
   ['paint',['paint',['../class_a_s_1_1_audio_block.html#a98e44763bf3afa6d5012ff123c4392be',1,'AS::AudioBlock']]],
   ['pairproxy',['PairProxy',['../class_a_s_1_1_buffer_1_1_pair_proxy.html#a3a262f4e1ff71ecd9b6f5ab65ec1fb2f',1,'AS::Buffer::PairProxy']]],
   ['persistentdatadirectory',['persistentDataDirectory',['../namespace_a_s.html#a3a824dbf7cd9f2974c686dec775bcfd6',1,'AS']]],

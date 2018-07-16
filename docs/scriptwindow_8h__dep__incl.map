@@ -1,12 +1,9 @@
 <map id="App/Editor/scriptwindow.h" name="App/Editor/scriptwindow.h">
-<area shape="rect" id="node2" href="$classdialog_8h.html" title="App/Editor/classdialog.h" alt="" coords="255,79,419,104"/>
-<area shape="rect" id="node4" href="$scriptwindow_8cpp.html" title="App/Editor/scriptwindow.cpp" alt="" coords="405,152,593,177"/>
-<area shape="rect" id="node6" href="$classloader_8cpp.html" title="App/Editor/classloader.cpp" alt="" coords="536,79,715,104"/>
-<area shape="rect" id="node7" href="$mainwindow_8h.html" title="App/Main/mainwindow.h" alt="" coords="739,79,904,104"/>
-<area shape="rect" id="node11" href="$moc__scriptwindow_8cpp.html" title="App/moc_scriptwindow.cpp" alt="" coords="927,79,1110,104"/>
+<area shape="rect" id="node2" href="$classdialog_8h.html" title="App/Editor/classdialog.h" alt="" coords="99,79,263,104"/>
+<area shape="rect" id="node4" href="$scriptwindow_8cpp.html" title="App/Editor/scriptwindow.cpp" alt="" coords="207,152,395,177"/>
+<area shape="rect" id="node5" href="$classloader_8cpp.html" title="App/Editor/classloader.cpp" alt="" coords="338,79,518,104"/>
+<area shape="rect" id="node6" href="$mainwindow_8h.html" title="App/Main/mainwindow.h" alt="" coords="541,79,706,104"/>
 <area shape="rect" id="node3" href="$classdialog_8cpp.html" title="App/Editor/classdialog.cpp" alt="" coords="5,152,184,177"/>
-<area shape="rect" id="node5" href="$moc__classdialog_8cpp.html" title="App/moc_classdialog.cpp" alt="" coords="208,152,381,177"/>
-<area shape="rect" id="node8" href="$main_8cpp.html" title="App/Main/main.cpp" alt="" coords="616,152,752,177"/>
-<area shape="rect" id="node9" href="$mainwindow_8cpp.html" title="App/Main/mainwindow.cpp" alt="" coords="776,152,955,177"/>
-<area shape="rect" id="node10" href="$moc__mainwindow_8cpp.html" title="App/moc_mainwindow.cpp" alt="" coords="978,152,1158,177"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="App/Main/main.cpp" alt="" coords="487,152,622,177"/>
+<area shape="rect" id="node8" href="$mainwindow_8cpp.html" title="App/Main/mainwindow.cpp" alt="" coords="646,152,826,177"/>
 </map>
