@@ -2,20 +2,21 @@
 #define AS_PROCESSGRAPH_H
 
 #include <vector>
+#include <QObject>
 
 namespace AS {
 
 class Buffer;
 class Script;
 
-class ProcessGraph
+class ProcessGraph : public QObject
 {
+    Q_OBJECT
+
 public:
-    ProcessGraph();
+    ProcessGraph(QObject* parent = nullptr);
 
     void add(Script* script);
-
-    Buffer process(Buffer in);
 
 private:
     std::vector<Script*> m_graph; // basic implementation, TODO branching

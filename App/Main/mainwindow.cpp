@@ -150,12 +150,9 @@ void MainWindow::initActions()
 
 void MainWindow::setupConnections()
 {
-    AS::Log::instance().setSink([this](AS::Log& log) {
-        auto size = log.size();
-        auto buffer = QByteArray(size, '\0');
-        log.read(buffer.data());
-        m_logOutput->appendPlainText(buffer);
-    });
+    connect(AS::Log::instance(), SIGNAL(logged(QString)),
+            m_logOutput, SLOT(appendPlainText(QString)),
+            Qt::QueuedConnection);
 }
 
 void MainWindow::readSettings()

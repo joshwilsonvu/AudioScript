@@ -5,7 +5,8 @@
 
 namespace AS {
 
-ProcessGraph::ProcessGraph()
+ProcessGraph::ProcessGraph(QObject* parent)
+    : QObject(parent)
 {
 
 }

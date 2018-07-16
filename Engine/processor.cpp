@@ -19,8 +19,10 @@ int Processor::duplex_callback(void* outputBuffer, void* inputBuffer,
                           nBufferFrames, streamTime, status);
 }
 
-Processor::Processor(ProcessGraph* processGraph)
-    : m_processGraph(processGraph), m_numChannels(2)
+Processor::Processor(ProcessGraph* processGraph, QObject* parent)
+    : QObject(parent),
+      m_processGraph(processGraph),
+      m_numChannels(2)
 {
     try {
         m_rtAudio = std::unique_ptr<RtAudio>(new RtAudio());
@@ -75,7 +77,6 @@ int Processor::duplex(sample_t* outputBuffer, sample_t* inputBuffer,
                    unsigned int nBufferFrames, double streamTime,
                    unsigned int status)
 {
-    //AS::log() << "t =" << streamTime;
     if (status) {
         AS::log() << "Under/overflow detected.";
     }
@@ -99,8 +100,6 @@ int Processor::duplex(sample_t* outputBuffer, sample_t* inputBuffer,
 
     // write the processed data
     std::copy(out.begin(), out.end(), (sample_t*)outputBuffer);
-
-    AS::Log::instance().flush();
 
     return 0; // continue normally
 }

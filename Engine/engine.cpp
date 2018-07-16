@@ -19,8 +19,9 @@ namespace AS {
 
 
 // class Engine
-Engine::Engine()
-    : m_pluginLibrary(new PluginLibrary()),
+Engine::Engine(QObject* parent)
+    : QObject(parent),
+      m_pluginLibrary(new PluginLibrary()),
       m_processGraph(new ProcessGraph()),
       m_processor(new Processor(m_processGraph.get()))
 {
@@ -30,19 +31,23 @@ Engine::~Engine()
 {
 }
 
-bool Engine::start()
+void Engine::start()
 {
-    return m_processor->start();
+    if (m_processor->start()) {
+        emit started();
+    }
 }
 
 void Engine::stop()
 {
     m_processor->stop();
+    emit stopped();
 }
 
 QString Engine::load(QString file)
 {
     QString package = m_pluginLibrary->load(file);
+    emit pluginLoaded(package);
     return package;
 }
 

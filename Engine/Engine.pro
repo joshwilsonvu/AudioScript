@@ -5,8 +5,6 @@ CONFIG += staticlib qt thread
 
 QT += core
 
-DESTDIR = .
-
 INCLUDEPATH += \
     ../ASUtils \
     3rdParty
@@ -28,7 +26,8 @@ SOURCES += \
     plugin.cpp \
     3rdParty/RtAudio.cpp
 
-LIBS += -L../ASUtils -lASUtils
+LIBS += -L$$OUT_PWD/../ASUtils/ -lASUtils
+DEPENDPATH += ../ASUtils
 
 # Platform-specific APIs to compile for RtAudio
 win32 {
@@ -54,3 +53,4 @@ win32 {
 
 DISTFILES += \
     libs.pri
+

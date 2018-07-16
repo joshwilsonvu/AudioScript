@@ -1,6 +1,5 @@
 #include "log.h"
 
-#include <mutex>
 #include <iostream>
 #include <QString>
 
@@ -9,14 +8,12 @@ namespace AS {
 // free function, alias for Log::instance().log()
 Log::Proxy log()
 {
-    return Log::instance().log();
+    return Log::instance()->log();
 }
 
 // Log implementation
 Log::Log()
-{
-    setSink(std::cout);
-}
+{}
 
 Log::~Log()
 {}
@@ -26,55 +23,32 @@ Log::Proxy Log::log()
     return Proxy(this);
 }
 
-void Log::setSink(std::ostream& out)
-{
-    m_sink = [&out] (Log& log) {
-        out << log.m_ss.rdbuf();
-    };
-}
-
-std::streamsize Log::read(char* buffer, std::streamsize count)
-{
-    count = std::min(count, size());
-    if (buffer) {
-        m_ss.read(buffer, count);
-    } else {
-        m_ss.ignore(count);
-    }
-    return count;
-}
-
-std::streamsize Log::size()
-{
-    m_ss.seekg(0, std::ios::end);
-    auto size = m_ss.tellg();
-    m_ss.seekg(0, std::ios::beg);
-    return size;
-}
-
-Log& Log::instance()
+Log* Log::instance()
 {
     static Log gLog;
-    return gLog;
+    return &gLog;
 }
 
 void Log::append(Proxy& proxy)
 {
-    // efficiently copy the stream's contents into ss
-    std::unique_lock<std::mutex> locker(m_mutex);
-    m_ss << proxy.stream.rdbuf();
-}
+    auto stream = std::move(proxy.stream);
 
-void Log::flush()
-{
-    // prevent m_ss from modification while flushing
-    std::unique_lock<std::mutex> locker(m_mutex);
-    try {
-        // call the callback to read data from *this
-        m_sink(*this);
-    } catch (...) {}
-    m_ss.str(std::string());
-    m_ss.clear();
+    // determine size of string buffer
+    stream.seekg(0, std::ios::end);
+    auto size = stream.tellg();
+    stream.seekg(0, std::ios::beg);
+
+    // create QByteArray buffer
+    auto buffer = QByteArray(size, '\0');
+
+    if (size) {
+        // fill the QByteArray
+        stream.read(buffer.data(), size);
+
+        // emit the signal
+        auto str = QString::fromLocal8Bit(buffer);
+        emit logged(std::move(str));
+    }
 }
 
 // Log::Proxy implementation

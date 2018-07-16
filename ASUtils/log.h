@@ -2,24 +2,25 @@
 #define AS_LOG_H
 
 #include <sstream>
+#include <QObject>
 
-// TODO: Create a true logging class, with a thread safe proxy,
-// an internal buffer, and a way for the engine to extract its contents.
-
-// This class shall replace std::cout for plugins, and all information
-// streamed to this will be displayed in the AudioScript application.
-// A proxy may be used.
-// One stream chain (logger << x << y << z;) should be added atomically
-// to the stream.
-// The stream should be flushed to the display *at most* once per
-// processed buffer, to reduce I/O to manageable levels, and not in the
+// Users perform logging by calling AS::log() and then using the
+// streaming operators, like so:
+//     AS::log() << "Value of parameter g:" << g;
+// Spaces are inserted between items automatically, and the chain is
+// ended with a newline character.
+// One stream chain (AS::log() << x << y << z;) is added atomically
+// to the stream--that is, there will be no interleaving between two
+// concurrent chains.
+// When the stream is flushed to the display, it is not in the
 // audio thread.
-
-class QString;
 
 namespace AS {
 
-class Log {
+class Log : public QObject {
+
+    Q_OBJECT
+
 public:
     class Proxy {
     public:
@@ -44,37 +45,17 @@ public:
     // Log instance on destruction.
     Proxy log();
 
-    // Trigger the flushing of data into the set sink
-    void flush();
+    static Log* instance();
 
-    // Set the function that will be called that is responsible
-    // for draining the internal buffer with size() and read()
-    template <typename Callback>
-    void setSink(Callback&& callback);
-    // Default to std::cout
-    void setSink(std::ostream& out);
-
-    // Returns the number of characters contained in the logger
-    std::streamsize size();
-
-    // Read std::min(count, size()) characters from the logger
-    // into the given buffer, returning the number of characters read.
-    // Discards characters if buffer is null.
-    std::streamsize read(char* buffer, std::streamsize count
-                         = std::numeric_limits<std::streamsize>::max());
-
-    static Log& instance();
+signals:
+    void logged(QString);
 
 private:
     Log();
-    void append(Proxy& proxy);
-
-    std::mutex m_mutex;
-    std::stringstream m_ss;
-    std::function<void(Log&)> m_sink;
+    void append(Proxy& proxy); // add more text on Proxy destruction
 };
 
-// free function users should use
+
 // ex. AS::log() << "Parameter a = " << this->a << std::endl;
 Log::Proxy log();
 
@@ -84,14 +65,6 @@ Log::Proxy& Log::Proxy::operator<<(const T& t) {
     stream << t;
     return *this;
 }
-
-template<typename Callback>
-void Log::setSink(Callback&& callback)
-{
-    m_sink = std::forward<Callback>(callback);
-}
-
-
 
 } // AS
 

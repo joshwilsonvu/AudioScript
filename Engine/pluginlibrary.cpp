@@ -1,11 +1,11 @@
 #include "pluginlibrary.h"
-#include "plugin.h"
 
 #include <QString>
 
 namespace AS {
 
-PluginLibrary::PluginLibrary()
+PluginLibrary::PluginLibrary(QObject* parent)
+    : QObject(parent)
 {
 
 }

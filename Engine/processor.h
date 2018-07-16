@@ -10,10 +10,12 @@ namespace AS {
 class Buffer;
 class ProcessGraph;
 
-class Processor
+class Processor : public QObject
 {
+    Q_OBJECT
+
 public:
-    Processor(ProcessGraph* processGraph);
+    Processor(ProcessGraph* processGraph, QObject* parent = nullptr);
 
     int numChannels() const;
 

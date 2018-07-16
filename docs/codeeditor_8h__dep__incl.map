@@ -1,0 +1,21 @@
+<map id="App/Editor/codeeditor.h" name="App/Editor/codeeditor.h">
+<area shape="rect" id="node2" href="$codetabs_8h.html" title="App/Editor/codetabs.h" alt="" coords="921,79,1073,104"/>
+<area shape="rect" id="node19" href="$codeeditor_8cpp.html" title="App/Editor/codeeditor.cpp" alt="" coords="1097,79,1271,104"/>
+<area shape="rect" id="node20" href="$moc__codeeditor_8cpp.html" title="App/moc_codeeditor.cpp" alt="" coords="1295,79,1463,104"/>
+<area shape="rect" id="node3" href="$classloader_8h.html" title="App/Editor/classloader.h" alt="" coords="725,152,890,177"/>
+<area shape="rect" id="node17" href="$codetabs_8cpp.html" title="App/Editor/codetabs.cpp" alt="" coords="914,152,1081,177"/>
+<area shape="rect" id="node18" href="$moc__codetabs_8cpp.html" title="App/moc_codetabs.cpp" alt="" coords="1105,152,1266,177"/>
+<area shape="rect" id="node4" href="$scriptwindow_8h.html" title="App/Editor/scriptwindow.h" alt="" coords="597,225,771,251"/>
+<area shape="rect" id="node5" href="$classdialog_8h.html" title="App/Editor/classdialog.h" alt="" coords="362,299,526,324"/>
+<area shape="rect" id="node9" href="$classloader_8cpp.html" title="App/Editor/classloader.cpp" alt="" coords="997,299,1176,324"/>
+<area shape="rect" id="node15" href="$dialogs_8cpp.html" title="App/Editor/dialogs.cpp" alt="" coords="845,225,1000,251"/>
+<area shape="rect" id="node16" href="$moc__classloader_8cpp.html" title="App/moc_classloader.cpp" alt="" coords="1024,225,1197,251"/>
+<area shape="rect" id="node7" href="$scriptwindow_8cpp.html" title="App/Editor/scriptwindow.cpp" alt="" coords="405,372,593,397"/>
+<area shape="rect" id="node10" href="$mainwindow_8h.html" title="App/Main/mainwindow.h" alt="" coords="601,299,766,324"/>
+<area shape="rect" id="node14" href="$moc__scriptwindow_8cpp.html" title="App/moc_scriptwindow.cpp" alt="" coords="790,299,972,324"/>
+<area shape="rect" id="node6" href="$classdialog_8cpp.html" title="App/Editor/classdialog.cpp" alt="" coords="5,372,184,397"/>
+<area shape="rect" id="node8" href="$moc__classdialog_8cpp.html" title="App/moc_classdialog.cpp" alt="" coords="208,372,381,397"/>
+<area shape="rect" id="node11" href="$main_8cpp.html" title="App/Main/main.cpp" alt="" coords="616,372,752,397"/>
+<area shape="rect" id="node12" href="$mainwindow_8cpp.html" title="App/Main/mainwindow.cpp" alt="" coords="776,372,955,397"/>
+<area shape="rect" id="node13" href="$moc__mainwindow_8cpp.html" title="App/moc_mainwindow.cpp" alt="" coords="978,372,1158,397"/>
+</map>

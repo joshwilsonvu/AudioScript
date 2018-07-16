@@ -3,6 +3,7 @@
 
 #include "globals.h"
 #include <memory>
+#include <QObject>
 
 /**
  * The AudioScript Engine class should expose its own API and be fully
@@ -10,10 +11,6 @@
  * functionality, such as spawning scripts, recording and playing audio,
  * converting to AudioScriptBuffers, and running the processing chain in a
  * separate, high-priority or realtime thread.
- *
- * During execution, std::cout will be redirected to a std::ostringstream,
- * whose contents are accessible via an API method. SCRATCH THIS, mutable
- * global state. Use dependency injection with a stream instead.
  *
  * Usage will most likely be building and linking to a library and including
  * the engine.h header file.
@@ -29,25 +26,33 @@ class Plugin;
 class ProcessGraph;
 class Processor;
 
-class Engine
+class Engine : public QObject
 {
-public:
-    Engine();
-    ~Engine();
+    Q_OBJECT
 
-    // loads the plugin at the specified file and returns its name, "" if failed
-    QString load(QString file);
+public:
+    Engine(QObject* parent = nullptr);
+    ~Engine() override;
+
 
     void probeAudio();
 
     int numChannels() const;
 
-    // TODO for starting out, I am going to make this start in mono duplex
-    // mode, without any other options. Once the minimum viable product
-    // is working, more options can be added and the interface can be smoothed.
-    bool start();
+public slots:
+    void start();
 
     void stop();
+
+    // loads the plugin at the specified file and returns its name, "" if failed
+    QString load(QString file);
+
+signals:
+    void pluginLoaded(QString);
+
+    void started();
+
+    void stopped();
 
 private:    
 

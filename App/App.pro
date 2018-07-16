@@ -21,9 +21,26 @@ INCLUDEPATH += \
     ../ASUtils \
     ..
 
-LIBS += -L../ASUtils -lASUtils # dynamic library containing shared defs
-LIBS += -L../Engine -lEngine # static library containing engine implementation
-LIBS += -L../Compiler -lCompiler # static library containing compiler implementation
+LIBS += \
+    -L$$OUT_PWD/../ASUtils -lASUtils \ # dynamic library containing shared defs
+    -L$$OUT_PWD/../Engine -lEngine \ # static library containing engine implementation
+    -L$$OUT_PWD/../Compiler -lCompiler # static library containing compiler implementation
+
+win32 {
+    PRE_TARGETDEPS += \
+        $$OUT_PWD/../ASUtils/ASUtils.dll \
+        $$OUT_PWD/../Engine/Engine.lib \
+        $$OUT_PWD/../Compiler/Compiler.lib
+} else {
+    PRE_TARGETDEPS += \
+        $$OUT_PWD/../Engine/libEngine.a \
+        $$OUT_PWD/../Compiler/libCompiler.a
+    macx {
+        PRE_TARGETDEPS += $$OUT_PWD/../ASUtils/libASUtils.dylib
+    } else {
+        PRE_TARGETDEPS += $$OUT_PWD/../ASUtils/libASUtils.so
+    }
+}
 
 include(../Engine/libs.pri)
 
